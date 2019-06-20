@@ -1,0 +1,134 @@
+﻿<Window x:Class="WpfApp1.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp1"
+        mc:Ignorable="d"
+        Title="Simply Store" Height="450" Width="800" MinHeight="450" MinWidth="600">
+    <Grid>
+        <Grid>
+            <Grid.Resources>
+                <Style TargetType="DataGrid">
+                    <Setter Property="Background" Value="#FF3A3A3A"></Setter>
+                    <Setter Property="Foreground" Value="White"></Setter>
+                    <Setter Property="RowBackground" Value="#FF3A3A3A"></Setter>
+                    <Setter Property="HeadersVisibility" Value="Column"></Setter>
+                    <Setter Property="GridLinesVisibility" Value="Horizontal"></Setter>
+                    <Setter Property="BorderBrush" Value="{x:Null}"></Setter>
+                    <Setter Property="HorizontalGridLinesBrush" Value="#FF2C2C2C"></Setter>
+                    <Setter Property="FontSize" Value="15"></Setter>
+                    <Setter Property="CanUserAddRows" Value="False"></Setter>
+                    <Setter Property="CanUserDeleteRows" Value="False"></Setter>
+                </Style>
+                <Style TargetType="DataGridColumnHeader">
+                    <Setter Property="Foreground" Value="Black"></Setter>
+                </Style>
+                <Style TargetType="DataGridCell">
+                    <Style.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" Value="#FF3A3A3A"/>
+                            <Setter Property="BorderBrush" Value="#00000000"></Setter>
+                            <Setter Property="Foreground" Value="Green"/>
+                        </Trigger>
+                    </Style.Triggers>
+                    <Setter Property="Margin" Value="10,0"></Setter>
+                    <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                </Style>
+            </Grid.Resources>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" ></ColumnDefinition>
+                <ColumnDefinition Width="4*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Rectangle Grid.ColumnSpan="2" Grid.Row="0" Fill="#FF212227"></Rectangle>
+            <Label Content="Home" x:Name="naslovLabel" Grid.ColumnSpan="2" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="30" FontWeight="Bold" Foreground="White" Margin="22,0,0,0"/>
+            <StackPanel Grid.Row="1" Grid.Column="0" Background="#FF212227">
+                <StackPanel.Resources>
+                    <Style TargetType="Button">
+                        <Setter Property="OverridesDefaultStyle" Value="True" />
+                        <Setter Property="VerticalAlignment" Value="Stretch"></Setter>
+                        <Setter Property="HorizontalAlignment" Value="Stretch"></Setter>
+                        <Setter Property="FontSize" Value="18"></Setter>
+                        <Setter Property="Background" Value="#FF2B2B2B"></Setter>
+                        <Setter Property="Foreground" Value="White"></Setter>
+                        <Setter Property="BorderBrush" Value="#FF2B2B2B"></Setter>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                
+                                <ControlTemplate TargetType="Button">
+                                    <Border Name="border" BorderThickness="0" BorderBrush="Black" Background="{TemplateBinding Background}">
+                                        <ContentPresenter HorizontalAlignment="Center" Margin="0,5,0,5" VerticalAlignment="Center" />
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="#828282" />
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </StackPanel.Resources>
+
+                <Button x:Name="menuHome" Content="Home" HorizontalAlignment="Stretch" VerticalAlignment="Top" Click="menuHome_Click" ></Button>
+                <Button x:Name="menuProstorije" Content="Prostorije" HorizontalAlignment="Stretch" VerticalAlignment="Top" Click="menuProstorije_Click"></Button>
+                <Button x:Name="menuSpremnici" Content="Spremnici" HorizontalAlignment="Stretch" VerticalAlignment="Top" Click="menuSpremnici_Click"></Button>
+                <Button x:Name="menuStavke" Content="Stavke" HorizontalAlignment="Stretch" VerticalAlignment="Top" Click="menuStavke_Click"></Button>
+            </StackPanel>
+            <Grid Grid.Column="1" Grid.Row="1" x:Name="gridPocetna" Visibility="Visible">
+                <Rectangle Fill="#FF3A3A3A"></Rectangle>
+                <Label Content="Simply Store" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="36" FontWeight="Bold" Foreground="White"/>
+                
+            </Grid>
+            
+            <Grid Grid.Column="1" Grid.Row="1" x:Name="gridProstorije" Visibility="Collapsed">
+                <Rectangle Fill="#FF3A3A3A"></Rectangle>
+                <DataGrid x:Name="dgProstorije" HorizontalAlignment="Stretch"  Margin="10,10,10,10" VerticalAlignment="Top"></DataGrid>
+                <Button x:Name="btnkreirajProstoriju" Content="Kreiraj prostoriju" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="btnkreirajProstoriju_Click"></Button>
+                <Button x:Name="btnizmjeniProstoriju" Content="Izmjeni prostoriju" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="100,0,0,0" Click="btnizmjeniProstoriju_Click"></Button>
+                <Button x:Name="btnObrisiProstoriju" Content="Obriši prostoriju" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="200,0,0,0" Click="btnObrisiProstoriju_Click"></Button>
+            </Grid>
+            <Grid Grid.Column="1" Grid.Row="1" x:Name="gridSpremnici" Visibility="Collapsed">
+                <Rectangle Fill="#FF3A3A3A"></Rectangle>
+                <DataGrid x:Name="dgSpremnici" HorizontalAlignment="Stretch"  Margin="10,40,10,10" VerticalAlignment="Top"></DataGrid>
+                <ComboBox x:Name="cmbProstorije" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="cmbProstorije_SelectionChanged"/>
+            </Grid>
+            <Grid Grid.Column="1" Grid.Row="1" x:Name="gridStavke" Visibility="Collapsed">
+                <Rectangle Fill="#FF3A3A3A"></Rectangle>
+                <Label Content="Stavke" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="36" FontWeight="Bold" Foreground="White"/>
+            </Grid>
+            <Grid Grid.Column="1" Grid.Row="1" x:Name="gridKreirajProstoriju" Visibility="Collapsed">
+                <Rectangle Fill="#FF3A3A3A"></Rectangle>
+                <Label Content="Naziv prostorije" HorizontalAlignment="Center" Margin="22,43,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White"/>
+                <TextBox Grid.Row="1" Height="25" Width="100" HorizontalAlignment="Center" Margin="22,83,0,0" VerticalAlignment="Top" Name="txtNazivProstorije"/>
+                
+                <Label Content="Opis prostorije" HorizontalAlignment="Center" Margin="22,123,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White"/>
+                <TextBox Grid.Row="1" Height="25" Width="100" HorizontalAlignment="Center" Margin="22,163,0,0" VerticalAlignment="Top" Name="txtOpisProstorije"/>
+                
+                <Label Content="Napomene" HorizontalAlignment="Center" Margin="22,203,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White"/>
+                <TextBox Grid.Row="1" Height="25" Width="100" HorizontalAlignment="Center" Margin="22,243,0,0" VerticalAlignment="Top" Name="txtNapomeneProstorije"/>
+                
+                <Button x:Name="KreirajProstoriju" Grid.Row="1" Height="25" Width="100"  HorizontalAlignment="Center" Margin="22,283,0,0" VerticalAlignment="Top" Content="Kreiraj prostoriju" Click="btnKreirajProstoriju_Click"/>
+            </Grid>
+
+            <Grid Grid.Column="1" Grid.Row="1" x:Name="gridIzmjeniProstoriju" Visibility="Collapsed">
+                <Rectangle Fill="#FF3A3A3A"></Rectangle>
+                <TextBox Grid.Row="1" Height="25" Width="100" Visibility="Collapsed" Name="txtIdProstorije"/>
+                <Label Content="Naziv prostorije" HorizontalAlignment="Center" Margin="22,43,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White"/>
+                <TextBox Grid.Row="1" Height="25" Width="100" HorizontalAlignment="Center" Margin="22,83,0,0" VerticalAlignment="Top" Name="txtNoviNazivProstorije"/>
+
+                <Label Content="Opis prostorije" HorizontalAlignment="Center" Margin="22,123,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White"/>
+                <TextBox Grid.Row="1" Height="25" Width="100" HorizontalAlignment="Center" Margin="22,163,0,0" VerticalAlignment="Top" Name="txtNoviOpisProstorije"/>
+
+                <Label Content="Napomene" HorizontalAlignment="Center" Margin="22,203,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White"/>
+                <TextBox Grid.Row="1" Height="25" Width="100" HorizontalAlignment="Center" Margin="22,243,0,0" VerticalAlignment="Top" Name="txtNoveNapomeneProstorije"/>
+
+                <Button x:Name="btnIzmjeniProstoriju" Grid.Row="1" Height="25" Width="100"  HorizontalAlignment="Center" Margin="22,283,0,0" VerticalAlignment="Top" Content="Izmjeni prostoriju" Click="btnIzmjeniProstoriju_Click"/>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>

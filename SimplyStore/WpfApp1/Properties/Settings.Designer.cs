@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SimplyStore.Properties
+namespace WpfApp1.Properties
 {
 
 
