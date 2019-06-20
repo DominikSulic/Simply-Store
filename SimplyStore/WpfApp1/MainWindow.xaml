@@ -58,7 +58,7 @@
                         <Setter Property="BorderBrush" Value="#FF2B2B2B"></Setter>
                         <Setter Property="Template">
                             <Setter.Value>
-                                
+
                                 <ControlTemplate TargetType="Button">
                                     <Border Name="border" BorderThickness="0" BorderBrush="Black" Background="{TemplateBinding Background}">
                                         <ContentPresenter HorizontalAlignment="Center" Margin="0,5,0,5" VerticalAlignment="Center" />
@@ -82,9 +82,9 @@
             <Grid Grid.Column="1" Grid.Row="1" x:Name="gridPocetna" Visibility="Visible">
                 <Rectangle Fill="#FF3A3A3A"></Rectangle>
                 <Label Content="Simply Store" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="36" FontWeight="Bold" Foreground="White"/>
-                
+
             </Grid>
-            
+
             <Grid Grid.Column="1" Grid.Row="1" x:Name="gridProstorije" Visibility="Collapsed">
                 <Rectangle Fill="#FF3A3A3A"></Rectangle>
                 <DataGrid x:Name="dgProstorije" HorizontalAlignment="Stretch"  Margin="10,10,10,10" VerticalAlignment="Top"></DataGrid>
@@ -96,6 +96,7 @@
                 <Rectangle Fill="#FF3A3A3A"></Rectangle>
                 <DataGrid x:Name="dgSpremnici" HorizontalAlignment="Stretch"  Margin="10,40,10,10" VerticalAlignment="Top"></DataGrid>
                 <ComboBox x:Name="cmbProstorije" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="cmbProstorije_SelectionChanged"/>
+                <Button  x:Name="btnKreirajSpremnik" Content="Kreiraj spremnik" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="auto"/>
             </Grid>
             <Grid Grid.Column="1" Grid.Row="1" x:Name="gridStavke" Visibility="Collapsed">
                 <Rectangle Fill="#FF3A3A3A"></Rectangle>
@@ -105,13 +106,13 @@
                 <Rectangle Fill="#FF3A3A3A"></Rectangle>
                 <Label Content="Naziv prostorije" HorizontalAlignment="Center" Margin="22,43,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White"/>
                 <TextBox Grid.Row="1" Height="25" Width="100" HorizontalAlignment="Center" Margin="22,83,0,0" VerticalAlignment="Top" Name="txtNazivProstorije"/>
-                
+
                 <Label Content="Opis prostorije" HorizontalAlignment="Center" Margin="22,123,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White"/>
                 <TextBox Grid.Row="1" Height="25" Width="100" HorizontalAlignment="Center" Margin="22,163,0,0" VerticalAlignment="Top" Name="txtOpisProstorije"/>
-                
+
                 <Label Content="Napomene" HorizontalAlignment="Center" Margin="22,203,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White"/>
                 <TextBox Grid.Row="1" Height="25" Width="100" HorizontalAlignment="Center" Margin="22,243,0,0" VerticalAlignment="Top" Name="txtNapomeneProstorije"/>
-                
+
                 <Button x:Name="KreirajProstoriju" Grid.Row="1" Height="25" Width="100"  HorizontalAlignment="Center" Margin="22,283,0,0" VerticalAlignment="Top" Content="Kreiraj prostoriju" Click="btnKreirajProstoriju_Click"/>
             </Grid>
 
