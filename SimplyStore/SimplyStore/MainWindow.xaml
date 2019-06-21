@@ -7,18 +7,33 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid Name="gridFullOverlay">
+        <Grid.Background>
+            <ImageBrush/>
+        </Grid.Background>
 
-        
+
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0.25*"/>
             <ColumnDefinition Width="0.75*"/>
         </Grid.ColumnDefinitions>
         <Border Grid.Column="1" Grid.RowSpan="4" BorderBrush="Black" BorderThickness="1,0,0,0" Background="{x:Null}"/>
-        <Button x:Name="btnProstorije" Content="PROSTORIJE" VerticalAlignment="Top" Height="40" Grid.Column="0" Padding="0"/>
-        <Button x:Name="btnSpremnici" Content="SPREMNICI" VerticalAlignment="Top" Height="40" Margin="0,40,0,0" Grid.Column="0" Padding="0"/>
-        <Button x:Name="btnStavke" Content="STAVKE" Margin="0,80,0,0" Grid.Column="0" Height="40" VerticalAlignment="Top" Padding="0"/>
-        <Button x:Name="btnStavkePredIstekom" Content="STAVKE PRED ISTEKOM" VerticalAlignment="Top" Height="40" Margin="0,120,0,0" Grid.Column="0" Padding="0"/>
-        <Button x:Name="btnOpcije" Content="OPCIJE" Margin="0,0,0,39" Grid.Column="0" VerticalAlignment="Bottom" Height="40" VerticalContentAlignment="Center" Padding="0"/>
-        <Button x:Name="btnIzlaz" Content="IZLAZ" Margin="0,0,0,-1" Grid.Column="0" VerticalAlignment="Bottom" Height="40" VerticalContentAlignment="Center" Padding="0"/>
+        <Rectangle Grid.Column="0">
+            <Rectangle.Fill>
+                <SolidColorBrush Color="#FF555555"/>
+            </Rectangle.Fill>
+        </Rectangle>
+        <Button x:Name="btnProstorije" Content="PROSTORIJE" VerticalAlignment="Top" Height="40" Grid.Column="0" Padding="0" Background="White" FontWeight="Bold" FontStretch="SemiExpanded" TextOptions.TextFormattingMode="Display" FontSize="20"/>
+        <Button x:Name="btnSpremnici" Content="SPREMNICI" VerticalAlignment="Top" Height="40" Margin="0,40,0,0" Grid.Column="0" Padding="0" Background="White" FontSize="20" FontStretch="SemiExpanded" FontWeight="Bold" TextOptions.TextFormattingMode="Display"/>
+        <Button x:Name="btnStavke" Content="STAVKE" Margin="0,80,0,0" Grid.Column="0" Height="40" VerticalAlignment="Top" Padding="0" Background="White" FontSize="20" FontStretch="SemiExpanded" FontWeight="Bold" TextOptions.TextFormattingMode="Display"/>
+        <Button x:Name="btnStavkePredIstekom" Content="STAVKE PRED ISTEKOM" VerticalAlignment="Top" Height="40" Margin="0,120,0,0" Grid.Column="0" Padding="0" Background="White" FontSize="17" FontWeight="Bold" TextOptions.TextFormattingMode="Display"/>
+        <Button x:Name="btnOpcije" Content="OPCIJE" Margin="0,0,0,39" Grid.Column="0" VerticalAlignment="Bottom" Height="40" VerticalContentAlignment="Center" Padding="0" Background="White" FontSize="20" FontStretch="SemiExpanded" FontWeight="Bold" TextOptions.TextFormattingMode="Display"/>
+        <Button x:Name="btnIzlaz" Content="IZLAZ" Margin="0,0,0,-1" Grid.Column="0" VerticalAlignment="Bottom" Height="40" VerticalContentAlignment="Center" Padding="0" Background="White" FontSize="20" FontStretch="SemiExpanded" FontWeight="Bold" TextOptions.TextFormattingMode="Display"/>
+
+        <Image Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Height="300">
+            <Image.Source>
+                <BitmapImage UriSource="/images/logo.png" />
+            </Image.Source>
+        </Image>
+
     </Grid>
 </Window>
