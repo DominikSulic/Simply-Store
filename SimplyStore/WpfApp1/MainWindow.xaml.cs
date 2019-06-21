@@ -128,8 +128,13 @@ namespace WpfApp1
 
         private void btnKreirajProstoriju_Click(object sender, RoutedEventArgs e)
         {
-            PrikazProstorije prikaz = new PrikazProstorije();
-            prikaz.kreirajProstoriju(txtNazivProstorije.Text, txtOpisProstorije.Text, txtNapomeneProstorije.Text);
+            PrikazProstorije.kreirajProstoriju(txtNazivProstorije.Text, txtOpisProstorije.Text, txtNapomeneProstorije.Text);
+            txtNazivProstorije.Clear();
+            txtOpisProstorije.Clear();
+            txtNapomeneProstorije.Clear();
+            naslovLabel.Content = "Prostorije";
+            PrikaziProstorije();
+            promjeniGrid("gridProstorije");
         }
 
         private void btnizmjeniProstoriju_Click(object sender, RoutedEventArgs e)
@@ -160,8 +165,7 @@ namespace WpfApp1
 
         private void btnIzmjeniProstoriju_Click(object sender, RoutedEventArgs e)
         {
-            PrikazProstorije pp = new PrikazProstorije();
-            pp.izmjeniProstoriju(int.Parse(txtIdProstorije.Text), txtNoviNazivProstorije.Text, txtNoviOpisProstorije.Text, txtNoveNapomeneProstorije.Text);
+            PrikazProstorije.izmjeniProstoriju(int.Parse(txtIdProstorije.Text), txtNoviNazivProstorije.Text, txtNoviOpisProstorije.Text, txtNoveNapomeneProstorije.Text);
             
         }
 
@@ -187,6 +191,32 @@ namespace WpfApp1
         {
             promjeniGrid("gridKreirajSpremnik");
             naslovLabel.Content = "Kreiraj spremnik";
+
+            cmbProstorijeKreiranjeSpremnika.ItemsSource = PrikazProstorije.dohvatiProstorije();
+            cmbTipSpreminka.ItemsSource = PrikazTipSpremnika.dohvatiTipSpremnika();
+
+
+        }
+
+        private void btnKreirajSpremnikSpremi_Click(object sender, RoutedEventArgs e)
+        {
+            PrikazTipSpremnika selektiranTipSpremnika = new PrikazTipSpremnika();
+            selektiranTipSpremnika=(PrikazTipSpremnika)cmbTipSpreminka.SelectedItem;
+
+            PrikazProstorije selektiranaProstorija = new PrikazProstorije();
+            selektiranaProstorija = (PrikazProstorije)cmbProstorijeKreiranjeSpremnika.SelectedItem;
+            double zapremnina = Convert.ToDouble(txbNoviSpremnikZapremnina.Text);
+
+            PrikazSpremnici.kreirajSpremnik(txbNoviSpremnikNaziv.Text,zapremnina,txbNoviSpremnikOpis.Text,selektiranaProstorija.idProstorije,selektiranTipSpremnika.idTipSpremnika);
+
+            txbNoviSpremnikNaziv.Clear();
+            txbNoviSpremnikOpis.Clear();
+            txbNoviSpremnikZapremnina.Clear();
+            // cmbTipSpreminka.Items.Clear(); EXCEPTION ERROR ITEMS IN USE
+            // cmbProstorijeKreiranjeSpremnika.Items.Clear(); EXCEPTION ERROR ITEMS IN USE
+            naslovLabel.Content = "Spremnici";
+            PrikaziSpremnike();
+            promjeniGrid("gridSpremnici");
         }
     }
 }

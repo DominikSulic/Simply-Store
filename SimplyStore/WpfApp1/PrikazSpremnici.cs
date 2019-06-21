@@ -73,13 +73,32 @@ namespace WpfApp1
         {
             List<string> naziviSpremnika = new List<string>();
 
-            using (var db= new SSDB())
+            using (var db = new SSDB())
             {
                 var query = (from s in db.spremnik select s.naziv_spremnika).ToList();
                 naziviSpremnika = query;
             }
 
             return naziviSpremnika;
+        }
+
+        public static void kreirajSpremnik(string naziv, double zapremnina, string opis, int idProstorije, int idTipa)
+        {
+            spremnik noviSpremnik = new spremnik
+            {
+                naziv_spremnika = naziv,
+                datum_kreiranja = DateTime.Now,
+                zapremnina = zapremnina,
+                opis = opis,
+                prostorija_id = idProstorije,
+                tip_id = idTipa
+            };
+
+            using (var db = new SSDB())
+            {
+                db.spremnik.Add(noviSpremnik);
+                db.SaveChanges();
+            }
         }
     }
 }

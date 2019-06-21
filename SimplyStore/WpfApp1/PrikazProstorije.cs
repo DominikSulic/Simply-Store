@@ -48,7 +48,7 @@ namespace WpfApp1
             return sviNazivi;
         }
 
-        public void kreirajProstoriju(string naziv, string opis, string napomene) 
+        public static void kreirajProstoriju(string naziv, string opis, string napomene) 
         {
             prostorija prostorija = new prostorija
             {
@@ -87,7 +87,7 @@ namespace WpfApp1
             return prostorija;
         }
 
-        public void izmjeniProstoriju(int id, string noviNaziv, string noviOpis, string noveNapomene)
+        public static void izmjeniProstoriju(int id, string noviNaziv, string noviOpis, string noveNapomene)
         {
             using(var db = new SSDB())
             {

@@ -139,16 +139,20 @@
                 <Rectangle Fill="#FF3A3A3A"></Rectangle>
                 <StackPanel>
                     <Label Content="Naziv spremnika" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White"/>
-                    <TextBox HorizontalAlignment="Center" Height="23"   Text="Naziv spremnika" VerticalAlignment="Top" Width="120"/>
+                    <TextBox x:Name="txbNoviSpremnikNaziv" HorizontalAlignment="Center" Height="23" Text="" VerticalAlignment="Top" Width="120"/>
 
                     <Label Content="Zapremnina spremnika" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White"/>
-                    <TextBox HorizontalAlignment="Center" Height="23"  Text="Zapremnina spremnika" VerticalAlignment="Top" Width="120"/>
+                    <TextBox x:Name="txbNoviSpremnikZapremnina" HorizontalAlignment="Center" Height="23"  Text="" VerticalAlignment="Top" Width="120"/>
 
                     <Label Content="Opis" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White"/>
-                    <TextBox HorizontalAlignment="Center" Height="23"  TextWrapping="Wrap" Text="Opis" VerticalAlignment="Top" Width="120"/>
+                    <TextBox x:Name="txbNoviSpremnikOpis" HorizontalAlignment="Center" Height="23"  TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
 
                     <Label Content="Prostorija kojoj pripada" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White"/>
-                    <TextBox HorizontalAlignment="Center" Height="23"  TextWrapping="Wrap" Text="Naziv spremnika" VerticalAlignment="Top" Width="120"/>
+                    <ComboBox x:Name="cmbProstorijeKreiranjeSpremnika" HorizontalAlignment="Center" VerticalAlignment="Top" Width="120"/>
+
+                    <Label Content="Tip spremnika" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White"/>
+                    <ComboBox x:Name="cmbTipSpreminka" HorizontalAlignment="Center" VerticalAlignment="Top" Width="120"/>
+                    <Button x:Name="btnKreirajSpremnikSpremi"  Content="Kreiraj" Width="100" VerticalAlignment="Top" HorizontalAlignment="Center" Click="btnKreirajSpremnikSpremi_Click" />
                 </StackPanel>
                 
             </Grid>
