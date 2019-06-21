@@ -100,5 +100,40 @@ namespace WpfApp1
                 db.SaveChanges();
             }
         }
+
+        public static void izmjeniSpremnik(int id, string noviNaziv, double zapremnina,string noviOpis, int idProstorije)
+        {
+            using (var db = new SSDB())
+            {
+                var query = (from sprem in db.spremnik where sprem.id_spremnik == id select sprem).First();
+                query.naziv_spremnika = noviNaziv;
+                query.opis = noviOpis;
+                query.prostorija_id = idProstorije;
+                query.zapremnina = zapremnina;
+                db.SaveChanges();
+            }
+        }
+
+        public static spremnik dohvatiSpremnik(int idSpremnika)
+        {
+            spremnik spremnik = new spremnik();
+            using (var db = new SSDB())
+            {
+                var query = (from sprem in db.spremnik where sprem.id_spremnik == idSpremnika select sprem).First();
+                spremnik = query;
+            }
+            return spremnik;
+        }
+
+        public static void obrisiSpremnik(int idSpremnika)
+        {
+            using (var db = new SSDB())
+            {
+                var query = (from sprem in db.spremnik where sprem.id_spremnik == idSpremnika select sprem).First();
+                db.spremnik.Attach(query);
+                db.spremnik.Remove(query);
+                db.SaveChanges();
+            }
+        }
     }
 }

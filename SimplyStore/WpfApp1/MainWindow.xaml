@@ -129,11 +129,13 @@
             </Grid>
 
 
-            <Grid Grid.Column="1" Grid.Row="1" x:Name="gridSpremnici" Visibility="Collapsed">
+            <Grid Grid.Column="1" Grid.Row="1" x:Name="gridSpremnici" Visibility="Visible">
                 <Rectangle Fill="#FF3A3A3A"></Rectangle>
                 <DataGrid x:Name="dgSpremnici" HorizontalAlignment="Stretch"  Margin="10,40,10,10" VerticalAlignment="Top"></DataGrid>
                 <ComboBox x:Name="cmbProstorije" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="cmbProstorije_SelectionChanged"/>
                 <Button  x:Name="btnKreirajSpremnik" Content="Kreiraj spremnik" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="auto" Click="btnKreirajSpremnik_Click"/>
+                <Button  x:Name="btnObrisiSpremnik" Content="Obriši spremnik" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="auto" Click="btnObrisiSpremnik_Click" Margin="94,0,0,0"/>
+                <Button  x:Name="btnIzmjeniSpremnik" Content="Izmjeni spremnik" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="auto"  Margin="186,0,0,0" Click="btnIzmjeniSpremnik_Click"/>
             </Grid>
 
             <Grid Grid.Column="1" Grid.Row="1" x:Name="gridKreirajSpremnik" Visibility="Collapsed">
@@ -157,13 +159,33 @@
                 </StackPanel>
                 
             </Grid>
-            
-            
-            
-            
-            
-            
-            
+
+            <Grid Grid.Column="1" Grid.Row="1" x:Name="gridIzmjeniSpremnik" Visibility="Collapsed">
+                <Rectangle Fill="#FF3A3A3A"></Rectangle>
+                <StackPanel>
+                    <Label Content="Naziv spremnika" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White"/>
+                    <TextBox x:Name="txbSpremnikNoviNaziv" HorizontalAlignment="Center" Height="23" Text="" VerticalAlignment="Top" Width="120"/>
+
+                    <Label Content="Zapremnina spremnika" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White"/>
+                    <TextBox x:Name="txbSpremnikNovaZapremnina" HorizontalAlignment="Center" Height="23"  Text="" VerticalAlignment="Top" Width="120"/>
+
+                    <Label Content="Opis" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White"/>
+                    <TextBox x:Name="txbSpremnikNoviOpis" HorizontalAlignment="Center" Height="23"  TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+
+                    <Label Content="Prostorija kojoj pripada" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White"/>
+                    <ComboBox x:Name="cmbProstorijeIzmjenaSpremnika" HorizontalAlignment="Center" VerticalAlignment="Top" Width="120"/>
+                    <TextBox x:Name="txbSpremnikID" HorizontalAlignment="Center" Height="23"  TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Visibility="Collapsed"/>
+                    <Button x:Name="btnIzmjeniSpremnikSpremi"  Content="Izmjeni spremnik" Width="100" VerticalAlignment="Top" HorizontalAlignment="Center" Click="btnIzmjeniSpremnikSpremi_Click" />
+                </StackPanel>
+
+            </Grid>
+
+
+
+
+
+
+
             <Grid Grid.Column="1" Grid.Row="1" x:Name="gridStavke" Visibility="Collapsed">
                 <Rectangle Fill="#FF3A3A3A"></Rectangle>
                 <DataGrid x:Name="dgStavke" HorizontalAlignment="Stretch"  Margin="10,40,10,10" VerticalAlignment="Top"></DataGrid>

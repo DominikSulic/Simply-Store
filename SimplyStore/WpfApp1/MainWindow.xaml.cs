@@ -32,6 +32,7 @@ namespace WpfApp1
 
             gridovi.Add("gridSpremnici", gridSpremnici);
             gridovi.Add("gridKreirajSpremnik", gridKreirajSpremnik);
+            gridovi.Add("gridIzmjeniSpremnik", gridIzmjeniSpremnik);
 
             gridovi.Add("gridStavke", gridStavke);
             
@@ -218,11 +219,70 @@ namespace WpfApp1
             txbNoviSpremnikNaziv.Clear();
             txbNoviSpremnikOpis.Clear();
             txbNoviSpremnikZapremnina.Clear();
-            cmbTipSpreminka.SelectedItem = "--Sve--"; 
-            //cmbProstorijeKreiranjeSpremnika.Items.Clear(); 
+            cmbTipSpreminka.SelectedItem =null; 
+            cmbProstorijeKreiranjeSpremnika.SelectedItem=null;
             naslovLabel.Content = "Spremnici";
             PrikaziSpremnike();
             promjeniGrid("gridSpremnici");
         }
+
+        private void btnObrisiSpremnik_Click(object sender, RoutedEventArgs e)
+        {
+            if (dgSpremnici.SelectedItems != null)
+            {
+                foreach (PrikazSpremnici p in dgSpremnici.SelectedItems)
+                {
+                    PrikazSpremnici.obrisiSpremnik(p.idSpremnika);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Niste odabrali spremnik!");
+            }
+
+            PrikaziSpremnike();
+
+        }
+
+        private void btnIzmjeniSpremnik_Click(object sender, RoutedEventArgs e)
+        {
+            
+            
+
+            if (dgSpremnici.SelectedItem != null)
+            {
+                naslovLabel.Content = "Izmjeni Spremnik";
+                promjeniGrid("gridIzmjeniSpremnik");
+                PrikazSpremnici odabraniSpremnik = new PrikazSpremnici();
+                odabraniSpremnik = (PrikazSpremnici)dgSpremnici.SelectedItem;
+                spremnik s = new spremnik();
+                s = PrikazSpremnici.dohvatiSpremnik(odabraniSpremnik.idSpremnika);
+                txbSpremnikNoviNaziv.Text = s.naziv_spremnika;
+                txbSpremnikNoviOpis.Text = s.opis;
+                txbSpremnikNovaZapremnina.Text = s.zapremnina.ToString();
+                txbSpremnikID.Text = s.id_spremnik.ToString();
+                cmbProstorijeIzmjenaSpremnika.ItemsSource = PrikazProstorije.dohvatiProstorije();
+            }
+            else
+            {
+                MessageBox.Show("Niste odabrali spremnik za izmjenu!");
+            }
+        }
+
+        private void btnIzmjeniSpremnikSpremi_Click(object sender, RoutedEventArgs e)
+        {
+            PrikazProstorije odabranaProstorija = new PrikazProstorije();
+            odabranaProstorija = (PrikazProstorije)cmbProstorijeIzmjenaSpremnika.SelectedItem;
+            PrikazSpremnici.izmjeniSpremnik(Convert.ToInt32(txbSpremnikID.Text), txbSpremnikNoviNaziv.Text,Convert.ToDouble(txbSpremnikNovaZapremnina.Text),txbSpremnikNoviOpis.Text, odabranaProstorija.idProstorije);
+            txbSpremnikNoviNaziv.Clear();
+            txbSpremnikNoviOpis.Clear();
+            txbSpremnikNovaZapremnina.Clear();
+            txbSpremnikID.Clear();
+            naslovLabel.Content = "Spremnici";
+            PrikaziSpremnike();
+            promjeniGrid("gridSpremnici");
+        }
+
+
     }
 }
