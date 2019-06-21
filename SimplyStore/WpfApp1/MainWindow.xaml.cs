@@ -20,11 +20,32 @@ namespace WpfApp1
     /// </summary>
     public partial class MainWindow : Window
     {
+        Dictionary<string, UIElement> gridovi = new Dictionary<string, UIElement>();
         public MainWindow()
         {
             InitializeComponent();
+            gridovi.Add("gridPocetna", gridPocetna);
+
+            gridovi.Add("gridProstorije", gridProstorije);
+            gridovi.Add("gridKreirajProstoriju", gridKreirajProstoriju);
+            gridovi.Add("gridIzmjeniProstoriju", gridIzmjeniProstoriju);
+
+            gridovi.Add("gridSpremnici", gridSpremnici);
+            gridovi.Add("gridKreirajSpremnik", gridKreirajSpremnik);
+
+            gridovi.Add("gridStavke", gridStavke);
+            
         }
-        
+
+        void promjeniGrid(string nazivGrida)
+        {
+            foreach (KeyValuePair<string, UIElement> grid in gridovi)
+            {
+                if (grid.Key == nazivGrida) grid.Value.Visibility = Visibility.Visible;
+                else grid.Value.Visibility = Visibility.Collapsed;
+            }
+        }
+
         public void PrikaziProstorije()
         {
             dgProstorije.ItemsSource = PrikazProstorije.dohvatiProstorije();
@@ -32,7 +53,9 @@ namespace WpfApp1
 
         public void PrikaziSpremnike()
         {
-            cmbProstorije.ItemsSource = PrikazProstorije.dohvatiNaziveProstorija();
+            List<string> naziviProstorija = PrikazProstorije.dohvatiNaziveProstorija();
+            naziviProstorija.Insert(0, "--Sve--");
+            cmbProstorije.ItemsSource = naziviProstorija;
             dgSpremnici.ItemsSource = PrikazSpremnici.dohvatiSpremnike();
 
 
@@ -46,53 +69,31 @@ namespace WpfApp1
 
         private void menuHome_Click(object sender, RoutedEventArgs e)
         {
-            gridSpremnici.Visibility = Visibility.Collapsed;
-            gridStavke.Visibility = Visibility.Collapsed;
-            gridProstorije.Visibility = Visibility.Collapsed;
-            gridKreirajProstoriju.Visibility = Visibility.Collapsed;
-            gridIzmjeniProstoriju.Visibility = Visibility.Collapsed;
+            
             naslovLabel.Content = "Home";
-            gridPocetna.Visibility = Visibility.Visible;
+            promjeniGrid("gridPocetna");
         }
 
         private void menuProstorije_Click(object sender, RoutedEventArgs e)
         {
-            gridSpremnici.Visibility = Visibility.Collapsed;
-            gridStavke.Visibility = Visibility.Collapsed;
-            gridPocetna.Visibility = Visibility.Collapsed;
-            gridKreirajProstoriju.Visibility = Visibility.Collapsed;
-            gridIzmjeniProstoriju.Visibility = Visibility.Collapsed;
+            
             naslovLabel.Content = "Prostorije";
-            PrikaziProstorije();            
-            gridProstorije.Visibility = Visibility.Visible;
-
-
+            PrikaziProstorije();
+            promjeniGrid("gridProstorije");
         }
 
         private void menuSpremnici_Click(object sender, RoutedEventArgs e)
         {
-            
-            gridStavke.Visibility = Visibility.Collapsed;
-            gridPocetna.Visibility = Visibility.Collapsed;
-            gridProstorije.Visibility = Visibility.Collapsed;
-            gridKreirajProstoriju.Visibility = Visibility.Collapsed;
-            gridIzmjeniProstoriju.Visibility = Visibility.Collapsed;
             naslovLabel.Content = "Spremnici";
             PrikaziSpremnike();
-            gridSpremnici.Visibility = Visibility.Visible;
+            promjeniGrid("gridSpremnici");
             
         }
 
         private void menuStavke_Click(object sender, RoutedEventArgs e)
         {
-            
-            gridPocetna.Visibility = Visibility.Collapsed;
-            gridProstorije.Visibility = Visibility.Collapsed;
-            gridSpremnici.Visibility = Visibility.Collapsed;
-            gridKreirajProstoriju.Visibility = Visibility.Collapsed;
-            gridIzmjeniProstoriju.Visibility = Visibility.Collapsed;
+            promjeniGrid("gridStavke");
             naslovLabel.Content = "Stavke";
-            gridStavke.Visibility = Visibility.Visible;
             PrikaziStavke();
 
         }
@@ -101,8 +102,15 @@ namespace WpfApp1
         {
             
             string nazivProstorije = cmbProstorije.SelectedItem.ToString();
+            if (nazivProstorije == "--Sve--")
+            {
+                dgSpremnici.ItemsSource = PrikazSpremnici.dohvatiSpremnike();
+            }
+            else
+            {
+                dgSpremnici.ItemsSource = PrikazSpremnici.dohvatiSpremnike(nazivProstorije);
+            }
             //MessageBoxResult result = MessageBox.Show(nazivProstorije); //Ultimate debugging tool
-            dgSpremnici.ItemsSource = PrikazSpremnici.dohvatiSpremnike(nazivProstorije);
         }
 
         private void cmbSpremnici_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -113,13 +121,8 @@ namespace WpfApp1
 
         private void btnkreirajProstoriju_Click(object sender, RoutedEventArgs e)
         {
-            gridPocetna.Visibility = Visibility.Collapsed;
-            gridProstorije.Visibility = Visibility.Collapsed;
-            gridSpremnici.Visibility = Visibility.Collapsed;
-            gridStavke.Visibility = Visibility.Collapsed;
-            gridIzmjeniProstoriju.Visibility = Visibility.Collapsed;
+            promjeniGrid("gridKreirajProstoriju");
             naslovLabel.Content = "Kreiraj prostoriju";
-            gridKreirajProstoriju.Visibility = Visibility.Visible;
             
         }
 
@@ -131,19 +134,16 @@ namespace WpfApp1
 
         private void btnizmjeniProstoriju_Click(object sender, RoutedEventArgs e)
         {
-            gridPocetna.Visibility = Visibility.Collapsed;
-            gridProstorije.Visibility = Visibility.Collapsed;
-            gridSpremnici.Visibility = Visibility.Collapsed;
-            gridStavke.Visibility = Visibility.Collapsed;
-            gridKreirajProstoriju.Visibility = Visibility.Collapsed;
-            naslovLabel.Content = "Izmjeni prostoriju";
-            gridIzmjeniProstoriju.Visibility = Visibility.Visible;
+             
+            
 
             PrikazProstorije pp = new PrikazProstorije();
             prostorija p = new prostorija();
 
             if (dgProstorije.SelectedItem != null)
             {
+                naslovLabel.Content = "Izmjeni prostoriju";
+                promjeniGrid("gridIzmjeniProstoriju");
                 pp = (PrikazProstorije)dgProstorije.SelectedItem;
                 p = pp.dohvatiProstoriju(pp.nazivProstorije);
             }
@@ -181,6 +181,12 @@ namespace WpfApp1
             }
 
             PrikaziProstorije();
+        }
+
+        private void btnKreirajSpremnik_Click(object sender, RoutedEventArgs e)
+        {
+            promjeniGrid("gridKreirajSpremnik");
+            naslovLabel.Content = "Kreiraj spremnik";
         }
     }
 }
