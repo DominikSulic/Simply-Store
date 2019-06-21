@@ -87,7 +87,8 @@
 
             <Grid Grid.Column="1" Grid.Row="1" x:Name="gridProstorije" Visibility="Collapsed">
                 <Rectangle Fill="#FF3A3A3A"></Rectangle>
-                <DataGrid x:Name="dgProstorije" HorizontalAlignment="Stretch"  Margin="10,10,10,10" VerticalAlignment="Top"></DataGrid>
+                <TextBox Height="20" VerticalAlignment="Top" HorizontalAlignment="Stretch" TextChanged="ProstorijeSearch_TextChanged" x:Name="ProstorijeSearch" Margin="5"/>
+                <DataGrid x:Name="dgProstorije" HorizontalAlignment="Stretch"  Margin="10,50,10,10" VerticalAlignment="Top"></DataGrid>
                 <Button x:Name="btnkreirajProstoriju" Content="Kreiraj prostoriju" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="btnkreirajProstoriju_Click"></Button>
                 <Button x:Name="btnizmjeniProstoriju" Content="Izmjeni prostoriju" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="100,0,0,0" Click="btnizmjeniProstoriju_Click"></Button>
                 <Button x:Name="btnObrisiProstoriju" Content="Obriši prostoriju" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="200,0,0,0" Click="btnObrisiProstoriju_Click"></Button>

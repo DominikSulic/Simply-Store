@@ -35,6 +35,28 @@ namespace WpfApp1
 
         }
 
+        public static List<PrikazProstorije> dohvatiProstorije(string tekst)
+        {
+            List<PrikazProstorije> prostorije = new List<PrikazProstorije>();
+            string search = tekst.ToLower();
+            using (var db = new SSDB())
+            {
+                var query = (from p in db.prostorija
+                             where p.naziv_prostorije.ToLower().Contains(search)
+                             select new PrikazProstorije
+                             {
+                                 idProstorije = p.id_prostorija,
+                                 nazivProstorije = p.naziv_prostorije,
+                                 datumKreiranja = p.datum_kreiranja,
+                                 opis = p.opis,
+                                 posebneNapomene = p.posebne_napomene
+                             }).ToList();
+                prostorije = query;
+            }
+            return prostorije;
+
+        }
+
         public static List<string> dohvatiNaziveProstorija()
         {
             List<string> sviNazivi = new List<string>();

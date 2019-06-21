@@ -187,6 +187,12 @@ namespace WpfApp1
             PrikaziProstorije();
         }
 
+        private void ProstorijeSearch_TextChanged(object sender, RoutedEventArgs e)
+        {
+            string tekst = ProstorijeSearch.Text;
+            dgProstorije.ItemsSource = PrikazProstorije.dohvatiProstorije(tekst);
+        }
+
         private void btnKreirajSpremnik_Click(object sender, RoutedEventArgs e)
         {
             promjeniGrid("gridKreirajSpremnik");
@@ -201,19 +207,19 @@ namespace WpfApp1
         private void btnKreirajSpremnikSpremi_Click(object sender, RoutedEventArgs e)
         {
             PrikazTipSpremnika selektiranTipSpremnika = new PrikazTipSpremnika();
-            selektiranTipSpremnika=(PrikazTipSpremnika)cmbTipSpreminka.SelectedItem;
+            selektiranTipSpremnika = (PrikazTipSpremnika)cmbTipSpreminka.SelectedItem;
 
             PrikazProstorije selektiranaProstorija = new PrikazProstorije();
             selektiranaProstorija = (PrikazProstorije)cmbProstorijeKreiranjeSpremnika.SelectedItem;
             double zapremnina = Convert.ToDouble(txbNoviSpremnikZapremnina.Text);
 
-            PrikazSpremnici.kreirajSpremnik(txbNoviSpremnikNaziv.Text,zapremnina,txbNoviSpremnikOpis.Text,selektiranaProstorija.idProstorije,selektiranTipSpremnika.idTipSpremnika);
+            PrikazSpremnici.kreirajSpremnik(txbNoviSpremnikNaziv.Text, zapremnina, txbNoviSpremnikOpis.Text, selektiranaProstorija.idProstorije, selektiranTipSpremnika.idTipSpremnika);
 
             txbNoviSpremnikNaziv.Clear();
             txbNoviSpremnikOpis.Clear();
             txbNoviSpremnikZapremnina.Clear();
-            // cmbTipSpreminka.Items.Clear(); EXCEPTION ERROR ITEMS IN USE
-            // cmbProstorijeKreiranjeSpremnika.Items.Clear(); EXCEPTION ERROR ITEMS IN USE
+            cmbTipSpreminka.SelectedItem = "--Sve--"; 
+            //cmbProstorijeKreiranjeSpremnika.Items.Clear(); 
             naslovLabel.Content = "Spremnici";
             PrikaziSpremnike();
             promjeniGrid("gridSpremnici");
