@@ -38,6 +38,12 @@ namespace WpfApp1
 
         }
 
+        public void PrikaziStavke()
+        {
+            cmbSpremnici.ItemsSource = PrikazSpremnici.dohvatiNaziveSpremnika();
+            dgStavke.ItemsSource = PrikazStavke.dohvatiStavke();
+        }
+
         private void menuHome_Click(object sender, RoutedEventArgs e)
         {
             gridSpremnici.Visibility = Visibility.Collapsed;
@@ -87,6 +93,7 @@ namespace WpfApp1
             gridIzmjeniProstoriju.Visibility = Visibility.Collapsed;
             naslovLabel.Content = "Stavke";
             gridStavke.Visibility = Visibility.Visible;
+            PrikaziStavke();
 
         }
 
@@ -96,6 +103,12 @@ namespace WpfApp1
             string nazivProstorije = cmbProstorije.SelectedItem.ToString();
             //MessageBoxResult result = MessageBox.Show(nazivProstorije); //Ultimate debugging tool
             dgSpremnici.ItemsSource = PrikazSpremnici.dohvatiSpremnike(nazivProstorije);
+        }
+
+        private void cmbSpremnici_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            string nazivSpremnika = cmbSpremnici.SelectedItem.ToString();
+            dgStavke.ItemsSource = PrikazStavke.dohvatiStavke(nazivSpremnika);
         }
 
         private void btnkreirajProstoriju_Click(object sender, RoutedEventArgs e)

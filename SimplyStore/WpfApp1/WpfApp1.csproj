@@ -72,6 +72,7 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="PrikazSpremnici.cs" />
+    <Compile Include="PrikazStavke.cs" />
     <Compile Include="prostorija.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>

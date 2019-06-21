@@ -66,5 +66,20 @@ namespace WpfApp1
             return sviSpremnici;
 
         }
+
+
+
+        public static List<string> dohvatiNaziveSpremnika()
+        {
+            List<string> naziviSpremnika = new List<string>();
+
+            using (var db= new SSDB())
+            {
+                var query = (from s in db.spremnik select s.naziv_spremnika).ToList();
+                naziviSpremnika = query;
+            }
+
+            return naziviSpremnika;
+        }
     }
 }
