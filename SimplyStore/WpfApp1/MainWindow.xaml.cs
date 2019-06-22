@@ -35,7 +35,7 @@ namespace WpfApp1
             gridovi.Add("gridIzmjeniSpremnik", gridIzmjeniSpremnik);
 
             gridovi.Add("gridStavke", gridStavke);
-            
+
         }
 
         void promjeniGrid(string nazivGrida)
@@ -72,14 +72,14 @@ namespace WpfApp1
 
         private void menuHome_Click(object sender, RoutedEventArgs e)
         {
-            
+
             naslovLabel.Content = "Home";
             promjeniGrid("gridPocetna");
         }
 
         private void menuProstorije_Click(object sender, RoutedEventArgs e)
         {
-            
+
             naslovLabel.Content = "Prostorije";
             PrikaziProstorije();
             promjeniGrid("gridProstorije");
@@ -91,7 +91,7 @@ namespace WpfApp1
             PrikaziSpremnike();
             cmbProstorije.SelectedIndex = 0;
             promjeniGrid("gridSpremnici");
-            
+
         }
 
         private void menuStavke_Click(object sender, RoutedEventArgs e)
@@ -104,8 +104,13 @@ namespace WpfApp1
 
         private void cmbProstorije_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+<<<<<<< HEAD
             
             string nazivProstorije = cmbProstorije.SelectedItem.ToString(); //EXCEPTION HERE kad je oznacena prostorija na gridu Spremnici,pa se ode na grid prostorija,izbrise ozancena prostorija,vrati na grid spremnici,POOF exception
+=======
+
+            string nazivProstorije = cmbProstorije.SelectedItem.ToString();
+>>>>>>> 51b154aca683d656653fd043172184d29785072e
             if (nazivProstorije == "--Sve--")
             {
                 dgSpremnici.ItemsSource = PrikazSpremnici.dohvatiSpremnike();
@@ -127,24 +132,62 @@ namespace WpfApp1
         {
             promjeniGrid("gridKreirajProstoriju");
             naslovLabel.Content = "Kreiraj prostoriju";
-            
+
         }
 
         private void btnKreirajProstoriju_Click(object sender, RoutedEventArgs e)
         {
-            PrikazProstorije.kreirajProstoriju(txtNazivProstorije.Text, txtOpisProstorije.Text, txtNapomeneProstorije.Text);
-            txtNazivProstorije.Clear();
-            txtOpisProstorije.Clear();
-            txtNapomeneProstorije.Clear();
-            naslovLabel.Content = "Prostorije";
-            PrikaziProstorije();
-            promjeniGrid("gridProstorije");
+            if (txtNazivProstorije.Text != "")
+            {
+                int broj;
+                if (txtBrojProstorija.Text == "")
+                {
+                    broj = 1;
+                    PrikazProstorije.kreirajProstoriju(txtNazivProstorije.Text, txtOpisProstorije.Text, txtNapomeneProstorije.Text, broj);
+                    txtNazivProstorije.Clear();
+                    txtOpisProstorije.Clear();
+                    txtNapomeneProstorije.Clear();
+                    naslovLabel.Content = "Prostorije";
+                    PrikaziProstorije();
+                    promjeniGrid("gridProstorije");
+                }
+                else
+                {
+                    if (int.TryParse(txtBrojProstorija.Text, out broj))
+                    {
+                        if (broj > 0)
+                        {
+                            PrikazProstorije.kreirajProstoriju(txtNazivProstorije.Text, txtOpisProstorije.Text, txtNapomeneProstorije.Text, broj);
+                            txtNazivProstorije.Clear();
+                            txtOpisProstorije.Clear();
+                            txtNapomeneProstorije.Clear();
+                            txtBrojProstorija.Clear();
+                            naslovLabel.Content = "Prostorije";
+                            PrikaziProstorije();
+                            promjeniGrid("gridProstorije");
+                        }
+                        else
+                        {
+                            MessageBox.Show("Unijeli ste nevažeću brojevnu vrijednost!");
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Niste unijeli brojčanu vrijednost!");
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Niste unijeli ime prostorije!");
+            }
+
         }
 
         private void btnizmjeniProstoriju_Click(object sender, RoutedEventArgs e)
         {
-             
-            
+
+
 
             PrikazProstorije pp = new PrikazProstorije();
             prostorija p = new prostorija();
@@ -170,15 +213,15 @@ namespace WpfApp1
         private void btnIzmjeniProstoriju_Click(object sender, RoutedEventArgs e)
         {
             PrikazProstorije.izmjeniProstoriju(int.Parse(txtIdProstorije.Text), txtNoviNazivProstorije.Text, txtNoviOpisProstorije.Text, txtNoveNapomeneProstorije.Text);
-            
+
         }
 
         private void btnObrisiProstoriju_Click(object sender, RoutedEventArgs e)
         {
             PrikazProstorije prikaz = new PrikazProstorije();
-            if(dgProstorije.SelectedItems != null)
+            if (dgProstorije.SelectedItems != null)
             {
-                foreach(PrikazProstorije p in dgProstorije.SelectedItems)
+                foreach (PrikazProstorije p in dgProstorije.SelectedItems)
                 {
                     prikaz.obrisiProstoriju(p.nazivProstorije);
                 }
@@ -227,6 +270,7 @@ namespace WpfApp1
 
             PrikazProstorije selektiranaProstorija = new PrikazProstorije();
             selektiranaProstorija = (PrikazProstorije)cmbProstorijeKreiranjeSpremnika.SelectedItem;
+<<<<<<< HEAD
             string zapremninaS = txbNoviSpremnikZapremnina.Text;
             double zapremnina;
             int brojUnosa;
@@ -307,6 +351,20 @@ namespace WpfApp1
                 MessageBox.Show("Morate unjeti naziv");
             }
             
+=======
+            double zapremnina = Convert.ToDouble(txbNoviSpremnikZapremnina.Text);
+
+            PrikazSpremnici.kreirajSpremnik(txbNoviSpremnikNaziv.Text, zapremnina, txbNoviSpremnikOpis.Text, selektiranaProstorija.idProstorije, selektiranTipSpremnika.idTipSpremnika);
+
+            txbNoviSpremnikNaziv.Clear();
+            txbNoviSpremnikOpis.Clear();
+            txbNoviSpremnikZapremnina.Clear();
+            cmbTipSpreminka.SelectedItem = null;
+            cmbProstorijeKreiranjeSpremnika.SelectedItem = null;
+            naslovLabel.Content = "Spremnici";
+            PrikaziSpremnike();
+            promjeniGrid("gridSpremnici");
+>>>>>>> 51b154aca683d656653fd043172184d29785072e
         }
 
         private void btnObrisiSpremnik_Click(object sender, RoutedEventArgs e)
@@ -329,8 +387,8 @@ namespace WpfApp1
 
         private void btnIzmjeniSpremnik_Click(object sender, RoutedEventArgs e)
         {
-            
-            
+
+
 
             if (dgSpremnici.SelectedItem != null)
             {
@@ -356,7 +414,7 @@ namespace WpfApp1
         {
             PrikazProstorije odabranaProstorija = new PrikazProstorije();
             odabranaProstorija = (PrikazProstorije)cmbProstorijeIzmjenaSpremnika.SelectedItem;
-            PrikazSpremnici.izmjeniSpremnik(Convert.ToInt32(txbSpremnikID.Text), txbSpremnikNoviNaziv.Text,Convert.ToDouble(txbSpremnikNovaZapremnina.Text),txbSpremnikNoviOpis.Text, odabranaProstorija.idProstorije);
+            PrikazSpremnici.izmjeniSpremnik(Convert.ToInt32(txbSpremnikID.Text), txbSpremnikNoviNaziv.Text, Convert.ToDouble(txbSpremnikNovaZapremnina.Text), txbSpremnikNoviOpis.Text, odabranaProstorija.idProstorije);
             txbSpremnikNoviNaziv.Clear();
             txbSpremnikNoviOpis.Clear();
             txbSpremnikNovaZapremnina.Clear();
