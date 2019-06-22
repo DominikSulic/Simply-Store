@@ -41,6 +41,33 @@ namespace WpfApp1
 
         }
 
+
+        public static List<PrikazSpremnici> dohvatiSpremnikeN(string tekst)
+        {
+            List<PrikazSpremnici> spremnici = new List<PrikazSpremnici>();
+            string search = tekst.ToLower();
+            using (var db = new SSDB())
+            {
+                var query = (from s in db.spremnik
+                             join pros in db.prostorija on s.prostorija_id equals pros.id_prostorija
+                             join tip in db.tip_spremnika on s.tip_id equals tip.id_tip
+                             where s.naziv_spremnika.ToLower().Contains(search)
+                             select new PrikazSpremnici
+                             {
+                                 idSpremnika = s.id_spremnik,
+                                 nazivSpremnika = s.naziv_spremnika,
+                                 datumKreiranja = s.datum_kreiranja,
+                                 zapremnina = s.zapremnina,
+                                 opis = s.opis,
+                                 nazivProstorije = pros.naziv_prostorije,
+                                 nazivTipa = tip.naziv
+                             }).ToList();
+                spremnici = query;
+            }
+            return spremnici;
+
+        }
+
         public static List<PrikazSpremnici> dohvatiSpremnike(string nazivProstorije)
         {
             List<PrikazSpremnici> sviSpremnici = new List<PrikazSpremnici>();

@@ -47,6 +47,8 @@ namespace WpfApp1
             }
         }
 
+
+
         public void PrikaziProstorije()
         {
             dgProstorije.ItemsSource = PrikazProstorije.dohvatiProstorije();
@@ -194,6 +196,18 @@ namespace WpfApp1
             dgProstorije.ItemsSource = PrikazProstorije.dohvatiProstorije(tekst);
         }
 
+        private void SpremniciSearch_TextChanged(object sender, RoutedEventArgs e)
+        {
+            string tekst = SpremniciSearch.Text;
+            dgSpremnici.ItemsSource = PrikazSpremnici.dohvatiSpremnikeN(tekst);
+        }
+
+        private void StavkeSearch_TextChanged(object sender, RoutedEventArgs e)
+        {
+            string tekst = StavkeSearch.Text;
+            dgStavke.ItemsSource = PrikazStavke.dohvatiStavkeN(tekst);
+        }
+
         private void btnKreirajSpremnik_Click(object sender, RoutedEventArgs e)
         {
             promjeniGrid("gridKreirajSpremnik");
@@ -284,5 +298,11 @@ namespace WpfApp1
         }
 
 
+        private void menuIzlaz_Click(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Application.Current.Shutdown();
+        }
     }
+
+
 }
