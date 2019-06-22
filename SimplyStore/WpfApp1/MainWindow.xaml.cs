@@ -89,6 +89,7 @@ namespace WpfApp1
         {
             naslovLabel.Content = "Spremnici";
             PrikaziSpremnike();
+            cmbProstorije.SelectedIndex = 0;
             promjeniGrid("gridSpremnici");
             
         }
@@ -104,7 +105,7 @@ namespace WpfApp1
         private void cmbProstorije_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             
-            string nazivProstorije = cmbProstorije.SelectedItem.ToString();
+            string nazivProstorije = cmbProstorije.SelectedItem.ToString(); //EXCEPTION HERE kad je oznacena prostorija na gridu Spremnici,pa se ode na grid prostorija,izbrise ozancena prostorija,vrati na grid spremnici,POOF exception
             if (nazivProstorije == "--Sve--")
             {
                 dgSpremnici.ItemsSource = PrikazSpremnici.dohvatiSpremnike();
@@ -226,18 +227,86 @@ namespace WpfApp1
 
             PrikazProstorije selektiranaProstorija = new PrikazProstorije();
             selektiranaProstorija = (PrikazProstorije)cmbProstorijeKreiranjeSpremnika.SelectedItem;
-            double zapremnina = Convert.ToDouble(txbNoviSpremnikZapremnina.Text);
+            string zapremninaS = txbNoviSpremnikZapremnina.Text;
+            double zapremnina;
+            int brojUnosa;
+            if (txbNoviSpremnikNaziv.Text != "")
+            {
+                if (zapremninaS != "")
+                {
+                    if (double.TryParse(zapremninaS, out zapremnina))
+                    {
+                        if (selektiranaProstorija != null)
+                        {
+                            if (selektiranTipSpremnika != null)
+                            {
+                                if (txbBrojSpremnikaUnos.Text != "")
+                                {
+                                    if (int.TryParse(txbBrojSpremnikaUnos.Text, out brojUnosa))
+                                    {
+                                        if (brojUnosa > 0)
+                                        {
+                                            PrikazSpremnici.kreirajSpremnik(txbNoviSpremnikNaziv.Text, zapremnina, txbNoviSpremnikOpis.Text, selektiranaProstorija.idProstorije, selektiranTipSpremnika.idTipSpremnika,brojUnosa);
+                                            txbNoviSpremnikNaziv.Clear();
+                                            txbNoviSpremnikOpis.Clear();
+                                            txbNoviSpremnikZapremnina.Clear();
+                                            cmbTipSpreminka.SelectedItem = null;
+                                            cmbProstorijeKreiranjeSpremnika.SelectedItem = null;
+                                            naslovLabel.Content = "Spremnici";
+                                            PrikaziSpremnike();
+                                            promjeniGrid("gridSpremnici");
+                                        }
+                                        else
+                                        {
+                                            MessageBox.Show("Unesite pozitivnu vrijednost broja unosa spremnika!");
+                                        }
+                                    }
+                                    else
+                                    {
+                                        MessageBox.Show("Pogrešna vrijednost u polju broj spremnika!");
+                                    }
+                                }
+                                else
+                                {
+                                    PrikazSpremnici.kreirajSpremnik(txbNoviSpremnikNaziv.Text, zapremnina, txbNoviSpremnikOpis.Text, selektiranaProstorija.idProstorije, selektiranTipSpremnika.idTipSpremnika);
+                                    txbNoviSpremnikNaziv.Clear();
+                                    txbNoviSpremnikOpis.Clear();
+                                    txbNoviSpremnikZapremnina.Clear();
+                                    cmbTipSpreminka.SelectedItem = null;
+                                    cmbProstorijeKreiranjeSpremnika.SelectedItem = null;
+                                    naslovLabel.Content = "Spremnici";
+                                    PrikaziSpremnike();
+                                    promjeniGrid("gridSpremnici");
+                                }
+                                
+                                
+                            }
+                            else
+                            {
+                                MessageBox.Show("Morate odabrati tip spremnika");
+                            }
 
-            PrikazSpremnici.kreirajSpremnik(txbNoviSpremnikNaziv.Text, zapremnina, txbNoviSpremnikOpis.Text, selektiranaProstorija.idProstorije, selektiranTipSpremnika.idTipSpremnika);
-
-            txbNoviSpremnikNaziv.Clear();
-            txbNoviSpremnikOpis.Clear();
-            txbNoviSpremnikZapremnina.Clear();
-            cmbTipSpreminka.SelectedItem =null; 
-            cmbProstorijeKreiranjeSpremnika.SelectedItem=null;
-            naslovLabel.Content = "Spremnici";
-            PrikaziSpremnike();
-            promjeniGrid("gridSpremnici");
+                        }
+                        else
+                        {
+                            MessageBox.Show("Morate odabrati prostoriju");
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Neispravna vrijednost u zapremnini");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Unesite zapremninu");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Morate unjeti naziv");
+            }
+            
         }
 
         private void btnObrisiSpremnik_Click(object sender, RoutedEventArgs e)
@@ -296,7 +365,6 @@ namespace WpfApp1
             PrikaziSpremnike();
             promjeniGrid("gridSpremnici");
         }
-
 
         private void menuIzlaz_Click(object sender, RoutedEventArgs e)
         {

@@ -109,23 +109,27 @@ namespace WpfApp1
             return naziviSpremnika;
         }
 
-        public static void kreirajSpremnik(string naziv, double zapremnina, string opis, int idProstorije, int idTipa)
+        public static void kreirajSpremnik(string naziv, double zapremnina, string opis, int idProstorije, int idTipa, int brojUnosa = 1)
         {
-            spremnik noviSpremnik = new spremnik
+            for (int i = 0; i < brojUnosa; i++)
             {
-                naziv_spremnika = naziv,
-                datum_kreiranja = DateTime.Now,
-                zapremnina = zapremnina,
-                opis = opis,
-                prostorija_id = idProstorije,
-                tip_id = idTipa
-            };
+                spremnik noviSpremnik = new spremnik
+                {
+                    naziv_spremnika = naziv + " ("+(i+1)+")",
+                    datum_kreiranja = DateTime.Now,
+                    zapremnina = zapremnina,
+                    opis = opis,
+                    prostorija_id = idProstorije,
+                    tip_id = idTipa
+                };
 
-            using (var db = new SSDB())
-            {
-                db.spremnik.Add(noviSpremnik);
-                db.SaveChanges();
+                using (var db = new SSDB())
+                {
+                    db.spremnik.Add(noviSpremnik);
+                    db.SaveChanges();
+                }
             }
+            
         }
 
         public static void izmjeniSpremnik(int id, string noviNaziv, double zapremnina,string noviOpis, int idProstorije)
