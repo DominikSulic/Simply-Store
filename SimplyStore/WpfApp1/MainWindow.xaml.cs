@@ -149,13 +149,21 @@ namespace WpfApp1
                 {
                     if (int.TryParse(txtBrojProstorija.Text, out broj))
                     {
-                        PrikazProstorije.kreirajProstoriju(txtNazivProstorije.Text, txtOpisProstorije.Text, txtNapomeneProstorije.Text, broj);
-                        txtNazivProstorije.Clear();
-                        txtOpisProstorije.Clear();
-                        txtNapomeneProstorije.Clear();
-                        naslovLabel.Content = "Prostorije";
-                        PrikaziProstorije();
-                        promjeniGrid("gridProstorije");
+                        if (broj > 0)
+                        {
+                            PrikazProstorije.kreirajProstoriju(txtNazivProstorije.Text, txtOpisProstorije.Text, txtNapomeneProstorije.Text, broj);
+                            txtNazivProstorije.Clear();
+                            txtOpisProstorije.Clear();
+                            txtNapomeneProstorije.Clear();
+                            txtBrojProstorija.Clear();
+                            naslovLabel.Content = "Prostorije";
+                            PrikaziProstorije();
+                            promjeniGrid("gridProstorije");
+                        }
+                        else
+                        {
+                            MessageBox.Show("Unijeli ste nevažeću brojevnu vrijednost!");
+                        }
                     }
                     else
                     {
