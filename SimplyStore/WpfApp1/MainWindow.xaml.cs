@@ -357,6 +357,25 @@ namespace WpfApp1
             
 
         }
+
+        private void BtnObrisiStavku_Click(object sender, RoutedEventArgs e)
+        {
+
+            if (dgStavke.SelectedItems != null)
+            {
+                foreach (PrikazStavke p in dgStavke.SelectedItems)
+                {
+                    PrikazStavke.obrisiStavku(p.idStavke);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Niste odabrali stavku!");
+            }
+
+            PrikaziStavke();
+
+        }
     }
 
 

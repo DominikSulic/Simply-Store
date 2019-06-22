@@ -207,6 +207,7 @@
                     <ComboBox Grid.Row="1" x:Name="cmbSpremnici" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="120" SelectionChanged="cmbSpremnici_SelectionChanged"/>
                     <DataGrid Grid.Row="2" x:Name="dgStavke" HorizontalAlignment="Stretch" VerticalAlignment="Top"></DataGrid>
                     <Button Grid.Row="3"  x:Name="btnKreirajStavku" Content="Kreiraj stavku" Width="auto" Click="BtnKreirajStavku_Click" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
+                    
 
                 </Grid>
             </Grid>

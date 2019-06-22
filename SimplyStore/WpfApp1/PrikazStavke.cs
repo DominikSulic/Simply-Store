@@ -106,7 +106,7 @@ namespace WpfApp1
                 datum_kreiranja = DateTime.Now,
                 datum_roka = datumIsteka,
                 zauzeće = zauzima,
-                spremnik_id = idSpremnika,
+                spremnik_id = idSpremnika
                 //oznaka = listaSelektiranihOznaka // dođe do greške, jer se ne može List<PrkazOznaka> convertati di ICollection<oznaka> koji je definiran u stavka.cs
 
 
@@ -116,5 +116,18 @@ namespace WpfApp1
             
             
         }
+
+        public static void obrisiStavku(int idStavke) {
+
+            using (var db = new SSDB())
+            {
+                var query = (from stavka in db.stavka where stavka.id_stavka == idStavke select stavka).First();
+                db.stavka.Attach(query);
+                db.stavka.Remove(query);
+                db.SaveChanges();
+            }
+        }
+
+    }
     }
 }
