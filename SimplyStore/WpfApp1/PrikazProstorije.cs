@@ -8,7 +8,7 @@ namespace WpfApp1
 {
     class PrikazProstorije
     {
-        public int idProstorije { get; set; }    
+        public int idProstorije { get; set; }
         public string nazivProstorije { get; set; }
         public DateTime datumKreiranja { get; set; }
         public string opis { get; set; }
@@ -70,20 +70,44 @@ namespace WpfApp1
             return sviNazivi;
         }
 
-        public static void kreirajProstoriju(string naziv, string opis, string napomene) 
+        public static void kreirajProstoriju(string naziv, string opis, string napomene, int brojProstorija)
         {
-            prostorija prostorija = new prostorija
-            {
-                naziv_prostorije = naziv,
-                datum_kreiranja = DateTime.Now,
-                opis = opis,
-                posebne_napomene = napomene
-            };
+            int broj = brojProstorija;
 
-            using(var db = new SSDB())
+            if (broj == 1)
             {
-                db.prostorija.Add(prostorija);
-                db.SaveChanges();
+                prostorija prostorija = new prostorija
+                {
+                    naziv_prostorije = naziv,
+                    datum_kreiranja = DateTime.Now,
+                    opis = opis,
+                    posebne_napomene = napomene
+                };
+
+                using (var db = new SSDB())
+                {
+                    db.prostorija.Add(prostorija);
+                    db.SaveChanges();
+                }
+            }
+            else
+            {
+                for (int i = 1; i <= broj; i++)
+                {
+                    prostorija prostorija = new prostorija
+                    {
+                        naziv_prostorije = naziv + " (" + i + ")",
+                        datum_kreiranja = DateTime.Now,
+                        opis = opis,
+                        posebne_napomene = napomene
+                    };
+
+                    using (var db = new SSDB())
+                    {
+                        db.prostorija.Add(prostorija);
+                        db.SaveChanges();
+                    }
+                }
             }
         }
 
@@ -101,7 +125,7 @@ namespace WpfApp1
         public prostorija dohvatiProstoriju(string staraProstorija)
         {
             prostorija prostorija = new prostorija();
-            using(var db = new SSDB())
+            using (var db = new SSDB())
             {
                 var query = (from p in db.prostorija where p.naziv_prostorije == nazivProstorije select p).First();
                 prostorija = query;
@@ -111,7 +135,7 @@ namespace WpfApp1
 
         public static void izmjeniProstoriju(int id, string noviNaziv, string noviOpis, string noveNapomene)
         {
-            using(var db = new SSDB())
+            using (var db = new SSDB())
             {
                 var query = (from p in db.prostorija where p.id_prostorija == id select p).First();
                 query.naziv_prostorije = noviNaziv;
