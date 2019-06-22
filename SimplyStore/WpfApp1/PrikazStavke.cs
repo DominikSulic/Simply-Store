@@ -97,11 +97,25 @@ namespace WpfApp1
             return sveStavke;
         }
 
-        public static void kreirajStavku(string nazivStavke, int idSpremnika, List<PrikazOznaka> listaSelektiranihOznaka, DateTime datumIsteka, int zauzima) {
+        public static stavka dohvatiStavku(int idStavke) {
 
-            stavka novaStavka = new stavka
+            stavka stavka = new stavka();
+            using (var db = new SSDB())
             {
 
+                var query = (from stv in db.stavka where stv.id_stavka == idStavke select stv).First();
+                stavka = query;
+
+            }
+
+            return stavka;
+
+        }
+
+        public static void kreirajStavku(string nazivStavke, int idSpremnika, List<PrikazOznaka> listaSelektiranihOznaka, DateTime datumIsteka, int zauzima) {
+            stavka novaStavka = new stavka
+            {
+                
                 naziv = nazivStavke,
                 datum_kreiranja = DateTime.Now,
                 datum_roka = datumIsteka,
@@ -129,5 +143,5 @@ namespace WpfApp1
         }
 
     }
-    }
+    
 }

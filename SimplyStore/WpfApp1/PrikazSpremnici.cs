@@ -41,7 +41,6 @@ namespace WpfApp1
 
         }
 
-
         public static List<PrikazSpremnici> dohvatiSpremnikeN(string tekst)
         {
             List<PrikazSpremnici> spremnici = new List<PrikazSpremnici>();
@@ -93,8 +92,6 @@ namespace WpfApp1
             return sviSpremnici;
 
         }
-
-
 
         public static List<string> dohvatiNaziveSpremnika()
         {

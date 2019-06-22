@@ -193,6 +193,7 @@
 
 
             <Grid Grid.Column="1" Grid.Row="1" x:Name="gridStavke" Visibility="Collapsed">
+
                 <Rectangle Fill="#FF3A3A3A"></Rectangle>
                 <Grid Margin="5,5,5,5">
 
@@ -206,13 +207,15 @@
                     <TextBox Grid.Row="0" Height="20" VerticalAlignment="Top" HorizontalAlignment="Stretch" TextChanged="StavkeSearch_TextChanged" x:Name="StavkeSearch" />
                     <ComboBox Grid.Row="1" x:Name="cmbSpremnici" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="120" SelectionChanged="cmbSpremnici_SelectionChanged"/>
                     <DataGrid Grid.Row="2" x:Name="dgStavke" HorizontalAlignment="Stretch" VerticalAlignment="Top"></DataGrid>
-                    <Button Grid.Row="3"  x:Name="btnKreirajStavku" Content="Kreiraj stavku" Width="auto" Click="BtnKreirajStavku_Click" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
-                    
+                    <Button Grid.Row="3"  x:Name="btnKreirajStavku" Content="Kreiraj stavku" Width="auto" Click="BtnKreirajStavku_Click" HorizontalAlignment="Right" VerticalAlignment="Bottom" RenderTransformOrigin="-1.76,0.55" Margin="0,0,171,0"/>
+                    <Button Grid.Row="3"  x:Name="btnObrisiStavku" Content="Obriši stavku" Width="auto" Click="BtnObrisiStavku_Click" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,10,0"/>
+                    <Button Grid.Row="3"  x:Name="btnIzmjeniStavku" Content="Izmjeni stavku" Width="auto" Click="BtnIzmijeniStavku_Click" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,7,87,0"/>
 
                 </Grid>
             </Grid>
 
             <Grid Grid.Column="1" Grid.Row="1" x:Name="gridKreirajStavku" Visibility="Collapsed">
+
                 <Rectangle Fill="#FF3A3A3A"></Rectangle>
                 <StackPanel>
 
@@ -254,7 +257,38 @@
                     </Grid>
 
                 </StackPanel>
+            </Grid>
 
+            <Grid Grid.Column="1" Grid.Row="1" x:Name="gridIzmjeniStavku" Visibility="Visible">
+
+                <Rectangle Fill="#FF3A3A3A"></Rectangle>
+                <StackPanel>
+                    <Label Content="Naziv stavke" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White"/>
+                    <TextBox x:Name="txbStavkaSpremnikNoviNaziv" HorizontalAlignment="Center" Height="23" Text="" VerticalAlignment="Top" Width="120"/>
+
+                    <Label Content="Zauzima (L/Kg)" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White"/>
+                    <TextBox x:Name="txbStavkaNovoZauzece" HorizontalAlignment="Center" Height="23"  Text="" VerticalAlignment="Top" Width="120"/>
+
+                    <Label Content="Datum isteka" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White"/>
+                    <DatePicker x:Name="dpStavkaNoviIstekRoka" FirstDayOfWeek="Monday" IsDropDownOpen="False" SelectedDateFormat="Short" Margin="0" Width="120" MinWidth="120" />
+
+                    <Label Content="Prostorija" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White"/>
+                    <ComboBox x:Name="cmbProstorijeIzmjenaStavke" HorizontalAlignment="Center" VerticalAlignment="Top" Width="282" Margin="176,0" SelectionChanged="CmbProstorijeIzmjenaStavke_SelectionChanged"/>
+
+                    <Label Content="Spremnik" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White"/>
+                    <ComboBox x:Name="cmbSpremniciOdabraneProstorije" HorizontalAlignment="Center" VerticalAlignment="Top" Width="282" Margin="176,0"/>
+
+                    <Grid Height="40" HorizontalAlignment="Center" Width="282" Margin="176,0" >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.5*"/>
+                            <ColumnDefinition Width="0.5*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button x:Name="btnIzmjeniStavkuSpremi"  Content="Izmjeni stavku" Width="100" VerticalAlignment="Top" HorizontalAlignment="Center" Click="btnIzmjeniStavkuSpremi_Click" Margin="31,10,10,0" />
+                        <Button x:Name="btnIzmjeniStavkuOdustani"  Content="Odustani" VerticalAlignment="Top" Click="btnIzmjeniStavkuOdustani_Click" Margin="10,10,0,0" Grid.Column="1" Width="95" HorizontalAlignment="Left" IsCancel="True"/>
+                    </Grid>
+
+
+                </StackPanel>
 
             </Grid>
 

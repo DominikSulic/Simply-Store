@@ -36,6 +36,7 @@ namespace WpfApp1
 
             gridovi.Add("gridStavke", gridStavke);
             gridovi.Add("gridKreirajStavku", gridKreirajStavku);
+            gridovi.Add("gridIzmjeniStavku", gridIzmjeniStavku);
             
         }
 
@@ -49,7 +50,7 @@ namespace WpfApp1
         }
 
 
-
+        #region Prikazi
         public void PrikaziProstorije()
         {
             dgProstorije.ItemsSource = PrikazProstorije.dohvatiProstorije();
@@ -70,7 +71,9 @@ namespace WpfApp1
             cmbSpremnici.ItemsSource = PrikazSpremnici.dohvatiNaziveSpremnika();
             dgStavke.ItemsSource = PrikazStavke.dohvatiStavke();
         }
+        #endregion
 
+        #region MenuItems
         private void menuHome_Click(object sender, RoutedEventArgs e)
         {
             
@@ -102,6 +105,13 @@ namespace WpfApp1
 
         }
 
+        private void menuIzlaz_Click(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Application.Current.Shutdown();
+        }
+        #endregion
+
+
         private void cmbProstorije_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             
@@ -123,6 +133,7 @@ namespace WpfApp1
             dgStavke.ItemsSource = PrikazStavke.dohvatiStavke(nazivSpremnika);
         }
 
+        #region Prostorije
         private void btnkreirajProstoriju_Click(object sender, RoutedEventArgs e)
         {
             promjeniGrid("gridKreirajProstoriju");
@@ -143,9 +154,7 @@ namespace WpfApp1
 
         private void btnizmjeniProstoriju_Click(object sender, RoutedEventArgs e)
         {
-             
-            
-
+              
             PrikazProstorije pp = new PrikazProstorije();
             prostorija p = new prostorija();
 
@@ -196,19 +205,9 @@ namespace WpfApp1
             string tekst = ProstorijeSearch.Text;
             dgProstorije.ItemsSource = PrikazProstorije.dohvatiProstorije(tekst);
         }
+        #endregion
 
-        private void SpremniciSearch_TextChanged(object sender, RoutedEventArgs e)
-        {
-            string tekst = SpremniciSearch.Text;
-            dgSpremnici.ItemsSource = PrikazSpremnici.dohvatiSpremnikeN(tekst);
-        }
-
-        private void StavkeSearch_TextChanged(object sender, RoutedEventArgs e)
-        {
-            string tekst = StavkeSearch.Text;
-            dgStavke.ItemsSource = PrikazStavke.dohvatiStavkeN(tekst);
-        }
-
+        #region Spremnici
         private void btnKreirajSpremnik_Click(object sender, RoutedEventArgs e)
         {
             promjeniGrid("gridKreirajSpremnik");
@@ -261,8 +260,6 @@ namespace WpfApp1
 
         private void btnIzmjeniSpremnik_Click(object sender, RoutedEventArgs e)
         {
-            
-            
 
             if (dgSpremnici.SelectedItem != null)
             {
@@ -298,23 +295,6 @@ namespace WpfApp1
             promjeniGrid("gridSpremnici");
         }
 
-
-        private void menuIzlaz_Click(object sender, RoutedEventArgs e)
-        {
-            System.Windows.Application.Current.Shutdown();
-        }
-
-        private void BtnKreirajStavku_Click(object sender, RoutedEventArgs e)
-        {
-            
-            promjeniGrid("gridKreirajStavku");
-            naslovLabel.Content = "Kreiraj stavku";
-
-            cmbSpremniciKreirajStavku.ItemsSource = PrikazSpremnici.dohvatiSpremnike();
-            lbOznakeKreirajStavku.ItemsSource = PrikazOznaka.dohvatiOznake(); // tu se List<PrikazOznaka>
-            
-        }
-
         private void btnKreirajSpremnikOdustani_Click(object sender, RoutedEventArgs e)
         {
 
@@ -324,9 +304,23 @@ namespace WpfApp1
 
         }
 
-        private void LbOznakeKreirajStavku_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void SpremniciSearch_TextChanged(object sender, RoutedEventArgs e)
         {
+            string tekst = SpremniciSearch.Text;
+            dgSpremnici.ItemsSource = PrikazSpremnici.dohvatiSpremnikeN(tekst);
+        }
+        #endregion
 
+        #region Stavke
+        private void BtnKreirajStavku_Click(object sender, RoutedEventArgs e)
+        {
+            
+            promjeniGrid("gridKreirajStavku");
+            naslovLabel.Content = "Kreiraj stavku";
+
+            cmbSpremniciKreirajStavku.ItemsSource = PrikazSpremnici.dohvatiSpremnike();
+            lbOznakeKreirajStavku.ItemsSource = PrikazOznaka.dohvatiOznake(); // tu se List<PrikazOznaka>
+            
         }
 
         private void btnKreirajStavkuOdustani_Click(object sender, RoutedEventArgs e)
@@ -376,7 +370,81 @@ namespace WpfApp1
             PrikaziStavke();
 
         }
-    }
 
+        private void BtnIzmijeniStavku_Click(object sender, RoutedEventArgs e)
+        {
+
+            if (dgStavke.SelectedItem != null)
+            {
+                naslovLabel.Content = "Izmjeni stavku";
+                promjeniGrid("gridIzmjeniStavku");
+
+                PrikazStavke odabranaStavka = new PrikazStavke();
+                odabranaStavka = (PrikazStavke)dgStavke.SelectedItem;
+                stavka s = new stavka();
+                s = PrikazStavke.dohvatiStavku(odabranaStavka.idStavke);
+                txbStavkaNoviNaziv.Text = s.naziv;
+                txbStavkaNovoZauzece.Text = s.zauzeće.ToString();
+                if (s.datum_roka.HasValue)
+                {
+                    dpStavkaNoviIstekRoka.DisplayDate = s.datum_roka.Value;
+                }
+
+                cmbProstorijeIzmjenaStavke.ItemsSource = PrikazProstorije.dohvatiProstorije();
+            }
+            else
+            {
+                MessageBox.Show("Niste odabrali stavku za izmjenu!");
+            }
+
+        }
+
+        private void CmbProstorijeIzmjenaStavke_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            PrikazProstorije odabranaProstorija = new PrikazProstorije();
+            odabranaProstorija = (PrikazProstorije)cmbProstorijeIzmjenaStavke.SelectedItem;
+            string nazivProstorije = odabranaProstorija.nazivProstorije;
+
+            List<PrikazSpremnici> popisSpremnika = new List<PrikazSpremnici>();
+            List<PrikazSpremnici> popisSpremnikaPoProstoriji = new List<PrikazSpremnici>();
+            popisSpremnika.AddRange(PrikazSpremnici.dohvatiSpremnike());
+            foreach (var sprem in popisSpremnika)
+            {
+                if (sprem.nazivProstorije == nazivProstorije)
+                {
+                    popisSpremnikaPoProstoriji.Add(sprem);
+                }
+            }
+            cmbSpremniciOdabraneProstorije.ItemsSource = popisSpremnikaPoProstoriji;
+        }
+
+        private void StavkeSearch_TextChanged(object sender, RoutedEventArgs e)
+        {
+            string tekst = StavkeSearch.Text;
+            dgStavke.ItemsSource = PrikazStavke.dohvatiStavkeN(tekst);
+        }
+
+        private void btnIzmjeniStavkuOdustani_Click(object sender, RoutedEventArgs e)
+        {
+            promjeniGrid("gridStavke");
+            naslovLabel.Content = "Stavke";
+            PrikaziStavke();
+        }
+
+        private void btnIzmjeniStavkuSpremi_Click(object sender, RoutedEventArgs e)
+        {
+
+
+        }
+
+        private void LbOznakeKreirajStavku_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        #endregion
+
+        
+    }
 
 }
