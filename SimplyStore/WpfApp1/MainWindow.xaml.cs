@@ -104,13 +104,9 @@ namespace WpfApp1
 
         private void cmbProstorije_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-<<<<<<< HEAD
             
             string nazivProstorije = cmbProstorije.SelectedItem.ToString(); //EXCEPTION HERE kad je oznacena prostorija na gridu Spremnici,pa se ode na grid prostorija,izbrise ozancena prostorija,vrati na grid spremnici,POOF exception
-=======
 
-            string nazivProstorije = cmbProstorije.SelectedItem.ToString();
->>>>>>> 51b154aca683d656653fd043172184d29785072e
             if (nazivProstorije == "--Sve--")
             {
                 dgSpremnici.ItemsSource = PrikazSpremnici.dohvatiSpremnike();
@@ -270,7 +266,6 @@ namespace WpfApp1
 
             PrikazProstorije selektiranaProstorija = new PrikazProstorije();
             selektiranaProstorija = (PrikazProstorije)cmbProstorijeKreiranjeSpremnika.SelectedItem;
-<<<<<<< HEAD
             string zapremninaS = txbNoviSpremnikZapremnina.Text;
             double zapremnina;
             int brojUnosa;
@@ -350,21 +345,6 @@ namespace WpfApp1
             {
                 MessageBox.Show("Morate unjeti naziv");
             }
-            
-=======
-            double zapremnina = Convert.ToDouble(txbNoviSpremnikZapremnina.Text);
-
-            PrikazSpremnici.kreirajSpremnik(txbNoviSpremnikNaziv.Text, zapremnina, txbNoviSpremnikOpis.Text, selektiranaProstorija.idProstorije, selektiranTipSpremnika.idTipSpremnika);
-
-            txbNoviSpremnikNaziv.Clear();
-            txbNoviSpremnikOpis.Clear();
-            txbNoviSpremnikZapremnina.Clear();
-            cmbTipSpreminka.SelectedItem = null;
-            cmbProstorijeKreiranjeSpremnika.SelectedItem = null;
-            naslovLabel.Content = "Spremnici";
-            PrikaziSpremnike();
-            promjeniGrid("gridSpremnici");
->>>>>>> 51b154aca683d656653fd043172184d29785072e
         }
 
         private void btnObrisiSpremnik_Click(object sender, RoutedEventArgs e)
