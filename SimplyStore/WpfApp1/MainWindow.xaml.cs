@@ -311,16 +311,51 @@ namespace WpfApp1
             naslovLabel.Content = "Kreiraj stavku";
 
             cmbSpremniciKreirajStavku.ItemsSource = PrikazSpremnici.dohvatiSpremnike();
-            cmbOznakeKreirajStavku.ItemsSource = PrikazOznaka.dohvatiOznake();
-            //cmbProstorijeKreiranjeSpremnika.ItemsSource = PrikazProstorije.dohvatiProstorije();
-            //cmbTipSpreminka.ItemsSource = PrikazTipSpremnika.dohvatiTipSpremnika();
+            lbOznakeKreirajStavku.ItemsSource = PrikazOznaka.dohvatiOznake(); // tu se List<PrikazOznaka>
+            
         }
 
         private void btnKreirajSpremnikOdustani_Click(object sender, RoutedEventArgs e)
         {
+
+            promjeniGrid("gridSpremnici");
+            naslovLabel.Content = "Spremnici";
+            PrikaziSpremnike();
+
+        }
+
+        private void LbOznakeKreirajStavku_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void btnKreirajStavkuOdustani_Click(object sender, RoutedEventArgs e)
+        {
+
             promjeniGrid("gridStavke");
             naslovLabel.Content = "Stavke";
             PrikaziStavke();
+
+        }
+
+        private void btnKreirajStavkuSpremi_Click(object sender, RoutedEventArgs e)
+        {
+
+            PrikazSpremnici selektiranSpremnik = new PrikazSpremnici();
+            selektiranSpremnik = (PrikazSpremnici)cmbSpremniciKreirajStavku.SelectedItem;
+
+            List<PrikazOznaka> selektiraneOznake = new List<PrikazOznaka>(); // stavara listu tipa Prikaz oznaka
+            foreach (var item in lbOznakeKreirajStavku.SelectedItems)
+            {
+                PrikazOznaka oznake = (PrikazOznaka)item;
+                selektiraneOznake.Add(oznake);
+            } 
+
+            int zauzima = Convert.ToInt32(txbZauzimaKreirajStavku.Text);
+            
+            PrikazStavke.kreirajStavku(txbStavkaNoviNaziv.Text, selektiranSpremnik.idSpremnika, selektiraneOznake, dpStavkaIstekRoka.DisplayDate, zauzima);
+            
+
         }
     }
 

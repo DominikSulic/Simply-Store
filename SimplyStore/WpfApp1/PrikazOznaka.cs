@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WpfApp1
 {
-    class PrikazOznaka
+    class PrikazOznaka 
     {
 
         public int id_oznaka { get; set; }
@@ -35,6 +35,7 @@ namespace WpfApp1
             }
             return sveOznake;
         }
+
 
         public override string ToString()
         {

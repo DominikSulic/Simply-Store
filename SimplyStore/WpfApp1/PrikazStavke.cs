@@ -96,5 +96,25 @@ namespace WpfApp1
 
             return sveStavke;
         }
+
+        public static void kreirajStavku(string nazivStavke, int idSpremnika, List<PrikazOznaka> listaSelektiranihOznaka, DateTime datumIsteka, int zauzima) {
+
+            stavka novaStavka = new stavka
+            {
+
+                naziv = nazivStavke,
+                datum_kreiranja = DateTime.Now,
+                datum_roka = datumIsteka,
+                zauzeće = zauzima,
+                spremnik_id = idSpremnika,
+                //oznaka = listaSelektiranihOznaka // dođe do greške, jer se ne može List<PrkazOznaka> convertati di ICollection<oznaka> koji je definiran u stavka.cs
+
+
+
+            };
+
+            
+            
+        }
     }
 }

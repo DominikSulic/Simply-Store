@@ -27,7 +27,7 @@ namespace WpfApp1
         public Nullable<int> spremnik_id { get; set; }
     
         public virtual spremnik spremnik { get; set; }
-        public virtual ICollection<oznaka> oznaka { get; set; }
+        public virtual ICollection<oznaka> oznaka { get; set; } // definiran ICollection za oznaku (s definiranim oznakom, nazivom i kvarljivosti)
     }
 
 }
