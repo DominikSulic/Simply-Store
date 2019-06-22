@@ -68,7 +68,7 @@ namespace WpfApp1
 
         }
 
-        public static List<PrikazSpremnici> dohvatiSpremnike(string nazivProstorije)
+        public static List<PrikazSpremnici> dohvatiSpremnike(PrikazProstorije nazivProstorije)
         {
             List<PrikazSpremnici> sviSpremnici = new List<PrikazSpremnici>();
 
@@ -77,7 +77,7 @@ namespace WpfApp1
                 var query = (from sp in db.spremnik
                              join pros in db.prostorija on sp.prostorija_id equals pros.id_prostorija
                              join tip in db.tip_spremnika on sp.tip_id equals tip.id_tip
-                             where pros.naziv_prostorije == nazivProstorije
+                             where pros.id_prostorija == nazivProstorije.idProstorije
                              select new PrikazSpremnici
                              {
                                  idSpremnika = sp.id_spremnik,

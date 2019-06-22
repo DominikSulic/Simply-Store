@@ -56,9 +56,8 @@ namespace WpfApp1
 
         public void PrikaziSpremnike()
         {
-            List<string> naziviProstorija = PrikazProstorije.dohvatiNaziveProstorija();
-            naziviProstorija.Insert(0, "--Sve--");
-            cmbProstorije.ItemsSource = naziviProstorija;
+            cmbProstorije.ItemsSource = PrikazProstorije.dohvatiProstorije();
+            
             dgSpremnici.ItemsSource = PrikazSpremnici.dohvatiSpremnike();
 
 
@@ -89,7 +88,7 @@ namespace WpfApp1
         {
             naslovLabel.Content = "Spremnici";
             PrikaziSpremnike();
-            cmbProstorije.SelectedIndex = 0;
+            
             promjeniGrid("gridSpremnici");
 
         }
@@ -105,17 +104,16 @@ namespace WpfApp1
         private void cmbProstorije_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             
-            string nazivProstorije = cmbProstorije.SelectedItem.ToString(); //EXCEPTION HERE kad je oznacena prostorija na gridu Spremnici,pa se ode na grid prostorija,izbrise ozancena prostorija,vrati na grid spremnici,POOF exception
+            PrikazProstorije selektiranaProstorija = (PrikazProstorije)cmbProstorije.SelectedItem; 
 
-            if (nazivProstorije == "--Sve--")
+            if (selektiranaProstorija == null)
             {
                 dgSpremnici.ItemsSource = PrikazSpremnici.dohvatiSpremnike();
             }
             else
             {
-                dgSpremnici.ItemsSource = PrikazSpremnici.dohvatiSpremnike(nazivProstorije);
+                dgSpremnici.ItemsSource = PrikazSpremnici.dohvatiSpremnike(selektiranaProstorija);
             }
-            //MessageBoxResult result = MessageBox.Show(nazivProstorije); //Ultimate debugging tool
         }
 
         private void cmbSpremnici_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -407,6 +405,13 @@ namespace WpfApp1
         private void menuIzlaz_Click(object sender, RoutedEventArgs e)
         {
             System.Windows.Application.Current.Shutdown();
+        }
+
+        private void btnPrikaziSveSpremnike_Click(object sender, RoutedEventArgs e)
+        {
+            cmbProstorije.ItemsSource = PrikazProstorije.dohvatiProstorije();
+            cmbProstorije.SelectedIndex = -1;
+            dgSpremnici.ItemsSource = PrikazSpremnici.dohvatiSpremnike();
         }
     }
 
