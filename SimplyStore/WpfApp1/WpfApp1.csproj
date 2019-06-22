@@ -143,7 +143,9 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+<<<<<<< HEAD:SimplyStore/WpfApp1/WpfApp1.csproj
   <ItemGroup>
+<<<<<<< HEAD:SimplyStore/WpfApp1/WpfApp1.csproj
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
@@ -158,6 +160,11 @@
       <DependentUpon>Model1.edmx</DependentUpon>
       <LastGenOutput>Model1.cs</LastGenOutput>
     </Content>
+=======
+    <Resource Include="images\logo.png" />
+>>>>>>> Home:SimplyStore/SimplyStore/SimplyStore.csproj
   </ItemGroup>
+=======
+>>>>>>> parent of 3f77f30... Logo:SimplyStore/SimplyStore/SimplyStore.csproj
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
