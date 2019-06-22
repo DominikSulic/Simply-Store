@@ -82,7 +82,11 @@
             </StackPanel>
             <Grid Grid.Column="1" Grid.Row="1" x:Name="gridPocetna" Visibility="Visible">
                 <Rectangle Fill="#FF3A3A3A"></Rectangle>
-                <Label Content="Simply Store" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="36" FontWeight="Bold" Foreground="White"/>
+                <Image Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Height="300">
+                    <Image.Source>
+                        <BitmapImage UriSource="/images/logo.png" />
+                    </Image.Source>
+                </Image>
 
             </Grid>
 
@@ -159,7 +163,7 @@
                     <ComboBox x:Name="cmbTipSpreminka" HorizontalAlignment="Center" VerticalAlignment="Top" Width="120"/>
                     <Button x:Name="btnKreirajSpremnikSpremi"  Content="Kreiraj" Width="100" VerticalAlignment="Top" HorizontalAlignment="Center" Click="btnKreirajSpremnikSpremi_Click" />
                 </StackPanel>
-                
+
             </Grid>
 
             <Grid Grid.Column="1" Grid.Row="1" x:Name="gridIzmjeniSpremnik" Visibility="Collapsed">
@@ -190,12 +194,55 @@
 
             <Grid Grid.Column="1" Grid.Row="1" x:Name="gridStavke" Visibility="Collapsed">
                 <Rectangle Fill="#FF3A3A3A"></Rectangle>
-                <TextBox Height="20" VerticalAlignment="Top" HorizontalAlignment="Stretch" TextChanged="StavkeSearch_TextChanged" x:Name="StavkeSearch" Margin="5"/>
-                <DataGrid x:Name="dgStavke" HorizontalAlignment="Stretch"  Margin="10,70,10,10" VerticalAlignment="Top"></DataGrid>
-                <ComboBox x:Name="cmbSpremnici" HorizontalAlignment="Left" Margin="10,40,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="cmbSpremnici_SelectionChanged"/>
-                <Button  x:Name="btnKreirajStavku" Content="Kreiraj stavku" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="auto"/>
+                <Grid Margin="5,5,5,5">
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"></RowDefinition>
+                        <RowDefinition Height="1*"></RowDefinition>
+                        <RowDefinition Height="10*"></RowDefinition>
+                        <RowDefinition Height="1*"></RowDefinition>
+                    </Grid.RowDefinitions>
+
+                    <TextBox Grid.Row="0" Height="20" VerticalAlignment="Top" HorizontalAlignment="Stretch" TextChanged="StavkeSearch_TextChanged" x:Name="StavkeSearch" />
+                    <ComboBox Grid.Row="1" x:Name="cmbSpremnici" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="120" SelectionChanged="cmbSpremnici_SelectionChanged"/>
+                    <DataGrid Grid.Row="2" x:Name="dgStavke" HorizontalAlignment="Stretch" VerticalAlignment="Top"></DataGrid>
+                    <Button Grid.Row="3"  x:Name="btnKreirajStavku" Content="Kreiraj stavku" Width="auto" Click="BtnKreirajStavku_Click" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
+
+                </Grid>
             </Grid>
-            
+
+            <Grid Grid.Column="1" Grid.Row="1" x:Name="gridKreirajStavku" Visibility="Visible">
+                <Rectangle Fill="#FF3A3A3A"></Rectangle>
+                <StackPanel>
+
+                    <Label Content="Naziv stavke" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White"/>
+                    <TextBox x:Name="txbStavkaNoviNaziv" HorizontalAlignment="Center" Height="23" Text="" VerticalAlignment="Top" Width="120"/>
+
+                    <Label Content="Spremnik" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White"/>
+                    <ComboBox x:Name="cmbSpremniciKreirajStavku" HorizontalAlignment="Center" VerticalAlignment="Top" Width="120"/>
+
+                    <Label Content="Oznake" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White"/>
+                    <ComboBox x:Name="cmbOznakeKreirajStavku" HorizontalAlignment="Center" VerticalAlignment="Top" Width="120"/>
+
+                    <Label Content="Datum isteka" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White"/>
+                    <DatePicker FirstDayOfWeek="Monday" IsDropDownOpen="False" SelectedDateFormat="Long" Margin="0" Width="120" MinWidth="120" />
+
+                    <Label Content="Zauzima (L/Kg)" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White"/>
+                    <TextBox x:Name="txbZauzimaKreirajStavku" HorizontalAlignment="Center" Height="23" Text="" VerticalAlignment="Top" Width="120"/>
+                    <Grid Height="40" HorizontalAlignment="Center" Width="197" Margin="0" >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.5*"/>
+                            <ColumnDefinition Width="0.5*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button x:Name="btnKreirajStavkuSpremi"  Content="Kreiraj" VerticalAlignment="Top" Click="btnKreirajSpremnikSpremi_Click" Margin="0,10,95,0" Grid.Column="0" HorizontalAlignment="Right" Width="102" Grid.ColumnSpan="2"/>
+                        <Button x:Name="btnKreirajStavkuOdustani"  Content="Odustani" VerticalAlignment="Top" Click="btnKreirajSpremnikOdustani_Click" Margin="0,10,0,0" Grid.Column="1" Width="95" HorizontalAlignment="Left" IsCancel="True"/>
+                    </Grid>
+
+                </StackPanel>
+
+            </Grid>
+
+
         </Grid>
     </Grid>
 </Window>

@@ -35,6 +35,7 @@ namespace WpfApp1
             gridovi.Add("gridIzmjeniSpremnik", gridIzmjeniSpremnik);
 
             gridovi.Add("gridStavke", gridStavke);
+            gridovi.Add("gridKreirajStavku", gridKreirajStavku);
             
         }
 
@@ -301,6 +302,25 @@ namespace WpfApp1
         private void menuIzlaz_Click(object sender, RoutedEventArgs e)
         {
             System.Windows.Application.Current.Shutdown();
+        }
+
+        private void BtnKreirajStavku_Click(object sender, RoutedEventArgs e)
+        {
+            
+            promjeniGrid("gridKreirajStavku");
+            naslovLabel.Content = "Kreiraj stavku";
+
+            cmbSpremniciKreirajStavku.ItemsSource = PrikazSpremnici.dohvatiSpremnike();
+            cmbOznakeKreirajStavku.ItemsSource = PrikazOznaka.dohvatiOznake();
+            //cmbProstorijeKreiranjeSpremnika.ItemsSource = PrikazProstorije.dohvatiProstorije();
+            //cmbTipSpreminka.ItemsSource = PrikazTipSpremnika.dohvatiTipSpremnika();
+        }
+
+        private void btnKreirajSpremnikOdustani_Click(object sender, RoutedEventArgs e)
+        {
+            promjeniGrid("gridStavke");
+            naslovLabel.Content = "Stavke";
+            PrikaziStavke();
         }
     }
 

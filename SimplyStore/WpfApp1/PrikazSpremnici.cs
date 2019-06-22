@@ -162,5 +162,10 @@ namespace WpfApp1
                 db.SaveChanges();
             }
         }
+
+        public override string ToString()
+        {
+            return nazivSpremnika;
+        }
     }
 }
