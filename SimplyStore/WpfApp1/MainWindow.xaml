@@ -92,17 +92,17 @@
             <Grid Grid.Column="1" Grid.Row="1" x:Name="gridProstorije" Visibility="Collapsed">
                 <Rectangle Fill="#FF3A3A3A"></Rectangle>
                 <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="1*"></RowDefinition>
-                    <RowDefinition Height="10*"></RowDefinition>
-                    <RowDefinition Height="1*"></RowDefinition>
-                </Grid.RowDefinitions>
-                <TextBox Grid.Row="0" Height="20" VerticalAlignment="Top" HorizontalAlignment="Stretch" TextChanged="ProstorijeSearch_TextChanged" x:Name="ProstorijeSearch" Margin="5"/>
-                <DataGrid Grid.Row="1" x:Name="dgProstorije" HorizontalAlignment="Stretch"  Margin="10,50,10,10" VerticalAlignment="Top"></DataGrid>
-                    
-                <Button Grid.Row="2" x:Name="btnkreirajProstoriju" Content="Kreiraj prostoriju" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="btnkreirajProstoriju_Click"></Button>
-                <Button Grid.Row="2" x:Name="btnizmjeniProstoriju" Content="Izmjeni prostoriju" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="100,0,0,0" Click="btnizmjeniProstoriju_Click"></Button>
-                <Button Grid.Row="2" x:Name="btnObrisiProstoriju" Content="Obriši prostoriju" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="200,0,0,0" Click="btnObrisiProstoriju_Click"></Button>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"></RowDefinition>
+                        <RowDefinition Height="10*"></RowDefinition>
+                        <RowDefinition Height="1*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <TextBox Grid.Row="0" Height="20" Width="150" VerticalAlignment="Top" HorizontalAlignment="Left" TextChanged="ProstorijeSearch_TextChanged" x:Name="ProstorijeSearch" Margin="5"/>
+                    <DataGrid Grid.Row="1" x:Name="dgProstorije" HorizontalAlignment="Stretch"  Margin="5,5,5,5" VerticalAlignment="Top"></DataGrid>
+
+                    <Button Grid.Row="2" x:Name="btnkreirajProstoriju" Content="Kreiraj prostoriju" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="btnkreirajProstoriju_Click"></Button>
+                    <Button Grid.Row="2" x:Name="btnizmjeniProstoriju" Content="Izmjeni prostoriju" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="100,0,0,0" Click="btnizmjeniProstoriju_Click"></Button>
+                    <Button Grid.Row="2" x:Name="btnObrisiProstoriju" Content="Obriši prostoriju" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="200,0,0,0" Click="btnObrisiProstoriju_Click"></Button>
                 </Grid>
 
             </Grid>
@@ -121,7 +121,16 @@
                     <Label Content="Broj prostorija za kreirati(opcionalno)" HorizontalAlignment="Center"  VerticalAlignment="Top" FontSize="24" Foreground="White"/>
                     <TextBox Grid.Row="1" Height="25" Width="100" HorizontalAlignment="Center"  VerticalAlignment="Top" Name="txtBrojProstorija"/>
 
-                    <Button x:Name="KreirajProstoriju" Grid.Row="1" Height="25" Width="100"  HorizontalAlignment="Center" VerticalAlignment="Top" Content="Kreiraj prostoriju" Click="btnKreirajProstoriju_Click"/>
+                    <Grid Height="40" HorizontalAlignment="Center" Width="282" Margin="176,0" >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.5*"/>
+                            <ColumnDefinition Width="0.5*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button x:Name="btnKreirajProstoriju"  Content="Kreiraj prostoriju" Width="100" VerticalAlignment="Top" HorizontalAlignment="Center" Click="btnKreirajProstoriju_Click" Margin="31,10,10,0" />
+                        <Button x:Name="btnKreirajProstorijukOdustani"  Content="Odustani" VerticalAlignment="Top" Click="btnKreirajProstorijukOdustani_Click" Margin="10,10,0,0" Grid.Column="1" Width="95" HorizontalAlignment="Left" IsCancel="True"/>
+                    </Grid>
+
+
                 </StackPanel>
 
             </Grid>
@@ -139,7 +148,15 @@
                     <Label Content="Napomene" HorizontalAlignment="Center"  VerticalAlignment="Top" FontSize="24" Foreground="White"/>
                     <TextBox Grid.Row="1" Height="25" Width="100" HorizontalAlignment="Center" VerticalAlignment="Top" Name="txtNoveNapomeneProstorije"/>
 
-                    <Button x:Name="btnIzmjeniProstoriju" Grid.Row="1" Height="25" Width="100"  HorizontalAlignment="Center" VerticalAlignment="Top" Content="Izmjeni prostoriju" Click="btnIzmjeniProstoriju_Click"/>
+                    <Grid Height="40" HorizontalAlignment="Center" Width="282" Margin="176,0" >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.5*"/>
+                            <ColumnDefinition Width="0.5*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button x:Name="btnIzmjeniProstoriju"  Content="Izmjeni prostoriju" Width="100" VerticalAlignment="Top" HorizontalAlignment="Center" Click="btnIzmjeniProstoriju_Click" Margin="31,10,10,0" />
+                        <Button x:Name="btnIzmjeniProstorijukOdustani"  Content="Odustani" VerticalAlignment="Top" Click="btnIzmjeniProstorijukOdustani_Click" Margin="10,10,0,0" Grid.Column="1" Width="95" HorizontalAlignment="Left" IsCancel="True"/>
+                    </Grid>
+
 
                 </StackPanel>
             </Grid>
@@ -158,7 +175,7 @@
                     <ComboBox Grid.Row="1" x:Name="cmbProstorije" HorizontalAlignment="Left"  VerticalAlignment="Center" Width="120" SelectionChanged="cmbProstorije_SelectionChanged"/>
                     <Button Grid.Row="1"  x:Name="btnPrikaziSveSpremnike" Content="Prikaži sve" HorizontalAlignment="Left" VerticalAlignment="Center" Width="auto" Margin="154,0,0,0" Click="btnPrikaziSveSpremnike_Click"/>
                     <DataGrid Grid.Row="2" x:Name="dgSpremnici" HorizontalAlignment="Stretch"   VerticalAlignment="Top"></DataGrid>
-                    
+
                     <Button Grid.Row="3"  x:Name="btnKreirajSpremnik" Content="Kreiraj spremnik" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="auto" Click="btnKreirajSpremnik_Click"/>
                     <Button Grid.Row="3" x:Name="btnObrisiSpremnik" Content="Obriši spremnik" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="auto" Click="btnObrisiSpremnik_Click" Margin="94,0,0,0"/>
                     <Button Grid.Row="3" x:Name="btnIzmjeniSpremnik" Content="Izmjeni spremnik" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="auto"  Margin="186,0,0,0" Click="btnIzmjeniSpremnik_Click"/>
@@ -177,22 +194,30 @@
 
                         <Label Content="Opis" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White"/>
                         <TextBox x:Name="txbNoviSpremnikOpis" HorizontalAlignment="Center" Height="23"  TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-
                         <Label Content="Prostorija kojoj pripada" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White"/>
                         <ComboBox x:Name="cmbProstorijeKreiranjeSpremnika" HorizontalAlignment="Center" VerticalAlignment="Top" Width="120"/>
+                        <Label Content="Tip spremnika" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="24" Foreground="White" RenderTransformOrigin="-0.108,0.476"  Margin="0"/>
+                        <ComboBox x:Name="cmbTipSpreminka" HorizontalAlignment="Center" VerticalAlignment="Top" Width="120" Grid.Column="1" Margin="0"/>
 
-                        <Label Content="Tip spremnika" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White"/>
-                        <ComboBox x:Name="cmbTipSpreminka" HorizontalAlignment="Center" VerticalAlignment="Top" Width="120"/>
+                        <Label Content="Koliko ovakvih spremnika zelite unjeti?" HorizontalAlignment="Center" Margin="0" VerticalAlignment="Top" Grid.Column="0" FontSize="24" Foreground="White"/>
+                        <TextBox x:Name="txbBrojSpremnikaUnos" HorizontalAlignment="Center" Height="23"  TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Margin="0"/>
+                            
 
-                        <Label Content="Koliko ovakvih spremnika zelite unjeti?" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White"/>
-                        <TextBox x:Name="txbBrojSpremnikaUnos" HorizontalAlignment="Center" Height="23"  TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+                        <Grid Height="40" HorizontalAlignment="Center" Width="282" Margin="176,0" >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="0.5*"/>
+                                <ColumnDefinition Width="0.5*"/>
+                            </Grid.ColumnDefinitions>
+                            <Button x:Name="btnKreirajSpremnikSpremi"  Content="Kreiraj spremnik" Width="100" VerticalAlignment="Top" HorizontalAlignment="Center" Click="btnKreirajSpremnikSpremi_Click" Margin="31,10,10,0" />
+                            <Button x:Name="btnKreirajSpremnikOdustani"  Content="Odustani" VerticalAlignment="Top" Click="btnKreirajSpremnikOdustani_Click" Margin="10,10,0,0" Grid.Column="1" Width="95" HorizontalAlignment="Left" IsCancel="True"/>
+                        </Grid>
 
-                        <Button x:Name="btnKreirajSpremnikSpremi"  Content="Kreiraj" Width="100" VerticalAlignment="Top" HorizontalAlignment="Center" Click="btnKreirajSpremnikSpremi_Click" />
+
                     </StackPanel>
                 </ScrollViewer>
             </Grid>
 
-            <Grid Grid.Column="1" Grid.Row="1" x:Name="gridIzmjeniSpremnik" Visibility="Collapsed">
+            <Grid Grid.Column="1" Grid.Row="1" x:Name="gridIzmjeniSpremnik" Visibility="Visible">
                 <Rectangle Fill="#FF3A3A3A"></Rectangle>
                 <StackPanel>
                     <Label Content="Naziv spremnika" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White"/>
@@ -207,7 +232,15 @@
                     <Label Content="Prostorija kojoj pripada" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White"/>
                     <ComboBox x:Name="cmbProstorijeIzmjenaSpremnika" HorizontalAlignment="Center" VerticalAlignment="Top" Width="120"/>
                     <TextBox x:Name="txbSpremnikID" HorizontalAlignment="Center" Height="23"  TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Visibility="Collapsed"/>
-                    <Button x:Name="btnIzmjeniSpremnikSpremi"  Content="Izmjeni spremnik" Width="100" VerticalAlignment="Top" HorizontalAlignment="Center" Click="btnIzmjeniSpremnikSpremi_Click" />
+                    <Grid Height="40" HorizontalAlignment="Center" Width="282" Margin="176,0" >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.5*"/>
+                            <ColumnDefinition Width="0.5*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button x:Name="btnIzmjeniSpremnikSpremi"  Content="Izmjeni spremnik" Width="100" VerticalAlignment="Top" HorizontalAlignment="Center" Click="btnIzmjeniSpremnikSpremi_Click" Margin="31,10,10,0" />
+                        <Button x:Name="btnIzmjeniSpremnikOdustani"  Content="Odustani" VerticalAlignment="Top" Click="btnIzmjeniSpremnikOdustani_Click" Margin="10,10,0,0" Grid.Column="1" Width="95" HorizontalAlignment="Left" IsCancel="True"/>
+                    </Grid>
+
                 </StackPanel>
 
             </Grid>

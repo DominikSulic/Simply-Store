@@ -191,6 +191,13 @@ namespace WpfApp1
 
         }
 
+        private void btnKreirajProstorijukOdustani_Click(object sender, RoutedEventArgs e)
+        {
+            promjeniGrid("gridProstorije");
+            naslovLabel.Content = "Prostorije";
+            PrikaziProstorije();
+        }
+
         private void btnizmjeniProstoriju_Click(object sender, RoutedEventArgs e)
         {
 
@@ -221,6 +228,13 @@ namespace WpfApp1
         {
             PrikazProstorije.izmjeniProstoriju(int.Parse(txtIdProstorije.Text), txtNoviNazivProstorije.Text, txtNoviOpisProstorije.Text, txtNoveNapomeneProstorije.Text);
 
+        }
+
+        private void btnIzmjeniProstorijukOdustani_Click(object sender, RoutedEventArgs e)
+        {
+            promjeniGrid("gridProstorije");
+            naslovLabel.Content = "Prostorije";
+            PrikaziProstorije();
         }
 
         private void btnObrisiProstoriju_Click(object sender, RoutedEventArgs e)
@@ -258,6 +272,13 @@ namespace WpfApp1
             cmbTipSpreminka.ItemsSource = PrikazTipSpremnika.dohvatiTipSpremnika();
 
 
+        }
+
+        private void btnPrikaziSveSpremnike_Click(object sender, RoutedEventArgs e)
+        {
+            cmbProstorije.ItemsSource = PrikazProstorije.dohvatiProstorije();
+            cmbProstorije.SelectedIndex = -1;
+            dgSpremnici.ItemsSource = PrikazSpremnici.dohvatiSpremnike();
         }
 
         private void btnKreirajSpremnikSpremi_Click(object sender, RoutedEventArgs e)
@@ -405,6 +426,13 @@ namespace WpfApp1
             promjeniGrid("gridSpremnici");
         }
 
+        private void btnIzmjeniSpremnikOdustani_Click(object sender, RoutedEventArgs e)
+        {
+            promjeniGrid("gridSpremnici");
+            naslovLabel.Content = "Spremnici";
+            PrikaziSpremnike();
+        }
+
         private void btnKreirajSpremnikOdustani_Click(object sender, RoutedEventArgs e)
         {
 
@@ -490,16 +518,6 @@ namespace WpfApp1
             PrikaziStavke();
 
         }
-
-
-        private void btnPrikaziSveSpremnike_Click(object sender, RoutedEventArgs e)
-        {
-            cmbProstorije.ItemsSource = PrikazProstorije.dohvatiProstorije();
-            cmbProstorije.SelectedIndex = -1;
-            dgSpremnici.ItemsSource = PrikazSpremnici.dohvatiSpremnike();
-        }
-    
-
 
         private void BtnIzmijeniStavku_Click(object sender, RoutedEventArgs e)
         {
@@ -652,7 +670,11 @@ namespace WpfApp1
 
         }
 
+
+
         #endregion
+
+        
     }
 
 }
