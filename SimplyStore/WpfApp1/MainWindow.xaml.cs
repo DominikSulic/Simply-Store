@@ -142,6 +142,8 @@ namespace WpfApp1
                     }
                 }
 
+                sr.Close();
+
                 dgStavkePredIstekom.ItemsSource = PrikazStavke.dohvatiStavkePredIstekom(brojDana);
             }
             else
@@ -742,6 +744,7 @@ namespace WpfApp1
                 using (StreamWriter file = new StreamWriter(putanja))
                 {
                     file.WriteLine("BD: " + BrojDana.Text);
+                    file.Close();
                 }
             }
 

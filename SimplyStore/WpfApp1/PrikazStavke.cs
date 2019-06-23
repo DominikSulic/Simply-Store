@@ -16,7 +16,6 @@ namespace WpfApp1
         public string nazivSpremnika { get; set; }
         public string nazivProstorije { get; set; }
 
-
         public static List<PrikazStavke> dohvatiStavke()
         {
             List<PrikazStavke> sveStavke = new List<PrikazStavke>();
@@ -192,7 +191,7 @@ namespace WpfApp1
                 var query = (from s in db.stavka
                              join d in db.spremnik on s.spremnik_id equals d.id_spremnik
                              join p in db.prostorija on d.prostorija_id equals p.id_prostorija
-                             where System.Data.Objects.SqlClient.SqlFunctions.DateDiff("dd", s.datum_roka, now) < brojDana
+                             where System.Data.Objects.SqlClient.SqlFunctions.DateDiff("dd", now, s.datum_roka) < brojDana
                              select new PrikazStavke
                              {
                                  idStavke = s.id_stavka,
