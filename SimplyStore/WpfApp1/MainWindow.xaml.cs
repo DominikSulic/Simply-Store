@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -38,6 +39,8 @@ namespace WpfApp1
             gridovi.Add("gridKreirajStavku", gridKreirajStavku);
             gridovi.Add("gridIzmjeniStavku", gridIzmjeniStavku);
 
+            gridovi.Add("gridOpcije", gridOpcije);
+            gridovi.Add("gridStavkePredIstekom", gridStavkePredIstekom);
 
         }
 
@@ -110,6 +113,49 @@ namespace WpfApp1
         {
             System.Windows.Application.Current.Shutdown();
         }
+
+        private void menuStavkePredIstekom_Click(object sender, RoutedEventArgs e)
+        {
+            naslovLabel.Content = "Stavke pred istekom";
+            promjeniGrid("gridStavkePredIstekom");
+
+            var putanja = Directory.GetCurrentDirectory();
+            putanja += "\\postavke.txt";
+
+            string[] fileDan = new string[5];
+            int brojDana = 3;
+
+            if (File.Exists(putanja))
+            {
+                StreamReader sr = new StreamReader(putanja);
+                while (!sr.EndOfStream)
+                {
+                    string p = sr.ReadLine();
+                    fileDan = p.Split('\n');
+                }
+
+                foreach (string linija in fileDan)
+                {
+                    if (linija.Contains("BD:"))
+                    {
+                        brojDana = int.Parse(linija.Substring(linija.Length - 1, 1));
+                    }
+                }
+
+                dgStavkePredIstekom.ItemsSource = PrikazStavke.dohvatiStavkePredIstekom(brojDana);
+            }
+            else
+            {
+                dgStavkePredIstekom.ItemsSource = PrikazStavke.dohvatiStavkePredIstekom(brojDana);
+            }
+        }
+
+        private void menuOpcije_Click(object sender, RoutedEventArgs e)
+        {
+            naslovLabel.Content = "Opcije";
+            promjeniGrid("gridOpcije");
+        }
+
         #endregion
 
 
@@ -674,7 +720,33 @@ namespace WpfApp1
 
         #endregion
 
-        
+
+
+        private void btnSpremiPostavke_Click(object sender, RoutedEventArgs e)
+        {
+            var putanja = Directory.GetCurrentDirectory();
+            putanja += "\\postavke.txt";
+            int brojDana;
+
+
+            if ((bool)chkDarkTheme.IsChecked)
+            {
+                Style st = FindResource("styleB") as Style;
+            }
+            else
+            {
+
+            }
+
+            if (int.TryParse(BrojDana.Text, out brojDana))
+            {
+                using (StreamWriter file = new StreamWriter(putanja))
+                {
+                    file.WriteLine("BD: " + BrojDana.Text);
+                }
+            }
+
+        }
     }
 
 }
