@@ -512,7 +512,7 @@
 
 
 
-            <Grid Grid.Column="1" Grid.Row="1" x:Name="gridStavke" Visibility="Visible">
+            <Grid Grid.Column="1" Grid.Row="1" x:Name="gridStavke" Visibility="Collapsed">
 
                 <Rectangle></Rectangle>
                 <Grid Margin="5,5,5,5">
