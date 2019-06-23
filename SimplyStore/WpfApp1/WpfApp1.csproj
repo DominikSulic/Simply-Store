@@ -150,6 +150,11 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\logo.png" />
+    <Resource Include="Images\delete.ico" />
+    <Resource Include="Images\izmjeni.ico" />
+    <Resource Include="Images\kreiraj.ico" />
+    <Resource Include="Images\search.ico" />
+    <Resource Include="Images\remove.ico" />
     <Content Include="Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Model1.edmx</DependentUpon>

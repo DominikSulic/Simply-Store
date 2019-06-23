@@ -135,11 +135,10 @@ namespace WpfApp1
         }
 
         #region Prostorije
-        private void btnkreirajProstoriju_Click(object sender, RoutedEventArgs e)
+        private void BtnkreirajProstoriju_Click_1(object sender, RoutedEventArgs e)
         {
             promjeniGrid("gridKreirajProstoriju");
             naslovLabel.Content = "Kreiraj prostoriju";
-
         }
 
         private void btnKreirajProstoriju_Click(object sender, RoutedEventArgs e)
@@ -198,10 +197,8 @@ namespace WpfApp1
             PrikaziProstorije();
         }
 
-        private void btnizmjeniProstoriju_Click(object sender, RoutedEventArgs e)
+        private void BtnizmjeniProstoriju_Click_1(object sender, RoutedEventArgs e)
         {
-
-
 
             PrikazProstorije pp = new PrikazProstorije();
             prostorija p = new prostorija();
@@ -222,6 +219,7 @@ namespace WpfApp1
             txtNoviNazivProstorije.Text = p.naziv_prostorije;
             txtNoviOpisProstorije.Text = p.opis;
             txtIdProstorije.Text = p.id_prostorija.ToString();
+
         }
 
         private void btnIzmjeniProstoriju_Click(object sender, RoutedEventArgs e)
@@ -237,8 +235,9 @@ namespace WpfApp1
             PrikaziProstorije();
         }
 
-        private void btnObrisiProstoriju_Click(object sender, RoutedEventArgs e)
+        private void BtnObrisiProstoriju_Click_1(object sender, RoutedEventArgs e)
         {
+
             PrikazProstorije prikaz = new PrikazProstorije();
             if (dgProstorije.SelectedItems != null)
             {
@@ -253,6 +252,7 @@ namespace WpfApp1
             }
 
             PrikaziProstorije();
+
         }
 
         private void ProstorijeSearch_TextChanged(object sender, RoutedEventArgs e)
@@ -669,7 +669,6 @@ namespace WpfApp1
             promjeniGrid("gridStavke");
 
         }
-
 
 
         #endregion
