@@ -26,7 +26,7 @@ namespace WpfApp1
         {
             InitializeComponent();
 
-
+            List<int> beskorisno = dohvatiDatotekuPodatke();
            
 
             gridovi.Add("gridPocetna", gridPocetna);
@@ -78,7 +78,6 @@ namespace WpfApp1
                 else postaviLight();
             }
             else postaviDark();
-
             podaciDatoteke.Add(brojDana);
             podaciDatoteke.Add(darkTheme);
             return podaciDatoteke;
@@ -840,6 +839,29 @@ namespace WpfApp1
             else
             {
                 postaviLight();
+            }
+
+            var putanja = Directory.GetCurrentDirectory();
+            putanja += "\\postavke.txt";
+            int brojDana;
+            int dark;
+
+            if ((bool)chkDarkTheme.IsChecked)
+            {
+                dark = 1;
+            }
+            else
+            {
+                dark = 0;
+            }
+
+            if (int.TryParse(BrojDana.Text, out brojDana))
+            {
+                using (StreamWriter file = new StreamWriter(putanja))
+                {
+                    file.WriteLine(BrojDana.Text + "," + dark);
+                    file.Close();
+                }
             }
         }
 
