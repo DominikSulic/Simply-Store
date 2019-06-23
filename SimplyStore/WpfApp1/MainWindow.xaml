@@ -6,13 +6,32 @@
         xmlns:local="clr-namespace:WpfApp1"
         mc:Ignorable="d"
         Title="Simply Store" Height="450" Width="800" MinHeight="450" MinWidth="600">
+    <Window.Resources>
+        <SolidColorBrush x:Key="labelsColor" Color="white"></SolidColorBrush>
+        <SolidColorBrush x:Key="menuBg" Color="#212227"></SolidColorBrush>
+        <SolidColorBrush x:Key="rectBg" Color="#3A3A3A"></SolidColorBrush>
+        <SolidColorBrush x:Key="headerRectBg" Color="#212227"></SolidColorBrush>
+        <SolidColorBrush x:Key="spBtnBg" Color="#2B2B2B"></SolidColorBrush>
+        <SolidColorBrush x:Key="spBtnFg" Color="White"></SolidColorBrush>
+        <SolidColorBrush x:Key="spBtnBorderB" Color="#2B2B2B"></SolidColorBrush>
+        <SolidColorBrush x:Key="spBtnHover" Color="#828282"></SolidColorBrush>
+        <SolidColorBrush x:Key="dataGridBG" Color="#3A3A3A"></SolidColorBrush>
+        <SolidColorBrush x:Key="dataGridFG" Color="white"></SolidColorBrush>
+        <SolidColorBrush x:Key="dataGridRowBG" Color="#3A3A3A"></SolidColorBrush>
+        <Style TargetType="Rectangle" x:Key="headerRect">
+            <Setter Property="Fill" Value="{DynamicResource headerRectBg}"></Setter>
+        </Style>
+        <Style TargetType="Rectangle">
+            <Setter Property="Fill" Value="{DynamicResource rectBg}"></Setter>
+        </Style>
+    </Window.Resources>
     <Grid>
         <Grid>
             <Grid.Resources>
                 <Style TargetType="DataGrid">
-                    <Setter Property="Background" Value="#FF3A3A3A"></Setter>
-                    <Setter Property="Foreground" Value="White"></Setter>
-                    <Setter Property="RowBackground" Value="#FF3A3A3A"></Setter>
+                    <Setter Property="Background" Value="{DynamicResource dataGridBG}"></Setter>
+                    <Setter Property="Foreground" Value="{DynamicResource dataGridFG}"></Setter>
+                    <Setter Property="RowBackground" Value="{DynamicResource dataGridRowBG}"></Setter>
                     <Setter Property="HeadersVisibility" Value="Column"></Setter>
                     <Setter Property="GridLinesVisibility" Value="Horizontal"></Setter>
                     <Setter Property="BorderBrush" Value="{x:Null}"></Setter>
@@ -27,7 +46,7 @@
                 <Style TargetType="DataGridCell">
                     <Style.Triggers>
                         <Trigger Property="IsSelected" Value="True">
-                            <Setter Property="Background" Value="#FF3A3A3A"/>
+                            <Setter Property="Background" Value="{DynamicResource dataGridBG}"/>
                             <Setter Property="BorderBrush" Value="#00000000"></Setter>
                             <Setter Property="Foreground" Value="Green"/>
                         </Trigger>
@@ -41,21 +60,21 @@
                 <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*" ></ColumnDefinition>
+                <ColumnDefinition Width="1.2*" ></ColumnDefinition>
                 <ColumnDefinition Width="4*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Rectangle Grid.ColumnSpan="2" Grid.Row="0" Fill="#FF212227"></Rectangle>
-            <Label Content="Home" x:Name="naslovLabel" Grid.ColumnSpan="2" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="30" FontWeight="Bold" Foreground="White" Margin="22,0,0,0"/>
-            <StackPanel Grid.Row="1" Grid.Column="0" Background="#FF212227">
+            <Rectangle Grid.ColumnSpan="2" Grid.Row="0" Style="{DynamicResource headerRect}"></Rectangle>
+            <Label Content="Home" x:Name="naslovLabel" Grid.ColumnSpan="2" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="30" FontWeight="Bold" Foreground="{DynamicResource labelsColor}" Margin="22,0,0,0"/>
+            <StackPanel Grid.Row="1" Grid.Column="0" Background="{DynamicResource menuBg}">
                 <StackPanel.Resources>
                     <Style TargetType="Button">
                         <Setter Property="OverridesDefaultStyle" Value="True" />
                         <Setter Property="VerticalAlignment" Value="Stretch"></Setter>
                         <Setter Property="HorizontalAlignment" Value="Stretch"></Setter>
                         <Setter Property="FontSize" Value="18"></Setter>
-                        <Setter Property="Background" Value="#FF2B2B2B"></Setter>
-                        <Setter Property="Foreground" Value="White"></Setter>
-                        <Setter Property="BorderBrush" Value="#FF2B2B2B"></Setter>
+                        <Setter Property="Background" Value="{DynamicResource spBtnBg}"></Setter>
+                        <Setter Property="Foreground" Value="{DynamicResource spBtnFg}"></Setter>
+                        <Setter Property="BorderBrush" Value="{DynamicResource spBtnBorderB}"></Setter>
                         <Setter Property="Template">
                             <Setter.Value>
 
@@ -65,7 +84,7 @@
                                     </Border>
                                     <ControlTemplate.Triggers>
                                         <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter Property="Background" Value="#828282" />
+                                            <Setter Property="Background" Value="{DynamicResource spBtnHover}" />
                                         </Trigger>
                                     </ControlTemplate.Triggers>
                                 </ControlTemplate>
@@ -83,7 +102,7 @@
                 <Button x:Name="menuIzlaz" Content="Izlaz" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Click="menuIzlaz_Click"></Button>
             </StackPanel>
             <Grid Grid.Column="1" Grid.Row="1" x:Name="gridPocetna" Visibility="Visible">
-                <Rectangle Fill="#FF3A3A3A"></Rectangle>
+                <Rectangle></Rectangle>
                 <Image Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Height="300">
                     <Image.Source>
                         <BitmapImage UriSource="/images/logo.png" />
@@ -94,14 +113,20 @@
             
 
             <Grid Grid.Column="1" Grid.Row="1" x:Name="gridProstorije" Visibility="Collapsed">
-                <Rectangle Fill="#FF3A3A3A"></Rectangle>
+                <Rectangle></Rectangle>
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="1*"></RowDefinition>
                         <RowDefinition Height="10*"></RowDefinition>
-                        <RowDefinition Height="1*"></RowDefinition>
                     </Grid.RowDefinitions>
-                    <TextBox Grid.Row="0" Height="20" Width="150" VerticalAlignment="Top" HorizontalAlignment="Left" TextChanged="ProstorijeSearch_TextChanged" x:Name="ProstorijeSearch" Margin="5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="3*"></ColumnDefinition>
+                        <ColumnDefinition Width="6*"></ColumnDefinition>
+                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <TextBox Grid.Row="0" Height="20"  VerticalAlignment="Center" HorizontalAlignment="Stretch" TextChanged="ProstorijeSearch_TextChanged" x:Name="ProstorijeSearch" Margin="5">
                         <TextBox.ToolTip>
                             <ToolTip>
                                 <StackPanel>
@@ -111,16 +136,35 @@
                             </ToolTip>
                         </TextBox.ToolTip>
                     </TextBox>
-                    <DataGrid Grid.Row="1" x:Name="dgProstorije" HorizontalAlignment="Stretch"  Margin="5,5,5,5" VerticalAlignment="Top"></DataGrid>
 
-                    <Grid>
-                        <Button Grid.Row="0" Name="btnkreirajProstoriju" Margin="1,0,65,0" Click="BtnkreirajProstoriju_Click_1" VerticalAlignment="Top" HorizontalAlignment="Right" RenderTransformOrigin="1,0.5">
+
+
+                    <Button  Grid.Row="0" Grid.Column="1" Name="btnSearchProstorije"  VerticalAlignment="Center" HorizontalAlignment="Left" >
+                        <Button.Effect>
+                            <DropShadowEffect BlurRadius="1" Opacity="0.3" Color="White" ShadowDepth="1" Direction="180"/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate>
+                                <Image Source="/images/search.ico" Stretch="Uniform" MaxWidth="40" MaxHeight="40"/>
+                            </ControlTemplate>
+                        </Button.Template>
+                        <Button.ToolTip>
+                            <ToolTip>
+                                <StackPanel>
+                                    <TextBlock FontWeight="Bold">Pretraži prostorije</TextBlock>
+                                    <TextBlock>Upišite naziv ili dio naziva prostorije...</TextBlock>
+                                </StackPanel>
+                            </ToolTip>
+                        </Button.ToolTip>
+                    </Button>
+
+                    <Button Grid.Row="0" Grid.Column="2" Name="btnkreirajProstoriju" Click="BtnkreirajProstoriju_Click_1" VerticalAlignment="Center" HorizontalAlignment="Center" RenderTransformOrigin="1,0.5">
                             <Button.Effect>
                                 <DropShadowEffect BlurRadius="1" Opacity="0.3" Color="White" ShadowDepth="1" Direction="180"/>
                             </Button.Effect>
                             <Button.Template>
                                 <ControlTemplate>
-                                    <Image Source="/images/kreiraj.ico"/>
+                                <Image Source="/images/kreiraj.ico" Stretch="Uniform" MaxWidth="40" MaxHeight="40"/>
                                 </ControlTemplate>
                             </Button.Template>
                             <Button.ToolTip>
@@ -132,96 +176,65 @@
                                 </ToolTip>
                             </Button.ToolTip>
                         </Button>
-                    </Grid>
 
-                    <Grid >
-                        <Button Grid.Row="0" Name="btnizmjeniProstoriju" Margin="1,0,37,0" VerticalAlignment="Top" RenderTransformOrigin="0,0.5" Click="BtnizmjeniProstoriju_Click_1" HorizontalAlignment="Right" >
-                            <Button.Effect>
-                                <DropShadowEffect BlurRadius="1" Opacity="0.3" Color="White" ShadowDepth="1" Direction="180"/>
-                            </Button.Effect>
-                            <Button.Template>
-                                <ControlTemplate>
-                                    <Image Source="/images/izmjeni.ico"/>
-                                </ControlTemplate>
-                            </Button.Template>
-                            <Button.ToolTip>
-                                <ToolTip>
-                                    <StackPanel>
-                                        <TextBlock FontWeight="Bold">Izmjeni prostoriju</TextBlock>
-                                        <TextBlock>Otvara formu za izmjenu označene prostorije. Prostoriju možete označiti sa lijevom tipkom miša.</TextBlock>
-                                    </StackPanel>
-                                </ToolTip>
-                            </Button.ToolTip>
-                        </Button>
-                    </Grid>
+                    <Button Grid.Row="0" Grid.Column="3" Name="btnizmjeniProstoriju" VerticalAlignment="Center" RenderTransformOrigin="0,0.5" Click="BtnizmjeniProstoriju_Click_1" HorizontalAlignment="Center" >
+                        <Button.Effect>
+                            <DropShadowEffect BlurRadius="1" Opacity="0.3" Color="White" ShadowDepth="1" Direction="180"/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate>
+                                <Image Source="/images/izmjeni.ico" Stretch="Uniform" MaxWidth="40" MaxHeight="40"/>
+                            </ControlTemplate>
+                        </Button.Template>
+                        <Button.ToolTip>
+                            <ToolTip>
+                                <StackPanel>
+                                    <TextBlock FontWeight="Bold">Izmjeni prostoriju</TextBlock>
+                                    <TextBlock>Otvara formu za izmjenu označene prostorije. Prostoriju možete označiti sa lijevom tipkom miša.</TextBlock>
+                                </StackPanel>
+                            </ToolTip>
+                        </Button.ToolTip>
+                    </Button>
 
-                    <Grid >
-                        <Button Grid.Row="0" Name="btnObrisiProstoriju" Margin="1,0,10,0" VerticalAlignment="Top" RenderTransformOrigin="-0.5,0.5" Click="BtnObrisiProstoriju_Click_1" HorizontalAlignment="Right" >
-                            <Button.Effect>
-                                <DropShadowEffect BlurRadius="1" Opacity="0.3" Color="White" ShadowDepth="1" Direction="180"/>
-                            </Button.Effect>
-                            <Button.Template>
-                                <ControlTemplate>
-                                    <Image Source="/images/remove.ico"/>
-                                </ControlTemplate>
-                            </Button.Template>
-                            <Button.ToolTip>
-                                <ToolTip>
-                                    <StackPanel>
-                                        <TextBlock FontWeight="Bold">Obriši prostoriju</TextBlock>
-                                        <TextBlock>Briše označene prostorije iz baze podataka. Više prostorija možete odabrati koristeći ctrl ili shift tipku + lijevi klik miša.</TextBlock>
-                                    </StackPanel>
-                                </ToolTip>
-                            </Button.ToolTip>
-                        </Button>
-                    </Grid>
+                    <Button Grid.Row="0" Grid.Column="4" Name="btnObrisiProstoriju" VerticalAlignment="Center" RenderTransformOrigin="-0.5,0.5" Click="BtnObrisiProstoriju_Click_1" HorizontalAlignment="Center" >
+                        <Button.Effect>
+                            <DropShadowEffect BlurRadius="1" Opacity="0.3" Color="White" ShadowDepth="1" Direction="180"/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate>
+                                <Image Source="/images/remove.ico"  Stretch="Uniform" MaxWidth="40" MaxHeight="40"/>
+                            </ControlTemplate>
+                        </Button.Template>
+                        <Button.ToolTip>
+                            <ToolTip>
+                                <StackPanel>
+                                    <TextBlock FontWeight="Bold">Obriši prostoriju</TextBlock>
+                                    <TextBlock>Briše označene prostorije iz baze podataka. Više prostorija možete odabrati koristeći ctrl ili shift tipku + lijevi klik miša.</TextBlock>
+                                </StackPanel>
+                            </ToolTip>
+                        </Button.ToolTip>
+                    </Button>
 
-                    <Grid  Height="30" Margin="0,0,0,2">
-                        <Button  Grid.Row="0" Name="btnSearchProstorije" Margin="212,0,0,0" RenderTransformOrigin="0.333,0.5" VerticalAlignment="Top" HorizontalAlignment="Left" >
-                            <Button.RenderTransform>
-                                <TransformGroup>
-                                    <ScaleTransform ScaleX="-1"/>
-                                    <SkewTransform/>
-                                    <RotateTransform/>
-                                    <TranslateTransform X="-49.98"/>
-                                </TransformGroup>
-                            </Button.RenderTransform>
-                            <Button.Effect>
-                                <DropShadowEffect BlurRadius="1" Opacity="0.3" Color="White" ShadowDepth="1" Direction="180"/>
-                            </Button.Effect>
-                            <Button.Template>
-                                <ControlTemplate>
-                                    <Image Source="/images/search.ico"/>
-                                </ControlTemplate>
-                            </Button.Template>
-                            <Button.ToolTip>
-                                <ToolTip>
-                                    <StackPanel>
-                                        <TextBlock FontWeight="Bold">Pretraži prostorije</TextBlock>
-                                        <TextBlock>Upišite naziv ili dio naziva prostorije...</TextBlock>
-                                    </StackPanel>
-                                </ToolTip>
-                            </Button.ToolTip>
-                        </Button>
-                    </Grid>
-                    
-            </Grid>
+
+                    <DataGrid Grid.Row="1" Grid.ColumnSpan="5" x:Name="dgProstorije" HorizontalAlignment="Stretch"  Margin="5,5,5,5" VerticalAlignment="Top"></DataGrid>
+
+                </Grid>
 
             </Grid>
             
             <Grid Grid.Column="1" Grid.Row="1" x:Name="gridKreirajProstoriju" Visibility="Collapsed">
-                <Rectangle Fill="#FF3A3A3A"></Rectangle>
+                <Rectangle></Rectangle>
                 <StackPanel>
-                    <Label Content="Naziv prostorije" HorizontalAlignment="Center"  VerticalAlignment="Top" FontSize="24" Foreground="White"/>
+                    <Label Content="Naziv prostorije" HorizontalAlignment="Center"  VerticalAlignment="Top" FontSize="24" Foreground="{DynamicResource labelsColor}"/>
                     <TextBox Grid.Row="1" Height="25" Width="100" HorizontalAlignment="Center" VerticalAlignment="Top" Name="txtNazivProstorije"/>
 
-                    <Label Content="Opis prostorije" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="24" Foreground="White"/>
+                    <Label Content="Opis prostorije" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="24" Foreground="{DynamicResource labelsColor}"/>
                     <TextBox Grid.Row="1" Height="25" Width="100" HorizontalAlignment="Center"  VerticalAlignment="Top" Name="txtOpisProstorije"/>
 
-                    <Label Content="Napomene" HorizontalAlignment="Center"  VerticalAlignment="Top" FontSize="24" Foreground="White"/>
+                    <Label Content="Napomene" HorizontalAlignment="Center"  VerticalAlignment="Top" FontSize="24" Foreground="{DynamicResource labelsColor}"/>
                     <TextBox Grid.Row="1" Height="25" Width="100" HorizontalAlignment="Center"  VerticalAlignment="Top" Name="txtNapomeneProstorije"/>
 
-                    <Label Content="Broj prostorija za kreirati(opcionalno)" HorizontalAlignment="Center"  VerticalAlignment="Top" FontSize="24" Foreground="White"/>
+                    <Label Content="Broj prostorija za kreirati(opcionalno)" HorizontalAlignment="Center"  VerticalAlignment="Top" FontSize="24" Foreground="{DynamicResource labelsColor}"/>
                     <TextBox Grid.Row="1" Height="25" Width="100" HorizontalAlignment="Center"  VerticalAlignment="Top" Name="txtBrojProstorija">
                         <TextBox.ToolTip>
                             <ToolTip>
@@ -259,16 +272,16 @@
             </Grid>
 
             <Grid Grid.Column="1" Grid.Row="1" x:Name="gridIzmjeniProstoriju" Visibility="Collapsed">
-                <Rectangle Fill="#FF3A3A3A"></Rectangle>
+                <Rectangle></Rectangle>
                 <StackPanel>
                     <TextBox Grid.Row="1" Height="25" Width="100" Visibility="Collapsed" Name="txtIdProstorije"/>
-                    <Label Content="Naziv prostorije" HorizontalAlignment="Center"  VerticalAlignment="Top" FontSize="24" Foreground="White"/>
+                    <Label Content="Naziv prostorije" HorizontalAlignment="Center"  VerticalAlignment="Top" FontSize="24" Foreground="{DynamicResource labelsColor}"/>
                     <TextBox Grid.Row="1" Height="25" Width="100" HorizontalAlignment="Center" VerticalAlignment="Top" Name="txtNoviNazivProstorije"/>
 
-                    <Label Content="Opis prostorije" HorizontalAlignment="Center"  VerticalAlignment="Top" FontSize="24" Foreground="White"/>
+                    <Label Content="Opis prostorije" HorizontalAlignment="Center"  VerticalAlignment="Top" FontSize="24" Foreground="{DynamicResource labelsColor}"/>
                     <TextBox Grid.Row="1" Height="25" Width="100" HorizontalAlignment="Center"  VerticalAlignment="Top" Name="txtNoviOpisProstorije"/>
 
-                    <Label Content="Napomene" HorizontalAlignment="Center"  VerticalAlignment="Top" FontSize="24" Foreground="White"/>
+                    <Label Content="Napomene" HorizontalAlignment="Center"  VerticalAlignment="Top" FontSize="24" Foreground="{DynamicResource labelsColor}"/>
                     <TextBox Grid.Row="1" Height="25" Width="100" HorizontalAlignment="Center" VerticalAlignment="Top" Name="txtNoveNapomeneProstorije"/>
 
                     <Grid Height="40" HorizontalAlignment="Center" Width="282" Margin="176,0" >
@@ -296,16 +309,22 @@
             
             
             <Grid Grid.Column="1" Grid.Row="1" x:Name="gridSpremnici" Visibility="Collapsed">
-                <Rectangle Fill="#FF3A3A3A"></Rectangle>
+                <Rectangle></Rectangle>
                 <Grid Margin="5,5,5,5">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="1*"></RowDefinition>
                         <RowDefinition Height="1*"></RowDefinition>
                         <RowDefinition Height="10*"></RowDefinition>
-                        <RowDefinition Height="1*"></RowDefinition>
                     </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="3*"></ColumnDefinition>
+                        <ColumnDefinition Width="6*"></ColumnDefinition>
+                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
                     
-                    <TextBox Grid.Row="0" Height="20" Width="150" VerticalAlignment="Center" HorizontalAlignment="Left" TextChanged="SpremniciSearch_TextChanged" x:Name="SpremniciSearch">
+                    <TextBox Grid.Row="0" Grid.Column="0" Height="20" VerticalAlignment="Center" HorizontalAlignment="Stretch" TextChanged="SpremniciSearch_TextChanged" x:Name="SpremniciSearch">
                         <TextBox.ToolTip>
                             <ToolTip>
                                 <StackPanel>
@@ -315,7 +334,7 @@
                             </ToolTip>
                         </TextBox.ToolTip>
                     </TextBox>
-                    <ComboBox Grid.Row="1" x:Name="cmbProstorije" HorizontalAlignment="Left"  VerticalAlignment="Center" Width="120" SelectionChanged="cmbProstorije_SelectionChanged">
+                    <ComboBox Grid.Row="1" Grid.Column="0" x:Name="cmbProstorije" HorizontalAlignment="Stretch"  VerticalAlignment="Center" SelectionChanged="cmbProstorije_SelectionChanged">
                         <ComboBox.ToolTip>
                             <ToolTip>
                                 <StackPanel>
@@ -326,88 +345,73 @@
                         </ComboBox.ToolTip>
                     </ComboBox>
 
-                    <Button Grid.Row="1"  x:Name="btnPrikaziSveSpremnike" Content="Prikaži sve" HorizontalAlignment="Left" VerticalAlignment="Center" Width="auto" Margin="154,0,0,0" Click="btnPrikaziSveSpremnike_Click"/>
-                    <DataGrid Grid.Row="2" x:Name="dgSpremnici" HorizontalAlignment="Stretch"   VerticalAlignment="Top"></DataGrid>
+                    <Button Grid.Row="1" Grid.Column="1"  x:Name="btnPrikaziSveSpremnike" Content="Prikaži sve" HorizontalAlignment="Left" VerticalAlignment="Center" Width="auto" Margin="5,0,0,0" Click="btnPrikaziSveSpremnike_Click"/>
+                    <DataGrid Grid.Row="2" Grid.ColumnSpan="5" x:Name="dgSpremnici" HorizontalAlignment="Stretch"   VerticalAlignment="Top"></DataGrid>
 
-                    <Grid>
-                        <Button Grid.Row="0" Name="btnKreirajSpremnik" Margin="1,0,65,0" Click="btnKreirajSpremnik_Click" VerticalAlignment="Top" HorizontalAlignment="Right" RenderTransformOrigin="1,0.5">
-                            <Button.Effect>
+                    <Button Grid.Row="0" Grid.Column="2" Name="btnKreirajSpremnik" Click="btnKreirajSpremnik_Click" VerticalAlignment="Center" HorizontalAlignment="Center" RenderTransformOrigin="1,0.5">
+                        <Button.Effect>
+                            <DropShadowEffect BlurRadius="1" Opacity="0.3" Color="White" ShadowDepth="1" Direction="180"/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate>
+                                <Image Source="/images/kreiraj.ico" Stretch="Uniform" MaxWidth="40" MaxHeight="40"/>
+                            </ControlTemplate>
+                        </Button.Template>
+                        <Button.ToolTip>
+                            <ToolTip>
+                                <StackPanel>
+                                    <TextBlock FontWeight="Bold">Kreiraj spremnik</TextBlock>
+                                    <TextBlock>Otvara formu za kreiranje novog spremnika</TextBlock>
+                                </StackPanel>
+                            </ToolTip>
+                        </Button.ToolTip>
+                    </Button>
+
+                    <Button Grid.Row="0" Grid.Column="3" Name="btnIzmjeniSpremnik" VerticalAlignment="Center" Click="btnIzmjeniSpremnik_Click" HorizontalAlignment="Center" >
+                        <Button.Effect>
+                            <DropShadowEffect BlurRadius="1" Opacity="0.3" Color="White" ShadowDepth="1" Direction="180"/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate>
+                                <Image Source="/images/izmjeni.ico" Stretch="Uniform" MaxWidth="40" MaxHeight="40"/>
+                            </ControlTemplate>
+                        </Button.Template>
+                        <Button.ToolTip>
+                            <ToolTip>
+                                <StackPanel>
+                                    <TextBlock FontWeight="Bold">Izmjeni spremnik</TextBlock>
+                                    <TextBlock>Otvara formu za izmjenu označenog spremnika. Spremnik možete označiti sa lijevom tipkom miša.</TextBlock>
+                                </StackPanel>
+                            </ToolTip>
+                        </Button.ToolTip>
+                    </Button>
+
+                    <Button Grid.Row="0" Grid.Column="4" Name="btnObrisiSpremnik" VerticalAlignment="Center" Click="btnObrisiSpremnik_Click" HorizontalAlignment="Center" >
+                        <Button.Effect>
+                            <DropShadowEffect BlurRadius="1" Opacity="0.3" Color="White" ShadowDepth="1" Direction="180"/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate>
+                                <Image Source="/images/remove.ico" Stretch="Uniform" MaxWidth="40" MaxHeight="40"/>
+                            </ControlTemplate>
+                        </Button.Template>
+                        <Button.ToolTip>
+                            <ToolTip>
+                                <StackPanel>
+                                    <TextBlock FontWeight="Bold">Obriši spremnik</TextBlock>
+                                    <TextBlock>Briše označene spremnike iz baze podataka. Više spremnika možete odabrati koristeći ctrl ili shift tipku + lijevi klik miša.</TextBlock>
+                                </StackPanel>
+                            </ToolTip>
+                        </Button.ToolTip>
+                    </Button>
+
+                    <Button  Grid.Row="0" Grid.Column="1" Name="btnSearchSpremnici"  VerticalAlignment="Center" HorizontalAlignment="Left" >
+                        <Button.Effect>
                                 <DropShadowEffect BlurRadius="1" Opacity="0.3" Color="White" ShadowDepth="1" Direction="180"/>
                             </Button.Effect>
                             <Button.Template>
                                 <ControlTemplate>
-                                    <Image Source="/images/kreiraj.ico"/>
-                                </ControlTemplate>
-                            </Button.Template>
-                            <Button.ToolTip>
-                                <ToolTip>
-                                    <StackPanel>
-                                        <TextBlock FontWeight="Bold">Kreiraj spremnik</TextBlock>
-                                        <TextBlock>Otvara formu za kreiranje novog spremnika</TextBlock>
-                                    </StackPanel>
-                                </ToolTip>
-                            </Button.ToolTip>
-                        </Button>
-                    </Grid>
-
-                    <Grid >
-                        <Button Grid.Row="0" Name="btnIzmjeniSpremnik" Margin="1,0,37,0" VerticalAlignment="Top" RenderTransformOrigin="0,0.5" Click="btnIzmjeniSpremnik_Click" HorizontalAlignment="Right" >
-                            <Button.Effect>
-                                <DropShadowEffect BlurRadius="1" Opacity="0.3" Color="White" ShadowDepth="1" Direction="180"/>
-                            </Button.Effect>
-                            <Button.Template>
-                                <ControlTemplate>
-                                    <Image Source="/images/izmjeni.ico"/>
-                                </ControlTemplate>
-                            </Button.Template>
-                            <Button.ToolTip>
-                                <ToolTip>
-                                    <StackPanel>
-                                        <TextBlock FontWeight="Bold">Izmjeni spremnik</TextBlock>
-                                        <TextBlock>Otvara formu za izmjenu označenog spremnika. Spremnik možete označiti sa lijevom tipkom miša.</TextBlock>
-                                    </StackPanel>
-                                </ToolTip>
-                            </Button.ToolTip>
-                        </Button>
-                    </Grid>
-
-                    <Grid >
-                        <Button Grid.Row="0" Name="btnObrisiSpremnik" Margin="1,0,10,0" VerticalAlignment="Top" RenderTransformOrigin="-0.5,0.5" Click="btnObrisiSpremnik_Click" HorizontalAlignment="Right" >
-                            <Button.Effect>
-                                <DropShadowEffect BlurRadius="1" Opacity="0.3" Color="White" ShadowDepth="1" Direction="180"/>
-                            </Button.Effect>
-                            <Button.Template>
-                                <ControlTemplate>
-                                    <Image Source="/images/remove.ico"/>
-                                </ControlTemplate>
-                            </Button.Template>
-                            <Button.ToolTip>
-                                <ToolTip>
-                                    <StackPanel>
-                                        <TextBlock FontWeight="Bold">Obriši spremnik</TextBlock>
-                                        <TextBlock>Briše označene spremnike iz baze podataka. Više spremnika možete odabrati koristeći ctrl ili shift tipku + lijevi klik miša.</TextBlock>
-                                    </StackPanel>
-                                </ToolTip>
-                            </Button.ToolTip>
-                        </Button>
-                    </Grid>
-
-                    <Grid  Height="30" Margin="0,0,0,2">
-                        <Button  Grid.Row="0" Name="btnSearchSpremnici" Margin="212,0,0,0" RenderTransformOrigin="0.333,0.5" VerticalAlignment="Top" HorizontalAlignment="Left" >
-                            <Button.RenderTransform>
-                                <TransformGroup>
-                                    <ScaleTransform ScaleX="-1"/>
-                                    <SkewTransform/>
-                                    <RotateTransform/>
-                                    <TranslateTransform X="-49.98"/>
-                                </TransformGroup>
-                            </Button.RenderTransform>
-                            <Button.Effect>
-                                <DropShadowEffect BlurRadius="1" Opacity="0.3" Color="White" ShadowDepth="1" Direction="180"/>
-                            </Button.Effect>
-                            <Button.Template>
-                                <ControlTemplate>
-                                    <Image Source="/images/search.ico"/>
+                                <Image Source="/images/search.ico" Stretch="Uniform" MaxWidth="40" MaxHeight="40"/>
                                 </ControlTemplate>
                             </Button.Template>
                             <Button.ToolTip>
@@ -420,29 +424,28 @@
                             </Button.ToolTip>
                         </Button>
 
-                    </Grid>
 
                 </Grid>
             </Grid>
 
             <Grid Grid.Column="1" Grid.Row="1" x:Name="gridKreirajSpremnik" Visibility="Collapsed">
-                <Rectangle Fill="#FF3A3A3A"></Rectangle>
+                <Rectangle></Rectangle>
                 <ScrollViewer>
                     <StackPanel>
-                        <Label Content="Naziv spremnika" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White"/>
+                        <Label Content="Naziv spremnika" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="{DynamicResource labelsColor}"/>
                         <TextBox x:Name="txbNoviSpremnikNaziv" HorizontalAlignment="Center" Height="23" Text="" VerticalAlignment="Top" Width="120"/>
 
-                        <Label Content="Zapremnina spremnika" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White"/>
+                        <Label Content="Zapremnina spremnika" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="{DynamicResource labelsColor}"/>
                         <TextBox x:Name="txbNoviSpremnikZapremnina" HorizontalAlignment="Center" Height="23"  Text="" VerticalAlignment="Top" Width="120"/>
 
-                        <Label Content="Opis" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White"/>
+                        <Label Content="Opis" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="{DynamicResource labelsColor}"/>
                         <TextBox x:Name="txbNoviSpremnikOpis" HorizontalAlignment="Center" Height="23"  TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-                        <Label Content="Prostorija kojoj pripada" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White"/>
+                        <Label Content="Prostorija kojoj pripada" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="{DynamicResource labelsColor}"/>
                         <ComboBox x:Name="cmbProstorijeKreiranjeSpremnika" HorizontalAlignment="Center" VerticalAlignment="Top" Width="120"/>
-                        <Label Content="Tip spremnika" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="24" Foreground="White" RenderTransformOrigin="-0.108,0.476"  Margin="0"/>
+                        <Label Content="Tip spremnika" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="24" Foreground="{DynamicResource labelsColor}" RenderTransformOrigin="-0.108,0.476"  Margin="0"/>
                         <ComboBox x:Name="cmbTipSpreminka" HorizontalAlignment="Center" VerticalAlignment="Top" Width="120" Grid.Column="1" Margin="0"/>
 
-                        <Label Content="Koliko ovakvih spremnika zelite unjeti?" HorizontalAlignment="Center" Margin="0" VerticalAlignment="Top" Grid.Column="0" FontSize="24" Foreground="White"/>
+                        <Label Content="Koliko ovakvih spremnika zelite unjeti?" HorizontalAlignment="Center" Margin="0" VerticalAlignment="Top" Grid.Column="0" FontSize="24" Foreground="{DynamicResource labelsColor}"/>
                         <TextBox x:Name="txbBrojSpremnikaUnos" HorizontalAlignment="Center" Height="23"  TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Margin="0"/>
 
 
@@ -470,18 +473,18 @@
             </Grid>
 
             <Grid Grid.Column="1" Grid.Row="1" x:Name="gridIzmjeniSpremnik" Visibility="Collapsed">
-                <Rectangle Fill="#FF3A3A3A"></Rectangle>
+                <Rectangle></Rectangle>
                 <StackPanel>
-                    <Label Content="Naziv spremnika" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White"/>
+                    <Label Content="Naziv spremnika" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="{DynamicResource labelsColor}"/>
                     <TextBox x:Name="txbSpremnikNoviNaziv" HorizontalAlignment="Center" Height="23" Text="" VerticalAlignment="Top" Width="120"/>
 
-                    <Label Content="Zapremnina spremnika" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White"/>
+                    <Label Content="Zapremnina spremnika" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="{DynamicResource labelsColor}"/>
                     <TextBox x:Name="txbSpremnikNovaZapremnina" HorizontalAlignment="Center" Height="23"  Text="" VerticalAlignment="Top" Width="120"/>
 
-                    <Label Content="Opis" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White"/>
+                    <Label Content="Opis" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="{DynamicResource labelsColor}"/>
                     <TextBox x:Name="txbSpremnikNoviOpis" HorizontalAlignment="Center" Height="23"  TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
 
-                    <Label Content="Prostorija kojoj pripada" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White"/>
+                    <Label Content="Prostorija kojoj pripada" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="{DynamicResource labelsColor}"/>
                     <ComboBox x:Name="cmbProstorijeIzmjenaSpremnika" HorizontalAlignment="Center" VerticalAlignment="Top" Width="120"/>
                     <TextBox x:Name="txbSpremnikID" HorizontalAlignment="Center" Height="23"  TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Visibility="Collapsed"/>
                     <Grid Height="40" HorizontalAlignment="Center" Width="282" Margin="176,0" >
@@ -511,7 +514,7 @@
 
             <Grid Grid.Column="1" Grid.Row="1" x:Name="gridStavke" Visibility="Visible">
 
-                <Rectangle Fill="#FF3A3A3A"></Rectangle>
+                <Rectangle></Rectangle>
                 <Grid Margin="5,5,5,5">
 
                     <Grid.RowDefinitions>
@@ -520,8 +523,15 @@
                         <RowDefinition Height="10*"></RowDefinition>
                         <RowDefinition Height="1*"></RowDefinition>
                     </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="3*"></ColumnDefinition>
+                        <ColumnDefinition Width="6*"></ColumnDefinition>
+                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
 
-                    <TextBox Grid.Row="0" Height="20" Width="150" VerticalAlignment="Top" HorizontalAlignment="Left" TextChanged="StavkeSearch_TextChanged" x:Name="StavkeSearch">
+                    <TextBox Grid.Row="0" Grid.Column="0" Height="20" VerticalAlignment="Center" HorizontalAlignment="Stretch" TextChanged="StavkeSearch_TextChanged" x:Name="StavkeSearch">
                         <TextBox.ToolTip>
                             <ToolTip>
                                 <StackPanel>
@@ -531,7 +541,7 @@
                             </ToolTip>
                         </TextBox.ToolTip>
                     </TextBox>
-                    <ComboBox Grid.Row="1" x:Name="cmbSpremnici" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="120" SelectionChanged="cmbSpremnici_SelectionChanged">
+                    <ComboBox Grid.Row="1" Grid.Column="0" x:Name="cmbSpremnici" HorizontalAlignment="Stretch"  VerticalAlignment="Center"  SelectionChanged="cmbSpremnici_SelectionChanged">
                         <ComboBox.ToolTip>
                             <ToolTip>
                                 <StackPanel>
@@ -541,100 +551,81 @@
                             </ToolTip>
                         </ComboBox.ToolTip>
                     </ComboBox>
-                    <DataGrid Grid.Row="2" x:Name="dgStavke" HorizontalAlignment="Stretch" VerticalAlignment="Top"></DataGrid>
-                    
-
-                    <Grid>
-                        <Button Grid.Row="0" Name="btnKreirajStavku" Margin="1,0,65,0" Click="BtnKreirajStavku_Click" VerticalAlignment="Top" HorizontalAlignment="Right" RenderTransformOrigin="1,0.5">
-                            <Button.Effect>
-                                <DropShadowEffect BlurRadius="1" Opacity="0.3" Color="White" ShadowDepth="1" Direction="180"/>
-                            </Button.Effect>
-                            <Button.Template>
-                                <ControlTemplate>
-                                    <Image Source="/images/kreiraj.ico"/>
-                                </ControlTemplate>
-                            </Button.Template>
-                            <Button.ToolTip>
-                                <ToolTip>
-                                    <StackPanel>
-                                        <TextBlock FontWeight="Bold">Kreiraj stavku</TextBlock>
-                                        <TextBlock>Otvara formu za kreiranje nove stavke</TextBlock>
-                                    </StackPanel>
-                                </ToolTip>
-                            </Button.ToolTip>
-                        </Button>
-                    </Grid>
-
-                    <Grid >
-                        <Button Grid.Row="0" Name="btnIzmjeniStavku" Margin="1,0,37,0" VerticalAlignment="Top" RenderTransformOrigin="0,0.5" Click="BtnIzmijeniStavku_Click" HorizontalAlignment="Right" >
-                            <Button.Effect>
-                                <DropShadowEffect BlurRadius="1" Opacity="0.3" Color="White" ShadowDepth="1" Direction="180"/>
-                            </Button.Effect>
-                            <Button.Template>
-                                <ControlTemplate>
-                                    <Image Source="/images/izmjeni.ico"/>
-                                </ControlTemplate>
-                            </Button.Template>
-                            <Button.ToolTip>
-                                <ToolTip>
-                                    <StackPanel>
-                                        <TextBlock FontWeight="Bold">Izmjeni stavku</TextBlock>
-                                        <TextBlock>Otvara formu za izmjenu označene stavke. Stavku možete označiti pritiskom na lijevu tipku miša.</TextBlock>
-                                    </StackPanel>
-                                </ToolTip>
-                            </Button.ToolTip>
-                        </Button>
-                    </Grid>
-
-                    <Grid >
-                        <Button Grid.Row="0" Name="btnObrisiStavku" Margin="1,0,10,0" VerticalAlignment="Top" RenderTransformOrigin="-0.5,0.5" Click="BtnObrisiStavku_Click" HorizontalAlignment="Right" >
-                            <Button.Effect>
-                                <DropShadowEffect BlurRadius="1" Opacity="0.3" Color="White" ShadowDepth="1" Direction="180"/>
-                            </Button.Effect>
-                            <Button.Template>
-                                <ControlTemplate>
-                                    <Image Source="/images/remove.ico"/>
-                                </ControlTemplate>
-                            </Button.Template>
-                            <Button.ToolTip>
-                                <ToolTip>
-                                    <StackPanel>
-                                        <TextBlock FontWeight="Bold">Obriši stavku</TextBlock>
-                                        <TextBlock>Briše označenu stavku. Više stavki možete obrisati tako da pritisnete crl ili shit + lijevi klik miša.</TextBlock>
-                                    </StackPanel>
-                                </ToolTip>
-                            </Button.ToolTip>
-                        </Button>
-                    </Grid>
-
-                    <Grid  Height="30" Margin="0,0,0,2">
-                        <Button  Grid.Row="0" Name="btnSearchStavke" Margin="212,0,0,0" RenderTransformOrigin="0.333,0.5" VerticalAlignment="Top" HorizontalAlignment="Left" >
-                            <Button.RenderTransform>
-                                <TransformGroup>
-                                    <ScaleTransform ScaleX="-1"/>
-                                    <SkewTransform/>
-                                    <RotateTransform/>
-                                    <TranslateTransform X="-49.98"/>
-                                </TransformGroup>
-                            </Button.RenderTransform>
-                            <Button.Effect>
-                                <DropShadowEffect BlurRadius="1" Opacity="0.3" Color="White" ShadowDepth="1" Direction="180"/>
-                            </Button.Effect>
-                            <Button.Template>
-                                <ControlTemplate>
-                                    <Image Source="/images/search.ico"/>
-                                </ControlTemplate>
-                            </Button.Template>
-                            <Button.ToolTip>
-                                <ToolTip>
-                                    <StackPanel>
-                                        <TextBlock FontWeight="Bold">Pretraži stavke</TextBlock>
-                                        <TextBlock>Upišite naziv ili dio naziva stavke...</TextBlock>
-                                    </StackPanel>
-                                </ToolTip>
-                            </Button.ToolTip>
-                        </Button>
-                    </Grid>
+                    <Button Grid.Row="1" Grid.Column="1"  x:Name="btnPrikaziSveStavke" Content="Prikaži sve" HorizontalAlignment="Left" VerticalAlignment="Center" Width="auto" Margin="5,0,0,0" Click="btnPrikaziSveStavke_Click"/>
+                    <DataGrid Grid.Row="2" Grid.ColumnSpan="2" x:Name="dgStavke" HorizontalAlignment="Stretch" VerticalAlignment="Top" SelectionChanged="DgStavke_SelectionChanged"></DataGrid>
+                    <ListBox Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="3" x:Name="lbOznakeStavke" HorizontalAlignment="Stretch"  VerticalAlignment="Top" Margin="5,0,0,0"/>
+                    <Button Grid.Row="0" Grid.Column="2" Name="btnKreirajStavku" Click="BtnKreirajStavku_Click" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <Button.Effect>
+                            <DropShadowEffect BlurRadius="1" Opacity="0.3" Color="White" ShadowDepth="1" Direction="180"/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate>
+                                <Image Source="/images/kreiraj.ico" Stretch="Uniform" MaxWidth="40" MaxHeight="40"/>
+                            </ControlTemplate>
+                        </Button.Template>
+                        <Button.ToolTip>
+                            <ToolTip>
+                                <StackPanel>
+                                    <TextBlock FontWeight="Bold">Kreiraj stavku</TextBlock>
+                                    <TextBlock>Otvara formu za kreiranje nove stavke</TextBlock>
+                                </StackPanel>
+                            </ToolTip>
+                        </Button.ToolTip>
+                    </Button>
+                    <Button Grid.Row="0" Grid.Column="3" Name="btnIzmjeniStavku" VerticalAlignment="Center"  Click="BtnIzmijeniStavku_Click" HorizontalAlignment="Center" >
+                        <Button.Effect>
+                            <DropShadowEffect BlurRadius="1" Opacity="0.3" Color="White" ShadowDepth="1" Direction="180"/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate>
+                                <Image Source="/images/izmjeni.ico" Stretch="Uniform" MaxWidth="40" MaxHeight="40"/>
+                            </ControlTemplate>
+                        </Button.Template>
+                        <Button.ToolTip>
+                            <ToolTip>
+                                <StackPanel>
+                                    <TextBlock FontWeight="Bold">Izmjeni stavku</TextBlock>
+                                    <TextBlock>Otvara formu za izmjenu označene stavke. Stavku možete označiti pritiskom na lijevu tipku miša.</TextBlock>
+                                </StackPanel>
+                            </ToolTip>
+                        </Button.ToolTip>
+                    </Button>
+                    <Button Grid.Row="0" Grid.Column="4" Name="btnObrisiStavku" VerticalAlignment="Center" Click="BtnObrisiStavku_Click" HorizontalAlignment="Center" >
+                        <Button.Effect>
+                            <DropShadowEffect BlurRadius="1" Opacity="0.3" Color="White" ShadowDepth="1" Direction="180"/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate>
+                                <Image Source="/images/remove.ico" Stretch="Uniform" MaxWidth="40" MaxHeight="40"/>
+                            </ControlTemplate>
+                        </Button.Template>
+                        <Button.ToolTip>
+                            <ToolTip>
+                                <StackPanel>
+                                    <TextBlock FontWeight="Bold">Obriši stavku</TextBlock>
+                                    <TextBlock>Briše označenu stavku. Više stavki možete obrisati tako da pritisnete crl ili shit + lijevi klik miša.</TextBlock>
+                                </StackPanel>
+                            </ToolTip>
+                        </Button.ToolTip>
+                    </Button>
+                    <Button  Grid.Row="0" Grid.Column="1" Name="btnSearchStavke" VerticalAlignment="Center" HorizontalAlignment="Left" >
+                        <Button.Effect>
+                            <DropShadowEffect BlurRadius="1" Opacity="0.3" Color="White" ShadowDepth="1" Direction="180"/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate>
+                                <Image Source="/images/search.ico" Stretch="Uniform" MaxWidth="40" MaxHeight="40"/>
+                            </ControlTemplate>
+                        </Button.Template>
+                        <Button.ToolTip>
+                            <ToolTip>
+                                <StackPanel>
+                                    <TextBlock FontWeight="Bold">Pretraži stavke</TextBlock>
+                                    <TextBlock>Upišite naziv ili dio naziva stavke...</TextBlock>
+                                </StackPanel>
+                            </ToolTip>
+                        </Button.ToolTip>
+                    </Button>
 
 
                 </Grid>
@@ -642,10 +633,10 @@
 
             <Grid Grid.Column="1" Grid.Row="1" x:Name="gridKreirajStavku" Visibility="Collapsed">
 
-                <Rectangle Fill="#FF3A3A3A"></Rectangle>
+                <Rectangle></Rectangle>
                 <StackPanel>
 
-                    <Label Content="Naziv stavke" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White"/>
+                    <Label Content="Naziv stavke" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="{DynamicResource labelsColor}"/>
                     <TextBox x:Name="txbStavkaNoviNaziv" HorizontalAlignment="Center" Height="23" Text="" VerticalAlignment="Top" Width="120"/>
 
                     <Grid Height="135" HorizontalAlignment="Center" Width="460" Margin="92,0,82,0" >
@@ -658,20 +649,20 @@
                             <ColumnDefinition Width="0.5*"/>
                         </Grid.ColumnDefinitions>
 
-                        <Label Content="Spremnik" HorizontalAlignment="Right" Margin="0,0,60,0" VerticalAlignment="Top" FontSize="24" Foreground="White" Grid.Column="0" MinWidth="110"/>
+                        <Label Content="Spremnik" HorizontalAlignment="Right" Margin="0,0,60,0" VerticalAlignment="Top" FontSize="24" Foreground="{DynamicResource labelsColor}" Grid.Column="0" MinWidth="110"/>
                         <ComboBox x:Name="cmbSpremniciKreirajStavku" HorizontalAlignment="Right" VerticalAlignment="Top" Width="210" Margin="0,47,10,0"  Grid.Column="0"/>
 
-                        <Label Content="Oznake" HorizontalAlignment="Left" Margin="71,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" Grid.Column="1" MinWidth="89" />
+                        <Label Content="Oznake" HorizontalAlignment="Left" Margin="71,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="{DynamicResource labelsColor}" Grid.Column="1" MinWidth="89" />
                         <ListBox x:Name="lbOznakeKreirajStavku" HorizontalAlignment="Left" VerticalAlignment="Top" Width="210" Height="66"  SelectionMode="Multiple" Margin="10,42,0,0" Grid.Column="1"/>
 
 
 
                     </Grid>
 
-                    <Label Content="Datum isteka" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White"/>
+                    <Label Content="Datum isteka" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="{DynamicResource labelsColor}"/>
                     <DatePicker x:Name="dpStavkaIstekRoka" FirstDayOfWeek="Monday" IsDropDownOpen="False" SelectedDateFormat="Short" Margin="0" Width="120" MinWidth="120" />
 
-                    <Label Content="Zauzima (L/Kg)" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White"/>
+                    <Label Content="Zauzima (L/Kg)" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="{DynamicResource labelsColor}"/>
                     <TextBox x:Name="txbZauzimaKreirajStavku" HorizontalAlignment="Center" Height="23" Text="" VerticalAlignment="Top" Width="120"/>
                     <Grid Height="40" HorizontalAlignment="Center" Width="197" Margin="0" >
                         <Grid.ColumnDefinitions>
@@ -696,7 +687,7 @@
 
             <Grid Grid.Column="1" Grid.Row="1" x:Name="gridIzmjeniStavku" Visibility="Collapsed">
 
-                <Rectangle Fill="#FF3A3A3A"></Rectangle>
+                <Rectangle></Rectangle>
                 <StackPanel>
 
                     <Grid Height="205" HorizontalAlignment="Center" Width="460" Margin="92,0,82,0" >
@@ -710,34 +701,34 @@
                             <ColumnDefinition Width="23*"/>
                         </Grid.ColumnDefinitions>
 
-                        <Label Content="Zauzima (L/Kg)" HorizontalAlignment="Center" Margin="2,49,40,0" VerticalAlignment="Top" FontSize="24" Foreground="White" Grid.Column="0" Grid.RowSpan="2"/>
+                        <Label Content="Zauzima (L/Kg)" HorizontalAlignment="Center" Margin="2,49,40,0" VerticalAlignment="Top" FontSize="24" Foreground="{DynamicResource labelsColor}" Grid.Column="0" Grid.RowSpan="2"/>
                         <TextBox x:Name="txbIzmjeniStavkuNovoZauzece" HorizontalAlignment="Center" Height="23"  Text="" VerticalAlignment="Top" Width="120" Grid.Column="0" Margin="20,96,70,0" Grid.RowSpan="2"/>
 
                         <TextBox x:Name="txbIzmjeniStavkuStavkaIdSkriven" Visibility="Collapsed"></TextBox>
 
-                        <Label Content="Oznake" HorizontalAlignment="Left" Margin="70,-8,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" Grid.Column="2" MinWidth="89" />
+                        <Label Content="Oznake" HorizontalAlignment="Left" Margin="70,-8,0,0" VerticalAlignment="Top" FontSize="24" Foreground="{DynamicResource labelsColor}" Grid.Column="2" MinWidth="89" />
                         <ListBox x:Name="lbIzmjeniStavkuOznake" HorizontalAlignment="Left" VerticalAlignment="Top" Width="210" Height="66"  SelectionMode="Multiple" Margin="10,31,0,0" Grid.Column="2" SelectionChanged="lbIzmjeniStavkuOznake_SelectionChanged"/>
 
-                        <Label Content="Oznake stavke" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" Foreground="White" MinWidth="89" Margin="35,86,33,77" Grid.Column="2" Grid.RowSpan="2" />
+                        <Label Content="Oznake stavke" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" Foreground="{DynamicResource labelsColor}" MinWidth="89" Margin="35,86,33,77" Grid.Column="2" Grid.RowSpan="2" />
                         <ListBox x:Name="lbIzmjeniStavkuNjeneOznake" HorizontalAlignment="Center" VerticalAlignment="Center" Width="210" Height="66"  SelectionMode="Multiple" SelectionChanged="lbIzmjeniStavkuNjeneOznake_SelectionChanged" Grid.Column="2" Margin="10,21,10,16" Grid.Row="1" />
 
 
                         <StackPanel Grid.Row="1" Grid.ColumnSpan="3"/>
 
-                        <Label Content="Datum isteka" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="24" Foreground="White" Margin="10,21,51,0" Grid.Row="1"/>
+                        <Label Content="Datum isteka" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="24" Foreground="{DynamicResource labelsColor}" Margin="10,21,51,0" Grid.Row="1"/>
                         <DatePicker x:Name="dpIzmjeniStavkuNoviIstekRoka"  FirstDayOfWeek="Monday" IsDropDownOpen="False" SelectedDateFormat="Short" Width="120" MinWidth="120" Margin="31,58,59,10" Grid.Row="1" />
 
                         <TextBox x:Name="txbStavkaID" HorizontalAlignment="Center" Height="23"  TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Visibility="Collapsed" Margin="55,0,35,0"/>
                         <TextBox x:Name="txbIzmjeniStavkuSpremnikID" HorizontalAlignment="Center" Height="23"  TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Visibility="Collapsed" Margin="55,0,35,0"/>
                         <TextBox x:Name="txbIzmjeniStavkuNoviNaziv" HorizontalAlignment="Center" Height="23" Text="" VerticalAlignment="Top" Width="120" Margin="20,28,70,0"/>
-                        <Label Content="Naziv stavke" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="24" Foreground="White" Margin="10,-8,59,0"/>
+                        <Label Content="Naziv stavke" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="24" Foreground="{DynamicResource labelsColor}" Margin="10,-8,59,0"/>
 
                     </Grid>
 
-                    <Label Content="Prostorija" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White"/>
+                    <Label Content="Prostorija" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="{DynamicResource labelsColor}"/>
                     <ComboBox x:Name="cmbProstorijeIzmjenaStavke" HorizontalAlignment="Center" VerticalAlignment="Top" Width="282" Margin="176,0" SelectionChanged="CmbProstorijeIzmjenaStavke_SelectionChanged"/>
 
-                    <Label Content="Spremnik" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White"/>
+                    <Label Content="Spremnik" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="{DynamicResource labelsColor}"/>
                     <ComboBox x:Name="cmbSpremniciOdabraneProstorije" HorizontalAlignment="Center" VerticalAlignment="Top" Width="282" Margin="176,0"/>
 
                     <Grid Height="40" HorizontalAlignment="Center" Width="282" Margin="176,0" >
@@ -765,17 +756,20 @@
 
             
             
-            <Grid Grid.Column="1" Grid.Row="1" x:Name="gridOpcije" Visibility="Collapsed">
-                <Rectangle Fill="#FF3A3A3A"></Rectangle>
-                <Label Content="Dark Theme" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White"/>
-                <CheckBox x:Name="chkDarkTheme" Margin="150,20,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120"/>
-                <Label Margin="0,50,0,0" FontWeight="Bold" Foreground="White" Content="Koliko dana prije isteka roka trajanja stavke želite da vas obavijestimo?"></Label>
-                <TextBox Height="20" Margin="5,70,0,0" Width="100" HorizontalAlignment="Left" VerticalAlignment="Top" x:Name="BrojDana"></TextBox>
-                <Button  x:Name="btnSpremiPostavke" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Spremi postavke" Margin="5,110,0,0" Width="100" Height="20" Click="btnSpremiPostavke_Click"></Button>
+            <Grid Grid.Column="1" Grid.Row="1" x:Name="gridOpcije" Visibility="Hidden">
+                <Rectangle></Rectangle>
+                <StackPanel>
+                    <Label Content="Dark Theme" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="{DynamicResource labelsColor}"/>
+                    <CheckBox x:Name="chkDarkTheme" HorizontalAlignment="Center" VerticalAlignment="Top"  Click="chkDarkTheme_Click"/>
+                    <Label Margin="0,10,0,0" HorizontalAlignment="Center" FontWeight="Bold" Foreground="{DynamicResource labelsColor}" Content="Koliko dana prije isteka roka trajanja stavke želite da vas obavijestimo?"></Label>
+                    <TextBox Height="20"  Width="100" HorizontalAlignment="Center" VerticalAlignment="Top" x:Name="BrojDana"></TextBox>
+                    <Button  x:Name="btnSpremiPostavke" HorizontalAlignment="Center" VerticalAlignment="Top" Content="Spremi postavke" Margin="0,10,0,0" Width="100" Height="20" Click="btnSpremiPostavke_Click"></Button>
+                </StackPanel>
+     
             </Grid>
 
             <Grid Grid.Column="1" Grid.Row="1" x:Name="gridStavkePredIstekom" Visibility="Collapsed">
-                <Rectangle Fill="#FF3A3A3A"></Rectangle>
+                <Rectangle></Rectangle>
                 <DataGrid Grid.Row="1" x:Name="dgStavkePredIstekom" HorizontalAlignment="Stretch"  Margin="10,50,10,10" VerticalAlignment="Top"></DataGrid>
             </Grid>
 

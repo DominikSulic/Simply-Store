@@ -25,6 +25,10 @@ namespace WpfApp1
         public MainWindow()
         {
             InitializeComponent();
+
+
+           
+
             gridovi.Add("gridPocetna", gridPocetna);
 
             gridovi.Add("gridProstorije", gridProstorije);
@@ -53,7 +57,32 @@ namespace WpfApp1
             }
         }
 
+        private List<int> dohvatiDatotekuPodatke()
+        {
+            List<int> podaciDatoteke = new List<int>();
+            var putanja = Directory.GetCurrentDirectory();
+            putanja += "\\postavke.txt";
+            int darkTheme = 1;
+            int brojDana = 3;
+            if (File.Exists(putanja))
+            {
+                string[] lines = File.ReadAllLines(putanja);
+                foreach (string line in lines)
+                {
+                    string[] col = line.Split(new char[] { ',' });
+                    brojDana = Convert.ToInt32(col[0]);
+                    darkTheme = Convert.ToInt32(col[1]);
+                }
 
+                if (darkTheme == 1)postaviDark();
+                else postaviLight();
+            }
+            else postaviDark();
+
+            podaciDatoteke.Add(brojDana);
+            podaciDatoteke.Add(darkTheme);
+            return podaciDatoteke;
+        }
         #region Prikazi
         public void PrikaziProstorije()
         {
@@ -63,7 +92,7 @@ namespace WpfApp1
         public void PrikaziSpremnike()
         {
             cmbProstorije.ItemsSource = PrikazProstorije.dohvatiProstorije();
-            
+
             dgSpremnici.ItemsSource = PrikazSpremnici.dohvatiSpremnike();
 
 
@@ -96,7 +125,7 @@ namespace WpfApp1
         {
             naslovLabel.Content = "Spremnici";
             PrikaziSpremnike();
-            
+
             promjeniGrid("gridSpremnici");
 
         }
@@ -119,31 +148,18 @@ namespace WpfApp1
             naslovLabel.Content = "Stavke pred istekom";
             promjeniGrid("gridStavkePredIstekom");
 
+
             var putanja = Directory.GetCurrentDirectory();
             putanja += "\\postavke.txt";
-
-            string[] fileDan = new string[5];
             int brojDana = 3;
-
             if (File.Exists(putanja))
             {
-                StreamReader sr = new StreamReader(putanja);
-                while (!sr.EndOfStream)
+                string[] lines = File.ReadAllLines(putanja);
+                foreach (string line in lines)
                 {
-                    string p = sr.ReadLine();
-                    fileDan = p.Split('\n');
+                    string[] col = line.Split(new char[] { ',' });
+                    brojDana = Convert.ToInt32(col[0]);
                 }
-
-                foreach (string linija in fileDan)
-                {
-                    if (linija.Contains("BD:"))
-                    {
-                        brojDana = int.Parse(linija.Substring(linija.Length - 1, 1));
-                    }
-                }
-
-                sr.Close();
-
                 dgStavkePredIstekom.ItemsSource = PrikazStavke.dohvatiStavkePredIstekom(brojDana);
             }
             else
@@ -156,6 +172,17 @@ namespace WpfApp1
         {
             naslovLabel.Content = "Opcije";
             promjeniGrid("gridOpcije");
+            List<int> podaciDatoteke = dohvatiDatotekuPodatke();
+            if (podaciDatoteke[1] == 1)
+            {
+                chkDarkTheme.IsChecked = true;
+            }
+            else
+            {
+                chkDarkTheme.IsChecked = false;
+            }
+            BrojDana.Text = Convert.ToString(podaciDatoteke[0]);
+
         }
 
         #endregion
@@ -163,8 +190,8 @@ namespace WpfApp1
 
         private void cmbProstorije_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            
-            PrikazProstorije selektiranaProstorija = (PrikazProstorije)cmbProstorije.SelectedItem; 
+
+            PrikazProstorije selektiranaProstorija = (PrikazProstorije)cmbProstorije.SelectedItem;
 
             if (selektiranaProstorija == null)
             {
@@ -178,8 +205,11 @@ namespace WpfApp1
 
         private void cmbSpremnici_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            string nazivSpremnika = cmbSpremnici.SelectedItem.ToString();
-            dgStavke.ItemsSource = PrikazStavke.dohvatiStavke(nazivSpremnika);
+            if (cmbSpremnici.SelectedItem != null) {
+                string nazivSpremnika = cmbSpremnici.SelectedItem.ToString();
+                dgStavke.ItemsSource = PrikazStavke.dohvatiStavke(nazivSpremnika);
+            }
+            
         }
 
         #region Prostorije
@@ -355,7 +385,7 @@ namespace WpfApp1
                                     {
                                         if (brojUnosa > 0)
                                         {
-                                            PrikazSpremnici.kreirajSpremnik(txbNoviSpremnikNaziv.Text, zapremnina, txbNoviSpremnikOpis.Text, selektiranaProstorija.idProstorije, selektiranTipSpremnika.idTipSpremnika,brojUnosa);
+                                            PrikazSpremnici.kreirajSpremnik(txbNoviSpremnikNaziv.Text, zapremnina, txbNoviSpremnikOpis.Text, selektiranaProstorija.idProstorije, selektiranTipSpremnika.idTipSpremnika, brojUnosa);
                                             txbNoviSpremnikNaziv.Clear();
                                             txbNoviSpremnikOpis.Clear();
                                             txbNoviSpremnikZapremnina.Clear();
@@ -387,8 +417,8 @@ namespace WpfApp1
                                     PrikaziSpremnike();
                                     promjeniGrid("gridSpremnici");
                                 }
-                                
-                                
+
+
                             }
                             else
                             {
@@ -499,15 +529,31 @@ namespace WpfApp1
         #endregion
 
         #region Stavke
+        private void btnPrikaziSveStavke_Click(object sender, RoutedEventArgs e)
+        {
+            PrikaziStavke();
+            cmbSpremnici.SelectedIndex = -1;
+        }
+
+        private void DgStavke_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            PrikazStavke stavka = (PrikazStavke)dgStavke.SelectedItem;
+            if (stavka != null)
+            {
+                lbOznakeStavke.ItemsSource = PrikazOznakaStavka.dohvatiOznakeStavke(stavka.idStavke);
+            }
+
+        }
+
         private void BtnKreirajStavku_Click(object sender, RoutedEventArgs e)
         {
-            
+
             promjeniGrid("gridKreirajStavku");
             naslovLabel.Content = "Kreiraj stavku";
 
             cmbSpremniciKreirajStavku.ItemsSource = PrikazSpremnici.dohvatiSpremnike();
             lbOznakeKreirajStavku.ItemsSource = PrikazOznaka.dohvatiOznake(); // tu se List<PrikazOznaka>
-            
+
         }
 
         private void btnKreirajStavkuOdustani_Click(object sender, RoutedEventArgs e)
@@ -530,10 +576,10 @@ namespace WpfApp1
             {
                 PrikazOznaka oznake = (PrikazOznaka)item;
                 selektiraneOznake.Add(oznake);
-            } 
+            }
 
             int zauzima = Convert.ToInt32(txbZauzimaKreirajStavku.Text);
-            
+
             PrikazStavke.kreirajStavku(txbStavkaNoviNaziv.Text, selektiranSpremnik.idSpremnika, selektiraneOznake, dpStavkaIstekRoka.SelectedDate.Value.Date, zauzima);
 
             txbStavkaNoviNaziv.Clear();
@@ -544,7 +590,7 @@ namespace WpfApp1
             naslovLabel.Content = "Stavke";
             PrikaziStavke();
             promjeniGrid("gridStavke");
-            
+
 
         }
 
@@ -579,7 +625,7 @@ namespace WpfApp1
                 odabranaStavka = (PrikazStavke)dgStavke.SelectedItem;
                 stavka s = new stavka();
                 s = PrikazStavke.dohvatiStavku(odabranaStavka.idStavke);
-              
+
                 txbIzmjeniStavkuNoviNaziv.Text = s.naziv;
                 txbIzmjeniStavkuNovoZauzece.Text = s.zauzeće.ToString();
                 txbStavkaID.Text = s.id_stavka.ToString();
@@ -708,7 +754,7 @@ namespace WpfApp1
             {
                 idSpremnika = odabranSpremnik.idSpremnika;
             }
-            
+
 
             PrikazStavke.izmjeniStavku(Convert.ToInt32(txbStavkaID.Text), txbIzmjeniStavkuNoviNaziv.Text, idSpremnika, dpIzmjeniStavkuNoviIstekRoka.SelectedDate.Value.Date, zauzima);
 
@@ -721,36 +767,84 @@ namespace WpfApp1
 
         #endregion
 
+        #region Postavke
 
+        private void postaviLight()
+        {
+            this.Resources["labelsColor"] = new SolidColorBrush(Color.FromRgb(7, 7, 7));
+            this.Resources["rectBg"] = new SolidColorBrush(Color.FromRgb(232, 232, 232));
+            this.Resources["headerRectBg"] = new SolidColorBrush(Color.FromRgb(169, 170, 173));
+            this.Resources["menuBg"] = new SolidColorBrush(Color.FromRgb(169, 170, 173));
+
+            this.Resources["dataGridBG"] = new SolidColorBrush(Color.FromRgb(232, 232, 232));
+            this.Resources["dataGridFG"] = new SolidColorBrush(Color.FromRgb(7, 7, 7));
+            this.Resources["dataGridRowBG"] = new SolidColorBrush(Color.FromRgb(232, 232, 232));
+
+            this.Resources["spBtnBg"] = new SolidColorBrush(Color.FromRgb(247, 247, 247));
+            this.Resources["spBtnFg"] = new SolidColorBrush(Color.FromRgb(7, 7, 7));
+            this.Resources["spBtnBorderB"] = new SolidColorBrush(Color.FromRgb(247, 247, 247));
+            this.Resources["spBtnHover"] = new SolidColorBrush(Color.FromRgb(193, 193, 193));
+        }
+
+        private void postaviDark()
+        {
+            this.Resources["labelsColor"] = new SolidColorBrush(Color.FromRgb(255, 255, 255));
+            this.Resources["rectBg"] = new SolidColorBrush(Color.FromRgb(58, 58, 58));
+            this.Resources["headerRectBg"] = new SolidColorBrush(Color.FromRgb(33, 34, 39));
+            this.Resources["menuBg"] = new SolidColorBrush(Color.FromRgb(33, 34, 39));
+
+            this.Resources["dataGridBG"] = new SolidColorBrush(Color.FromRgb(58, 58, 58));
+            this.Resources["dataGridFG"] = new SolidColorBrush(Color.FromRgb(255, 255, 255));
+            this.Resources["dataGridRowBG"] = new SolidColorBrush(Color.FromRgb(58, 58, 58));
+
+            this.Resources["spBtnBg"] = new SolidColorBrush(Color.FromRgb(43, 43, 43));
+            this.Resources["spBtnFg"] = new SolidColorBrush(Color.FromRgb(255, 255, 255));
+            this.Resources["spBtnBorderB"] = new SolidColorBrush(Color.FromRgb(43, 43, 43));
+            this.Resources["spBtnHover"] = new SolidColorBrush(Color.FromRgb(130, 130, 130));
+        }
 
         private void btnSpremiPostavke_Click(object sender, RoutedEventArgs e)
         {
             var putanja = Directory.GetCurrentDirectory();
             putanja += "\\postavke.txt";
             int brojDana;
-
+            int dark;
 
             if ((bool)chkDarkTheme.IsChecked)
             {
-                Style st = FindResource("styleB") as Style;
+                dark = 1;
             }
             else
             {
-
+                dark = 0;
             }
 
             if (int.TryParse(BrojDana.Text, out brojDana))
             {
                 using (StreamWriter file = new StreamWriter(putanja))
                 {
-                    file.WriteLine("BD: " + BrojDana.Text);
+                    file.WriteLine(BrojDana.Text+","+dark);
                     file.Close();
                 }
             }
 
         }
-    }
+        #endregion
 
+        private void chkDarkTheme_Click(object sender, RoutedEventArgs e)
+        {
+            if (chkDarkTheme.IsChecked == true)
+            {
+                postaviDark();
+            }
+            else
+            {
+                postaviLight();
+            }
+        }
+
+
+    }
 }
 
 
