@@ -338,7 +338,7 @@ namespace WpfApp1
             PrikazSpremnici selektiranSpremnik = new PrikazSpremnici();
             selektiranSpremnik = (PrikazSpremnici)cmbSpremniciKreirajStavku.SelectedItem;
 
-            List<PrikazOznaka> selektiraneOznake = new List<PrikazOznaka>(); // stavara listu tipa Prikaz oznaka
+            List<PrikazOznaka> selektiraneOznake = new List<PrikazOznaka>();
             foreach (var item in lbOznakeKreirajStavku.SelectedItems)
             {
                 PrikazOznaka oznake = (PrikazOznaka)item;
@@ -347,7 +347,16 @@ namespace WpfApp1
 
             int zauzima = Convert.ToInt32(txbZauzimaKreirajStavku.Text);
             
-            PrikazStavke.kreirajStavku(txbStavkaNoviNaziv.Text, selektiranSpremnik.idSpremnika, selektiraneOznake, dpStavkaIstekRoka.DisplayDate, zauzima);
+            PrikazStavke.kreirajStavku(txbStavkaNoviNaziv.Text, selektiranSpremnik.idSpremnika, selektiraneOznake, dpStavkaIstekRoka.SelectedDate.Value.Date, zauzima);
+
+            txbStavkaNoviNaziv.Clear();
+            txbZauzimaKreirajStavku.Clear();
+            dpStavkaIstekRoka.SelectedDate = null;
+            cmbSpremniciKreirajStavku.SelectedItem = null;
+            lbOznakeKreirajStavku.SelectedItem = null;
+            naslovLabel.Content = "Stavke";
+            PrikaziStavke();
+            promjeniGrid("gridStavke");
             
 
         }
@@ -383,11 +392,25 @@ namespace WpfApp1
                 odabranaStavka = (PrikazStavke)dgStavke.SelectedItem;
                 stavka s = new stavka();
                 s = PrikazStavke.dohvatiStavku(odabranaStavka.idStavke);
-                txbStavkaNoviNaziv.Text = s.naziv;
-                txbStavkaNovoZauzece.Text = s.zauzeće.ToString();
+              
+                txbIzmjeniStavkuNoviNaziv.Text = s.naziv;
+                txbIzmjeniStavkuNovoZauzece.Text = s.zauzeće.ToString();
+                txbStavkaID.Text = s.id_stavka.ToString();
+                txbIzmjeniStavkuSpremnikID.Text = s.spremnik_id.ToString();
+                txbIzmjeniStavkuStavkaIdSkriven.Text = Convert.ToString(s.id_stavka);
+
+                List<PrikazOznaka> sveOznake = new List<PrikazOznaka>();
+                sveOznake.AddRange(PrikazOznaka.dohvatiOznake());
+                lbIzmjeniStavkuOznake.ItemsSource = sveOznake;
+
+                List<PrikazOznakaStavka> oznakeZaOdabranuStavku = new List<PrikazOznakaStavka>();
+                oznakeZaOdabranuStavku.AddRange(PrikazOznakaStavka.dohvatiOznakeStavke(s.id_stavka));
+                lbIzmjeniStavkuNjeneOznake.ItemsSource = oznakeZaOdabranuStavku;
+
                 if (s.datum_roka.HasValue)
                 {
-                    dpStavkaNoviIstekRoka.DisplayDate = s.datum_roka.Value;
+                    var inMyString = s.datum_roka.Value.ToShortDateString();
+                    dpIzmjeniStavkuNoviIstekRoka.SelectedDate = DateTime.Parse(inMyString);
                 }
 
                 cmbProstorijeIzmjenaStavke.ItemsSource = PrikazProstorije.dohvatiProstorije();
@@ -397,6 +420,49 @@ namespace WpfApp1
                 MessageBox.Show("Niste odabrali stavku za izmjenu!");
             }
 
+        }
+
+        private void lbIzmjeniStavkuNjeneOznake_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            PrikazOznakaStavka odabranaOznaka = new PrikazOznakaStavka();
+            odabranaOznaka = (PrikazOznakaStavka)lbIzmjeniStavkuNjeneOznake.SelectedItem;
+            if (odabranaOznaka != null)
+            {
+                int idStavke = Convert.ToInt32(txbIzmjeniStavkuStavkaIdSkriven.Text);
+                PrikazOznakaStavka.obrisiStavkuOznaku(odabranaOznaka.idStavka, odabranaOznaka.idOznaka);
+                osvjeziStavkineOznake();
+
+            }
+
+        }
+
+        private void lbIzmjeniStavkuOznake_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            PrikazOznaka odabranaOznaka = new PrikazOznaka();
+            odabranaOznaka = (PrikazOznaka)lbIzmjeniStavkuOznake.SelectedItem;
+
+            if (odabranaOznaka != null)
+            {
+                int idStavke = Convert.ToInt32(txbIzmjeniStavkuStavkaIdSkriven.Text);
+                if (PrikazOznakaStavka.dodajStavkuOznaku(idStavke, odabranaOznaka.id_oznaka) == 0)
+                {
+                    MessageBox.Show("Unjeli ste oznaku koja vec vrijedi za tu stavku");
+                }
+
+                osvjeziStavkineOznake();
+            }
+        }
+
+        private void osvjeziStavkineOznake()
+        {
+            int idStavke = Convert.ToInt32(txbIzmjeniStavkuStavkaIdSkriven.Text);
+            List<PrikazOznakaStavka> oznakeZaOdabranuStavku = new List<PrikazOznakaStavka>();
+            oznakeZaOdabranuStavku.AddRange(PrikazOznakaStavka.dohvatiOznakeStavke(idStavke));
+            lbIzmjeniStavkuNjeneOznake.ItemsSource = oznakeZaOdabranuStavku;
+
+            List<PrikazOznaka> sveOznake = new List<PrikazOznaka>();
+            sveOznake.AddRange(PrikazOznaka.dohvatiOznake());
+            lbIzmjeniStavkuOznake.ItemsSource = sveOznake;
         }
 
         private void CmbProstorijeIzmjenaStavke_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -434,17 +500,40 @@ namespace WpfApp1
         private void btnIzmjeniStavkuSpremi_Click(object sender, RoutedEventArgs e)
         {
 
+            PrikazSpremnici odabranSpremnik = new PrikazSpremnici();
+            odabranSpremnik = (PrikazSpremnici)cmbSpremniciOdabraneProstorije.SelectedItem;
 
-        }
+            List<PrikazOznaka> selektiraneOznake = new List<PrikazOznaka>();
 
-        private void LbOznakeKreirajStavku_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
+            int zauzima = Convert.ToInt32(txbIzmjeniStavkuNovoZauzece.Text);
+            foreach (var item in lbIzmjeniStavkuNjeneOznake.SelectedItems)
+            {
+                PrikazOznaka oznake = (PrikazOznaka)item;
+                selektiraneOznake.Add(oznake);
+            }
+
+            int idSpremnika;
+            if (odabranSpremnik == null)
+            {
+                idSpremnika = int.Parse(txbIzmjeniStavkuSpremnikID.Text);
+            }
+            else
+            {
+                idSpremnika = odabranSpremnik.idSpremnika;
+            }
+            
+
+            PrikazStavke.izmjeniStavku(Convert.ToInt32(txbStavkaID.Text), txbIzmjeniStavkuNoviNaziv.Text, idSpremnika, dpIzmjeniStavkuNoviIstekRoka.SelectedDate.Value.Date, zauzima);
+
+            naslovLabel.Content = "Stavke";
+            PrikaziStavke();
+            promjeniGrid("gridStavke");
 
         }
 
         #endregion
 
-        
+
     }
 
 }

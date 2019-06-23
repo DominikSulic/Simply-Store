@@ -34,7 +34,7 @@ namespace WpfApp1
                                  datumRoka = s.datum_roka,
                                  zauzece = s.zauzeće,
                                  nazivSpremnika = d.naziv_spremnika,
-                                 nazivProstorije = p.naziv_prostorije
+                                 nazivProstorije = p.naziv_prostorije,
 
                              }).ToList();
                 sveStavke = query;
@@ -89,6 +89,7 @@ namespace WpfApp1
                                  zauzece = s.zauzeće,
                                  nazivSpremnika = d.naziv_spremnika,
                                  nazivProstorije = p.naziv_prostorije
+                                 
 
                              }).ToList();
                 sveStavke = query;
@@ -112,7 +113,22 @@ namespace WpfApp1
 
         }
 
-        public static void kreirajStavku(string nazivStavke, int idSpremnika, List<PrikazOznaka> listaSelektiranihOznaka, DateTime datumIsteka, int zauzima) {
+        public static void kreirajStavku(string nazivStavke, int idSpremnika, List<PrikazOznaka> listaSelektiranihOznaka, DateTime datumIsteka, int zauzima)
+        {
+
+            ICollection<oznaka> oznake = new List<oznaka>();
+
+            foreach (var item in listaSelektiranihOznaka)
+            {
+                oznaka oznaka = new oznaka
+                {
+                    id_oznaka = item.id_oznaka,
+                    naziv = item.naziv,
+                    kvarljivost = item.kvarljivost
+                };
+                oznake.Add(oznaka);
+            }
+
             stavka novaStavka = new stavka
             {
                 
@@ -121,20 +137,43 @@ namespace WpfApp1
                 datum_roka = datumIsteka,
                 zauzeće = zauzima,
                 spremnik_id = idSpremnika
-                //oznaka = listaSelektiranihOznaka // dođe do greške, jer se ne može List<PrkazOznaka> convertati di ICollection<oznaka> koji je definiran u stavka.cs
-
 
 
             };
 
-            
-            
+            using (var db = new SSDB())
+            {
+                novaStavka.oznaka = new List<oznaka>();
+                foreach (var item in oznake)
+                {
+                    db.oznaka.Attach(item);
+                    novaStavka.oznaka.Add(item);
+                }
+                db.stavka.Add(novaStavka);
+                db.SaveChanges();
+            }
+
+        }
+
+
+        public static void izmjeniStavku(int id, string noviNaziv, int idSpremnika, DateTime datumIsteka, int zauzima)
+        {
+            using (var db = new SSDB())
+            {
+                var query = (from stv in db.stavka where stv.id_stavka == id select stv).First();
+                query.naziv = noviNaziv;
+                query.spremnik_id = idSpremnika;
+                query.datum_roka = datumIsteka;
+                query.zauzeće = zauzima;
+                db.SaveChanges();
+            }
         }
 
         public static void obrisiStavku(int idStavke) {
 
             using (var db = new SSDB())
             {
+                
                 var query = (from stavka in db.stavka where stavka.id_stavka == idStavke select stavka).First();
                 db.stavka.Attach(query);
                 db.stavka.Remove(query);
