@@ -63,6 +63,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="PrikazOznaka.cs" />
+    <Compile Include="PrikazOznakaStavka.cs" />
     <Compile Include="PrikazTipSpremnika.cs" />
     <Compile Include="PrikazProstorije.cs" />
     <Compile Include="Model1.cs">
