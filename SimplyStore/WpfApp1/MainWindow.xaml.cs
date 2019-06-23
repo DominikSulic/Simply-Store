@@ -35,6 +35,9 @@ namespace WpfApp1
             gridovi.Add("gridIzmjeniSpremnik", gridIzmjeniSpremnik);
 
             gridovi.Add("gridStavke", gridStavke);
+            gridovi.Add("gridKreirajStavku", gridKreirajStavku);
+            gridovi.Add("gridIzmjeniStavku", gridIzmjeniStavku);
+
 
         }
 
@@ -402,9 +405,6 @@ namespace WpfApp1
             promjeniGrid("gridSpremnici");
         }
 
-<<<<<<< HEAD
-        private void menuIzlaz_Click(object sender, RoutedEventArgs e)
-=======
         private void btnKreirajSpremnikOdustani_Click(object sender, RoutedEventArgs e)
         {
 
@@ -415,7 +415,7 @@ namespace WpfApp1
         }
 
         private void SpremniciSearch_TextChanged(object sender, RoutedEventArgs e)
->>>>>>> Stavke
+
         {
             string tekst = SpremniciSearch.Text;
             dgSpremnici.ItemsSource = PrikazSpremnici.dohvatiSpremnikeN(tekst);
@@ -490,7 +490,7 @@ namespace WpfApp1
             PrikaziStavke();
 
         }
-<<<<<<< HEAD
+
 
         private void btnPrikaziSveSpremnike_Click(object sender, RoutedEventArgs e)
         {
@@ -498,9 +498,8 @@ namespace WpfApp1
             cmbProstorije.SelectedIndex = -1;
             dgSpremnici.ItemsSource = PrikazSpremnici.dohvatiSpremnike();
         }
-    }
-=======
->>>>>>> Stavke
+    
+
 
         private void BtnIzmijeniStavku_Click(object sender, RoutedEventArgs e)
         {
@@ -654,8 +653,8 @@ namespace WpfApp1
         }
 
         #endregion
-
-
     }
 
 }
+
+

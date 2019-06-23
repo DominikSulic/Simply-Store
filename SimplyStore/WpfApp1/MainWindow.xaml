@@ -282,7 +282,7 @@
                 </StackPanel>
             </Grid>
 
-            <Grid Grid.Column="1" Grid.Row="1" x:Name="gridIzmjeniStavku" Visibility="Visible">
+            <Grid Grid.Column="1" Grid.Row="1" x:Name="gridIzmjeniStavku" Visibility="Collapsed">
 
                 <Rectangle Fill="#FF3A3A3A"></Rectangle>
                 <StackPanel>
