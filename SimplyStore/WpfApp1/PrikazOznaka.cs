@@ -38,7 +38,6 @@ namespace WpfApp1
         }
 
 
-
         public override string ToString()
         {
             return naziv;
