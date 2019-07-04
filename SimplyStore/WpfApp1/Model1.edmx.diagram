@@ -15,6 +15,13 @@
         <AssociationConnector Association="SSModel.FK__stavka__spremnik__300424B4" ManuallyRouted="false" />
         <AssociationConnector Association="SSModel.stavka_oznaka" ManuallyRouted="false" />
         <AssociationConnector Association="SSModel.tipSpremnika_oznaka" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="SSModel.dnevnik" Width="1.5" PointX="5.25" PointY="2.625" />
+        <EntityTypeShape EntityType="SSModel.korisnik" Width="1.5" PointX="0.75" PointY="6.375" />
+        <AssociationConnector Association="SSModel.FK__dnevnik__korisni__3864608B" />
+        <AssociationConnector Association="SSModel.FK__dnevnik__stavka___37703C52" />
+        <AssociationConnector Association="SSModel.FK__prostorij__koris__1EA48E88" />
+        <AssociationConnector Association="SSModel.FK__spremnik__korisn__2645B050" />
+        <AssociationConnector Association="SSModel.FK__stavka__korisnik__2CF2ADDF" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

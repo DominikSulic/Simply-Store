@@ -27,7 +27,8 @@ namespace WpfApp1
             InitializeComponent();
 
             List<int> beskorisno = dohvatiDatotekuPodatke();
-           
+
+            gridovi.Add("gridLogin",gridLogin);
 
             gridovi.Add("gridPocetna", gridPocetna);
 
@@ -45,7 +46,7 @@ namespace WpfApp1
 
             gridovi.Add("gridOpcije", gridOpcije);
             gridovi.Add("gridStavkePredIstekom", gridStavkePredIstekom);
-
+            gridovi.Add("gridStatistika", gridStatistika);
         }
 
         void promjeniGrid(string nazivGrida)
@@ -102,9 +103,24 @@ namespace WpfApp1
             cmbSpremnici.ItemsSource = PrikazSpremnici.dohvatiNaziveSpremnika();
             dgStavke.ItemsSource = PrikazStavke.dohvatiStavke();
         }
+
         #endregion
 
         #region MenuItems
+
+        private void btnPrijava_Click(object sender, RoutedEventArgs e)
+        {
+            if (true)//ako login prođe
+            {
+                gridGlavni.Visibility = Visibility.Visible;//ovo mora bit tako,nemoj premjestat u listu gridova
+                promjeniGrid("gridPocetna");
+            }
+            else
+            {
+                MessageBox.Show("Pogresan Login");
+            }
+            
+        }
         private void menuHome_Click(object sender, RoutedEventArgs e)
         {
 
@@ -183,6 +199,14 @@ namespace WpfApp1
             BrojDana.Text = Convert.ToString(podaciDatoteke[0]);
 
         }
+
+        private void menuStatistika_Click(object sender, RoutedEventArgs e)
+        {
+            naslovLabel.Content = "Dnevnik";
+            promjeniGrid("gridStatistika");
+            dgStatistika.ItemsSource = PrikazStatistika.dohvatiStatistike();
+        }
+
 
         #endregion
 
@@ -524,6 +548,24 @@ namespace WpfApp1
         {
             string tekst = SpremniciSearch.Text;
             dgSpremnici.ItemsSource = PrikazSpremnici.dohvatiSpremnikeN(tekst);
+        }
+
+        private void dgSpremnici_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            PrikazSpremnici spremnik = (PrikazSpremnici)dgSpremnici.SelectedItem;
+            if (spremnik != null)
+            {
+                gridPopunjenost.Visibility = Visibility.Visible;
+                double [] popunjenost = PrikazSpremnici.dohvatiPopunjenost(spremnik.idSpremnika);
+                double postotakZauz = popunjenost[1] / popunjenost[0];
+                postotakZauzetosti.Width = new GridLength(postotakZauz, GridUnitType.Star);
+                postotakSlobodnog.Width = new GridLength(1- postotakZauz, GridUnitType.Star);
+                postotakZauzetostiText.Content = 100*postotakZauz + "%(" + popunjenost[1] + "/" + popunjenost[0] + ")";
+            }
+            else
+            {
+                gridPopunjenost.Visibility = Visibility.Collapsed;
+            }
         }
         #endregion
 

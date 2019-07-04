@@ -62,6 +62,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="PrikazStatistika.cs" />
+    <Compile Include="dnevnik.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="korisnik.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="PrikazOznaka.cs" />
     <Compile Include="PrikazOznakaStavka.cs" />
     <Compile Include="PrikazTipSpremnika.cs" />

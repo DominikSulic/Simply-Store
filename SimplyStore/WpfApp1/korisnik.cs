@@ -12,25 +12,23 @@ namespace WpfApp1
     using System;
     using System.Collections.Generic;
     
-    public partial class spremnik
+    public partial class korisnik
     {
-        public spremnik()
+        public korisnik()
         {
+            this.dnevnik = new HashSet<dnevnik>();
+            this.prostorija = new HashSet<prostorija>();
+            this.spremnik = new HashSet<spremnik>();
             this.stavka = new HashSet<stavka>();
         }
     
-        public int id_spremnik { get; set; }
-        public string naziv_spremnika { get; set; }
-        public System.DateTime datum_kreiranja { get; set; }
-        public double zapremnina { get; set; }
-        public string opis { get; set; }
-        public Nullable<int> prostorija_id { get; set; }
-        public Nullable<int> tip_id { get; set; }
-        public Nullable<int> korisnik_id { get; set; }
+        public int id_korisnik { get; set; }
+        public string korisnicko_ime { get; set; }
+        public string lozinka { get; set; }
     
-        public virtual prostorija prostorija { get; set; }
-        public virtual tip_spremnika tip_spremnika { get; set; }
+        public virtual ICollection<dnevnik> dnevnik { get; set; }
+        public virtual ICollection<prostorija> prostorija { get; set; }
+        public virtual ICollection<spremnik> spremnik { get; set; }
         public virtual ICollection<stavka> stavka { get; set; }
-        public virtual korisnik korisnik { get; set; }
     }
 }

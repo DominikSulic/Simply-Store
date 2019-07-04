@@ -26,7 +26,17 @@
         </Style>
     </Window.Resources>
     <Grid>
-        <Grid>
+        <Grid x:Name="gridLogin" Visibility="Visible">
+            <Rectangle></Rectangle>
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Label Content="Korisničko ime:" FontSize="20" Foreground="{DynamicResource labelsColor}"></Label>
+                <TextBox x:Name="txbKorisnickoIme" Height="23"  Width="120"/>
+                <Label Content="Lozinka:" FontSize="20" Foreground="{DynamicResource labelsColor}"></Label>
+                <TextBox x:Name="txbLozinka" Height="23" Width="120"/>
+                <Button x:Name="btnPrijava" Content="Prijavi se" Margin="0,10,0,0" Width="70" Click="btnPrijava_Click"></Button>
+            </StackPanel>
+        </Grid>
+        <Grid x:Name="gridGlavni" Visibility="Collapsed">
             <Grid.Resources>
                 <Style TargetType="DataGrid">
                     <Setter Property="Background" Value="{DynamicResource dataGridBG}"></Setter>
@@ -98,10 +108,12 @@
                 <Button x:Name="menuSpremnici" Content="Spremnici" HorizontalAlignment="Stretch" VerticalAlignment="Top" Click="menuSpremnici_Click"></Button>
                 <Button x:Name="menuStavke" Content="Stavke" HorizontalAlignment="Stretch" VerticalAlignment="Top" Click="menuStavke_Click"></Button>
                 <Button x:Name="menuStavkePredIstekom" Content="Stavke pred istekom" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Click="menuStavkePredIstekom_Click"></Button>
+                <Button x:Name="menuStatistika" Content="Statistika" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Click="menuStatistika_Click"></Button>
                 <Button x:Name="menuOpcije" Content="Opcije" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Click="menuOpcije_Click"></Button>
                 <Button x:Name="menuIzlaz" Content="Izlaz" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Click="menuIzlaz_Click"></Button>
             </StackPanel>
-            <Grid Grid.Column="1" Grid.Row="1" x:Name="gridPocetna" Visibility="Visible">
+            
+            <Grid Grid.Column="1" Grid.Row="1" x:Name="gridPocetna" Visibility="Collapsed">
                 <Rectangle></Rectangle>
                 <Image Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Height="300">
                     <Image.Source>
@@ -314,7 +326,8 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="1*"></RowDefinition>
                         <RowDefinition Height="1*"></RowDefinition>
-                        <RowDefinition Height="10*"></RowDefinition>
+                        <RowDefinition Height="9*"></RowDefinition>
+                        <RowDefinition Height="2*"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="3*"></ColumnDefinition>
@@ -346,7 +359,7 @@
                     </ComboBox>
 
                     <Button Grid.Row="1" Grid.Column="1"  x:Name="btnPrikaziSveSpremnike" Content="Prikaži sve" HorizontalAlignment="Left" VerticalAlignment="Center" Width="auto" Margin="5,0,0,0" Click="btnPrikaziSveSpremnike_Click"/>
-                    <DataGrid Grid.Row="2" Grid.ColumnSpan="5" x:Name="dgSpremnici" HorizontalAlignment="Stretch"   VerticalAlignment="Top"></DataGrid>
+                    <DataGrid Grid.Row="2" Grid.ColumnSpan="5" x:Name="dgSpremnici" HorizontalAlignment="Stretch"   VerticalAlignment="Top" SelectionChanged="dgSpremnici_SelectionChanged"></DataGrid>
 
                     <Button Grid.Row="0" Grid.Column="2" Name="btnKreirajSpremnik" Click="btnKreirajSpremnik_Click" VerticalAlignment="Center" HorizontalAlignment="Center" RenderTransformOrigin="1,0.5">
                         <Button.Effect>
@@ -424,6 +437,23 @@
                             </Button.ToolTip>
                         </Button>
 
+                    <Grid Grid.Row="3" Grid.ColumnSpan="2" x:Name="gridPopunjenost" Visibility="Collapsed">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="0*" x:Name="postotakZauzetosti"/>
+                                <ColumnDefinition Width="1*" x:Name="postotakSlobodnog"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*" MaxHeight="30"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Label Grid.Row="0" Grid.ColumnSpan="2" Content="Popunjenost odabranog spremnika:" VerticalAlignment="Bottom" Foreground="{DynamicResource labelsColor}" FontSize="15" Padding="0,0,0,0"></Label>
+                            <Label Grid.Row="2" Grid.ColumnSpan="2" Content="" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="{DynamicResource labelsColor}" FontSize="15" Padding="0,0,0,0" x:Name="postotakZauzetostiText"></Label>
+                            <Rectangle Grid.Column="0" Grid.Row="1" Width="Auto" Fill="Green"></Rectangle>
+                            <Rectangle Grid.Column="1" Grid.Row="1" Width="Auto" Fill="#d6d6d6"></Rectangle>
+                        </Grid>
+                    </Grid>
 
                 </Grid>
             </Grid>
@@ -627,7 +657,6 @@
                         </Button.ToolTip>
                     </Button>
 
-
                 </Grid>
             </Grid>
 
@@ -756,7 +785,7 @@
 
             
             
-            <Grid Grid.Column="1" Grid.Row="1" x:Name="gridOpcije" Visibility="Hidden">
+            <Grid Grid.Column="1" Grid.Row="1" x:Name="gridOpcije" Visibility="Collapsed">
                 <Rectangle></Rectangle>
                 <StackPanel>
                     <Label Content="Dark Theme" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="{DynamicResource labelsColor}"/>
@@ -772,8 +801,10 @@
                 <Rectangle></Rectangle>
                 <DataGrid Grid.Row="1" x:Name="dgStavkePredIstekom" HorizontalAlignment="Stretch"  Margin="10,50,10,10" VerticalAlignment="Top"></DataGrid>
             </Grid>
-
-
+            <Grid Grid.Column="1" Grid.Row="1" x:Name="gridStatistika" Visibility="Collapsed">
+                <Rectangle></Rectangle>
+                <DataGrid x:Name="dgStatistika"></DataGrid>
+            </Grid>
         </Grid>
     </Grid>
 </Window>

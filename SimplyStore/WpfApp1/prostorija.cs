@@ -11,8 +11,7 @@ namespace WpfApp1
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
-
+    
     public partial class prostorija
     {
         public prostorija()
@@ -25,12 +24,9 @@ namespace WpfApp1
         public System.DateTime datum_kreiranja { get; set; }
         public string opis { get; set; }
         public string posebne_napomene { get; set; }
+        public Nullable<int> korisnik_id { get; set; }
     
         public virtual ICollection<spremnik> spremnik { get; set; }
-
-        public override string ToString()
-        {
-            return naziv_prostorije;
-        }
+        public virtual korisnik korisnik { get; set; }
     }
 }

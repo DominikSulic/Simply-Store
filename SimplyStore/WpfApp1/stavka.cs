@@ -17,6 +17,7 @@ namespace WpfApp1
         public stavka()
         {
             this.oznaka = new HashSet<oznaka>();
+            this.dnevnik = new HashSet<dnevnik>();
         }
     
         public int id_stavka { get; set; }
@@ -25,9 +26,11 @@ namespace WpfApp1
         public Nullable<System.DateTime> datum_roka { get; set; }
         public int zauzeće { get; set; }
         public Nullable<int> spremnik_id { get; set; }
+        public Nullable<int> korisnik_id { get; set; }
     
         public virtual spremnik spremnik { get; set; }
         public virtual ICollection<oznaka> oznaka { get; set; }
+        public virtual ICollection<dnevnik> dnevnik { get; set; }
+        public virtual korisnik korisnik { get; set; }
     }
-
 }
