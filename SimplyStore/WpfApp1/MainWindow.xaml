@@ -32,7 +32,7 @@
                 <Label Content="Korisničko ime:" FontSize="20" Foreground="{DynamicResource labelsColor}"></Label>
                 <TextBox x:Name="txbKorisnickoIme" Height="23"  Width="120"/>
                 <Label Content="Lozinka:" FontSize="20" Foreground="{DynamicResource labelsColor}"></Label>
-                <TextBox x:Name="txbLozinka" Height="23" Width="120"/>
+                <PasswordBox x:Name="txbLozinka" Height="23" Width="120"/>
                 <Button x:Name="btnPrijava" Content="Prijavi se" Margin="0,10,0,0" Width="70" Click="btnPrijava_Click"></Button>
             </StackPanel>
         </Grid>
@@ -799,11 +799,37 @@
 
             <Grid Grid.Column="1" Grid.Row="1" x:Name="gridStavkePredIstekom" Visibility="Collapsed">
                 <Rectangle></Rectangle>
-                <DataGrid Grid.Row="1" x:Name="dgStavkePredIstekom" HorizontalAlignment="Stretch"  Margin="10,50,10,10" VerticalAlignment="Top"></DataGrid>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="10*"></RowDefinition>
+                        <RowDefinition Height="10*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <DataGrid Grid.Row="0" x:Name="dgStavkePredIstekom" HorizontalAlignment="Stretch"  Margin="10,50,10,10" VerticalAlignment="Top"></DataGrid>
+                    <DataGrid Grid.Row="1" x:Name="dgStavkeIstekle" HorizontalAlignment="Stretch"  Margin="10,50,10,10" VerticalAlignment="Top"></DataGrid>
+                </Grid>
             </Grid>
+
             <Grid Grid.Column="1" Grid.Row="1" x:Name="gridStatistika" Visibility="Collapsed">
                 <Rectangle></Rectangle>
-                <DataGrid x:Name="dgStatistika"></DataGrid>
+                <Grid>
+                    <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"></RowDefinition>
+                    <RowDefinition Height="10*"></RowDefinition>
+                    <RowDefinition Height="1*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*"></ColumnDefinition>
+                    <ColumnDefinition Width="6*"></ColumnDefinition>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+
+                <TextBox Grid.Row="0" Grid.Column="0" Height="20"  Width="100" HorizontalAlignment="Center" VerticalAlignment="Top" x:Name="StatistikaNaziv"></TextBox>
+                <TextBox Grid.Row="0" Grid.Column="1" Height="20"  Width="100" HorizontalAlignment="Center" VerticalAlignment="Top" x:Name="StatistikaBrojDana"></TextBox>
+                <DataGrid Grid.Row="1" Grid.ColumnSpan="5" x:Name="dgStatistika"></DataGrid>
+                </Grid>
             </Grid>
         </Grid>
     </Grid>

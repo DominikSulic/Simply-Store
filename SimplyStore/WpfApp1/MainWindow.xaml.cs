@@ -22,6 +22,8 @@ namespace WpfApp1
     public partial class MainWindow : Window
     {
         Dictionary<string, UIElement> gridovi = new Dictionary<string, UIElement>();
+        int globalniKorisnikID = 0;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -110,14 +112,28 @@ namespace WpfApp1
 
         private void btnPrijava_Click(object sender, RoutedEventArgs e)
         {
-            if (true)//ako login prođe
+            string korisnickoIme = txbKorisnickoIme.Text;
+            string sLozinka = txbLozinka.Password;
+
+            using (var db = new SSDB())
+            {
+                int query = (from k in db.korisnik
+                             where k.korisnicko_ime == korisnickoIme && k.lozinka == sLozinka
+                             select k.id_korisnik).FirstOrDefault();
+                if(query != null)
+                {
+                    globalniKorisnikID = query;
+                }
+            }
+
+            if (globalniKorisnikID != 0)//ako login prođe
             {
                 gridGlavni.Visibility = Visibility.Visible;//ovo mora bit tako,nemoj premjestat u listu gridova
                 promjeniGrid("gridPocetna");
             }
             else
             {
-                MessageBox.Show("Pogresan Login");
+                MessageBox.Show("Pogrešan Login");
             }
             
         }
@@ -163,7 +179,6 @@ namespace WpfApp1
             naslovLabel.Content = "Stavke pred istekom";
             promjeniGrid("gridStavkePredIstekom");
 
-
             var putanja = Directory.GetCurrentDirectory();
             putanja += "\\postavke.txt";
             int brojDana = 3;
@@ -181,6 +196,8 @@ namespace WpfApp1
             {
                 dgStavkePredIstekom.ItemsSource = PrikazStavke.dohvatiStavkePredIstekom(brojDana);
             }
+
+            dgStavkeIstekle.ItemsSource = PrikazStavke.stavkeIstecenogRoka();
         }
 
         private void menuOpcije_Click(object sender, RoutedEventArgs e)
@@ -206,8 +223,6 @@ namespace WpfApp1
             promjeniGrid("gridStatistika");
             dgStatistika.ItemsSource = PrikazStatistika.dohvatiStatistike();
         }
-
-
         #endregion
 
 
@@ -621,7 +636,7 @@ namespace WpfApp1
 
             int zauzima = Convert.ToInt32(txbZauzimaKreirajStavku.Text);
 
-            PrikazStavke.kreirajStavku(txbStavkaNoviNaziv.Text, selektiranSpremnik.idSpremnika, selektiraneOznake, dpStavkaIstekRoka.SelectedDate.Value.Date, zauzima);
+            PrikazStavke.kreirajStavku(txbStavkaNoviNaziv.Text, selektiranSpremnik.idSpremnika, selektiraneOznake, dpStavkaIstekRoka.SelectedDate.Value.Date, zauzima, globalniKorisnikID);
 
             txbStavkaNoviNaziv.Clear();
             txbZauzimaKreirajStavku.Clear();
@@ -642,7 +657,7 @@ namespace WpfApp1
             {
                 foreach (PrikazStavke p in dgStavke.SelectedItems)
                 {
-                    PrikazStavke.obrisiStavku(p.idStavke);
+                    PrikazStavke.obrisiStavku(p.idStavke, globalniKorisnikID);
                 }
             }
             else
@@ -797,7 +812,7 @@ namespace WpfApp1
             }
 
 
-            PrikazStavke.izmjeniStavku(Convert.ToInt32(txbStavkaID.Text), txbIzmjeniStavkuNoviNaziv.Text, idSpremnika, dpIzmjeniStavkuNoviIstekRoka.SelectedDate.Value.Date, zauzima);
+            PrikazStavke.izmjeniStavku(Convert.ToInt32(txbStavkaID.Text), txbIzmjeniStavkuNoviNaziv.Text, idSpremnika, dpIzmjeniStavkuNoviIstekRoka.SelectedDate.Value.Date, zauzima, globalniKorisnikID);
 
             naslovLabel.Content = "Stavke";
             PrikaziStavke();

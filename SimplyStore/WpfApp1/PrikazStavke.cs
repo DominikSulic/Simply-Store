@@ -112,7 +112,7 @@ namespace WpfApp1
 
         }
 
-        public static void kreirajStavku(string nazivStavke, int idSpremnika, List<PrikazOznaka> listaSelektiranihOznaka, DateTime datumIsteka, int zauzima)
+        public static void kreirajStavku(string nazivStavke, int idSpremnika, List<PrikazOznaka> listaSelektiranihOznaka, DateTime datumIsteka, int zauzima, int korisnikID)
         {
 
             ICollection<oznaka> oznake = new List<oznaka>();
@@ -130,14 +130,19 @@ namespace WpfApp1
 
             stavka novaStavka = new stavka
             {
-                
                 naziv = nazivStavke,
                 datum_kreiranja = DateTime.Now,
                 datum_roka = datumIsteka,
                 zauzeće = zauzima,
                 spremnik_id = idSpremnika
+            };
 
-
+            dnevnik noviDnevnik = new dnevnik
+            {
+                radnja = "kreiranje",
+                datum = DateTime.Now,
+                kolicina = zauzima,
+                korisnik_id = korisnikID
             };
 
             using (var db = new SSDB())
@@ -149,14 +154,25 @@ namespace WpfApp1
                     novaStavka.oznaka.Add(item);
                 }
                 db.stavka.Add(novaStavka);
+                noviDnevnik.stavka_id = novaStavka.id_stavka;
+                db.dnevnik.Add(noviDnevnik);
                 db.SaveChanges();
             }
 
         }
 
 
-        public static void izmjeniStavku(int id, string noviNaziv, int idSpremnika, DateTime datumIsteka, int zauzima)
+        public static void izmjeniStavku(int id, string noviNaziv, int idSpremnika, DateTime datumIsteka, int zauzima, int korisnikID)
         {
+            dnevnik noviDnevnik = new dnevnik
+            {
+                radnja = "ažuriranje",
+                datum = DateTime.Now,
+                kolicina = zauzima,
+                korisnik_id = korisnikID,
+                stavka_id = id
+            };
+
             using (var db = new SSDB())
             {
                 var query = (from stv in db.stavka where stv.id_stavka == id select stv).First();
@@ -164,18 +180,28 @@ namespace WpfApp1
                 query.spremnik_id = idSpremnika;
                 query.datum_roka = datumIsteka;
                 query.zauzeće = zauzima;
+                db.dnevnik.Add(noviDnevnik);
                 db.SaveChanges();
             }
         }
 
-        public static void obrisiStavku(int idStavke) {
+        public static void obrisiStavku(int idStavke, int korisnikID)
+        {
+            dnevnik noviDnevnik = new dnevnik
+            {
+                radnja = "brisanje",
+                datum = DateTime.Now,
+                korisnik_id = korisnikID,
+                stavka_id = idStavke
+            };
 
             using (var db = new SSDB())
             {
-                
                 var query = (from stavka in db.stavka where stavka.id_stavka == idStavke select stavka).First();
                 db.stavka.Attach(query);
+                noviDnevnik.kolicina = query.zauzeće;
                 db.stavka.Remove(query);
+                db.dnevnik.Add(noviDnevnik);
                 db.SaveChanges();
             }
         }
@@ -207,6 +233,35 @@ namespace WpfApp1
             }
 
             return sveStavke;
+        }
+
+        public static List<PrikazStavke> stavkeIstecenogRoka()
+        {
+            List<PrikazStavke> lista = new List<PrikazStavke>();
+
+            DateTime? now = DateTime.Now;
+
+            using (var db = new SSDB())
+            {
+                var query = (from s in db.stavka
+                             join d in db.spremnik on s.spremnik_id equals d.id_spremnik
+                             join p in db.prostorija on d.prostorija_id equals p.id_prostorija
+                             where now > s.datum_roka
+                             select new PrikazStavke
+                             {
+                                 idStavke = s.id_stavka,
+                                 nazivStavke = s.naziv,
+                                 datumKreiranja = s.datum_kreiranja,
+                                 datumRoka = s.datum_roka,
+                                 zauzece = s.zauzeće,
+                                 nazivSpremnika = d.naziv_spremnika,
+                                 nazivProstorije = p.naziv_prostorije
+
+                             }).ToList();
+                lista = query;
+            }
+
+            return lista;
         }
 
     }
