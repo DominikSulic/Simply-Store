@@ -826,9 +826,8 @@
                 </Grid.ColumnDefinitions>
 
 
-                <TextBox Grid.Row="0" Grid.Column="0" Height="20"  Width="100" HorizontalAlignment="Center" VerticalAlignment="Top" x:Name="StatistikaNaziv"></TextBox>
-                <TextBox Grid.Row="0" Grid.Column="1" Height="20"  Width="100" HorizontalAlignment="Center" VerticalAlignment="Top" x:Name="StatistikaBrojDana"></TextBox>
-                <DataGrid Grid.Row="1" Grid.ColumnSpan="5" x:Name="dgStatistika"></DataGrid>
+                    <TextBox Grid.Row="0" Grid.Column="0" Height="20"  Width="100" HorizontalAlignment="Center" TextChanged="StatistikaSearch_TextChanged" VerticalAlignment="Top" x:Name="StatistikaSearch"></TextBox>
+                    <DataGrid Grid.Row="1" Grid.ColumnSpan="5" x:Name="dgStatistika"></DataGrid>
                 </Grid>
             </Grid>
         </Grid>

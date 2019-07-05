@@ -779,6 +779,12 @@ namespace WpfApp1
             dgStavke.ItemsSource = PrikazStavke.dohvatiStavkeN(tekst);
         }
 
+        private void StatistikaSearch_TextChanged(object sender, RoutedEventArgs e)
+        {
+            string tekst = StatistikaSearch.Text;
+            dgStatistika.ItemsSource = PrikazStatistika.dohvatiStatistike(tekst);
+        }
+
         private void btnIzmjeniStavkuOdustani_Click(object sender, RoutedEventArgs e)
         {
             promjeniGrid("gridStavke");
