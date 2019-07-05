@@ -17,7 +17,7 @@ namespace WpfApp1
         public int id_dnevnik { get; set; }
         public string radnja { get; set; }
         public System.DateTime datum { get; set; }
-        public Nullable<double> kolicina { get; set; }
+        public double kolicina { get; set; }
         public Nullable<int> stavka_id { get; set; }
         public Nullable<int> korisnik_id { get; set; }
     

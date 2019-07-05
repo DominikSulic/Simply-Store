@@ -89,7 +89,6 @@
     <Compile Include="PrikazStatistika.cs" />
     <Compile Include="PrikazOznaka.cs" />
     <Compile Include="PrikazOznakaStavka.cs" />
-    <Compile Include="PrikazTipSpremnika.cs" />
     <Compile Include="PrikazProstorije.cs" />
     <Compile Include="PrikazSpremnici.cs" />
     <Compile Include="PrikazStavke.cs" />
@@ -100,9 +99,6 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="stavka.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="tip_spremnika.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">

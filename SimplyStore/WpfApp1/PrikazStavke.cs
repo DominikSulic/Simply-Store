@@ -112,7 +112,7 @@ namespace WpfApp1
 
         }
 
-        public static void kreirajStavku(string nazivStavke, int idSpremnika, List<PrikazOznaka> listaSelektiranihOznaka, DateTime datumIsteka, double zauzima, int korisnikID)
+        public static void kreirajStavku(string nazivStavke, int idSpremnika, List<PrikazOznaka> listaSelektiranihOznaka, DateTime? datumIsteka, double zauzima, int korisnikID)
         {
 
             ICollection<oznaka> oznake = new List<oznaka>();
@@ -160,6 +160,7 @@ namespace WpfApp1
             }
 
         }
+
 
 
         public static void izmjeniStavku(int id, string noviNaziv, int idSpremnika, DateTime datumIsteka, int zauzima, int korisnikID)

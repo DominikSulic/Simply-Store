@@ -31,6 +31,5 @@ namespace WpfApp1
         public DbSet<prostorija> prostorija { get; set; }
         public DbSet<spremnik> spremnik { get; set; }
         public DbSet<stavka> stavka { get; set; }
-        public DbSet<tip_spremnika> tip_spremnika { get; set; }
     }
 }

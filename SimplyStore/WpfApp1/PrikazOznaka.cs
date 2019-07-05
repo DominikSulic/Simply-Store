@@ -11,7 +11,7 @@ namespace WpfApp1
 
         public int id_oznaka { get; set; }
         public string naziv { get; set; }
-        public byte kvarljivost { get; set; }
+        public string kvarljivost { get; set; }
  
 
         public static List<PrikazOznaka> dohvatiOznake() {

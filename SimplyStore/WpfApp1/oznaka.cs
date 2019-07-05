@@ -17,14 +17,12 @@ namespace WpfApp1
         public oznaka()
         {
             this.stavka = new HashSet<stavka>();
-            this.tip_spremnika = new HashSet<tip_spremnika>();
         }
     
         public int id_oznaka { get; set; }
         public string naziv { get; set; }
-        public byte kvarljivost { get; set; }
+        public string kvarljivost { get; set; }
     
         public virtual ICollection<stavka> stavka { get; set; }
-        public virtual ICollection<tip_spremnika> tip_spremnika { get; set; }
     }
 }

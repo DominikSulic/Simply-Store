@@ -15,7 +15,7 @@ namespace WpfApp1
         public double zapremnina { get; set; }
         public string opis { get; set; }
         public string nazivProstorije { get; set; }
-        public string nazivTipa { get; set; }
+        public string kvarljivost { get; set; }
 
         public static List<PrikazSpremnici> dohvatiSpremnike()
         {
@@ -25,7 +25,6 @@ namespace WpfApp1
             {
                 var query = (from sp in db.spremnik
                              join pros in db.prostorija on sp.prostorija_id equals pros.id_prostorija
-                             join tip in db.tip_spremnika on sp.tip_id equals tip.id_tip
                              select new PrikazSpremnici
                              {
                                  idSpremnika = sp.id_spremnik,
@@ -34,7 +33,7 @@ namespace WpfApp1
                                  zapremnina = sp.zapremnina,
                                  opis = sp.opis,
                                  nazivProstorije = pros.naziv_prostorije,
-                                 nazivTipa = tip.naziv
+                                 kvarljivost=sp.prima_kvarljive
                              }).ToList();
                 sviSpremnici = query;
             }
@@ -50,7 +49,6 @@ namespace WpfApp1
             {
                 var query = (from s in db.spremnik
                              join pros in db.prostorija on s.prostorija_id equals pros.id_prostorija
-                             join tip in db.tip_spremnika on s.tip_id equals tip.id_tip
                              where s.naziv_spremnika.ToLower().Contains(search)
                              select new PrikazSpremnici
                              {
@@ -60,7 +58,6 @@ namespace WpfApp1
                                  zapremnina = s.zapremnina,
                                  opis = s.opis,
                                  nazivProstorije = pros.naziv_prostorije,
-                                 nazivTipa = tip.naziv
                              }).ToList();
                 spremnici = query;
             }
@@ -76,7 +73,6 @@ namespace WpfApp1
             {
                 var query = (from sp in db.spremnik
                              join pros in db.prostorija on sp.prostorija_id equals pros.id_prostorija
-                             join tip in db.tip_spremnika on sp.tip_id equals tip.id_tip
                              where pros.id_prostorija == nazivProstorije.idProstorije
                              select new PrikazSpremnici
                              {
@@ -86,7 +82,6 @@ namespace WpfApp1
                                  zapremnina = sp.zapremnina,
                                  opis = sp.opis,
                                  nazivProstorije = pros.naziv_prostorije,
-                                 nazivTipa = tip.naziv
                              }).ToList();
                 sviSpremnici = query;
             }
@@ -107,18 +102,18 @@ namespace WpfApp1
             return naziviSpremnika;
         }
 
-        public static void kreirajSpremnik(string naziv, double zapremnina, string opis, int idProstorije, int idTipa, int brojUnosa = 1)
+        public static void kreirajSpremnik(string naziv, double zapremnina, string opis, int idProstorije,string kvarljivost, int brojUnosa = 1)
         {
             for (int i = 0; i < brojUnosa; i++)
             {
                 spremnik noviSpremnik = new spremnik
                 {
-                    naziv_spremnika = naziv + " ("+(i+1)+")",
+                    naziv_spremnika = naziv + " (" + (i + 1) + ")",
                     datum_kreiranja = DateTime.Now,
                     zapremnina = zapremnina,
                     opis = opis,
                     prostorija_id = idProstorije,
-                    tip_id = idTipa
+                    prima_kvarljive = kvarljivost
                 };
 
                 using (var db = new SSDB())
