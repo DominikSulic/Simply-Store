@@ -636,7 +636,6 @@ namespace WpfApp1
                     unosiKvarljivi = true;
                 }
             }
-            MessageBox.Show(Convert.ToString(unosiKvarljivi));
 
             if (txbStavkaNoviNaziv.Text!="")
             {
