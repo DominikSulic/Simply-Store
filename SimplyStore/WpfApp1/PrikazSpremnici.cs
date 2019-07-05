@@ -25,6 +25,7 @@ namespace WpfApp1
             {
                 var query = (from sp in db.spremnik
                              join pros in db.prostorija on sp.prostorija_id equals pros.id_prostorija
+                             where sp.zapremnina>0
                              select new PrikazSpremnici
                              {
                                  idSpremnika = sp.id_spremnik,
@@ -49,7 +50,7 @@ namespace WpfApp1
             {
                 var query = (from s in db.spremnik
                              join pros in db.prostorija on s.prostorija_id equals pros.id_prostorija
-                             where s.naziv_spremnika.ToLower().Contains(search)
+                             where s.naziv_spremnika.ToLower().Contains(search) && s.zapremnina > 0 && s.zapremnina > 0
                              select new PrikazSpremnici
                              {
                                  idSpremnika = s.id_spremnik,
@@ -73,7 +74,7 @@ namespace WpfApp1
             {
                 var query = (from sp in db.spremnik
                              join pros in db.prostorija on sp.prostorija_id equals pros.id_prostorija
-                             where pros.id_prostorija == nazivProstorije.idProstorije
+                             where pros.id_prostorija == nazivProstorije.idProstorije && sp.zapremnina > 0
                              select new PrikazSpremnici
                              {
                                  idSpremnika = sp.id_spremnik,
@@ -155,9 +156,20 @@ namespace WpfApp1
             {
                 var query = (from sprem in db.spremnik where sprem.id_spremnik == idSpremnika select sprem).First();
                 db.spremnik.Attach(query);
-                db.spremnik.Remove(query);
+                query.zapremnina = 0;
+                db.SaveChanges();
+
+                foreach(var item in db.stavka)
+                {
+                    if (item.spremnik_id == idSpremnika)
+                    {
+                        db.stavka.Attach(item);
+                        item.zauzeće = 0;
+                    }
+                }
                 db.SaveChanges();
             }
+
         }
 
         public override string ToString()

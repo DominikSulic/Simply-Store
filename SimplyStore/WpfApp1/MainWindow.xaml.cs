@@ -559,12 +559,15 @@ namespace WpfApp1
             PrikazSpremnici spremnik = (PrikazSpremnici)dgSpremnici.SelectedItem;
             if (spremnik != null)
             {
-                gridPopunjenost.Visibility = Visibility.Visible;
-                double [] popunjenost = PrikazSpremnici.dohvatiPopunjenost(spremnik.idSpremnika);
+
+                double[] popunjenost = PrikazSpremnici.dohvatiPopunjenost(spremnik.idSpremnika);
                 double postotakZauz = popunjenost[1] / popunjenost[0];
+                if (popunjenost[0] != 0) {
+                gridPopunjenost.Visibility = Visibility.Visible;
                 postotakZauzetosti.Width = new GridLength(postotakZauz, GridUnitType.Star);
-                postotakSlobodnog.Width = new GridLength(1- postotakZauz, GridUnitType.Star);
-                postotakZauzetostiText.Content = 100*Math.Round(postotakZauz,4) + "%(" + popunjenost[1] + "/" + popunjenost[0] + ")";
+                postotakSlobodnog.Width = new GridLength(1 - postotakZauz, GridUnitType.Star);
+                postotakZauzetostiText.Content = 100 * Math.Round(postotakZauz, 4) + "%(" + popunjenost[1] + "/" + popunjenost[0] + ")";
+                }
             }
             else
             {
@@ -613,9 +616,12 @@ namespace WpfApp1
         private void btnKreirajStavkuSpremi_Click(object sender, RoutedEventArgs e)
         {
 
+            
+
             PrikazSpremnici selektiranSpremnik = new PrikazSpremnici();
             selektiranSpremnik = (PrikazSpremnici)cmbSpremniciKreirajStavku.SelectedItem;
 
+            bool unosiKvarljivi = false;
             List<PrikazOznaka> selektiraneOznake = new List<PrikazOznaka>();
             foreach (var item in lbOznakeKreirajStavku.SelectedItems)
             {
@@ -623,6 +629,14 @@ namespace WpfApp1
                 selektiraneOznake.Add(oznake);
             }
 
+            foreach(var item in selektiraneOznake)
+            {
+                if (item.kvarljivost == "da")
+                {
+                    unosiKvarljivi = true;
+                }
+            }
+            MessageBox.Show(Convert.ToString(unosiKvarljivi));
 
             if (txbStavkaNoviNaziv.Text!="")
             {
@@ -634,32 +648,38 @@ namespace WpfApp1
                         double[] zapremninaSpremnika = PrikazSpremnici.dohvatiPopunjenost(selektiranSpremnik.idSpremnika);
                         if (zapremninaSpremnika[1] + zauzima < zapremninaSpremnika[0])
                         {
-                            if (selektiraneOznake.Count()!=0)
+                            if (selektiraneOznake.Count() != 0)
                             {
-                                if (dpStavkaIstekRoka.SelectedDate!=null) 
-                                {
-                                    PrikazStavke.kreirajStavku(txbStavkaNoviNaziv.Text, selektiranSpremnik.idSpremnika, selektiraneOznake, dpStavkaIstekRoka.SelectedDate.Value.Date, zauzima, globalniKorisnikID);
-                                    txbStavkaNoviNaziv.Clear();
-                                    txbZauzimaKreirajStavku.Clear();
-                                    dpStavkaIstekRoka.SelectedDate = null;
-                                    cmbSpremniciKreirajStavku.SelectedItem = null;
-                                    lbOznakeKreirajStavku.SelectedItem = null;
-                                    naslovLabel.Content = "Stavke";
-                                    PrikaziStavke();
-                                    promjeniGrid("gridStavke");
+                                if ((unosiKvarljivi==true  && selektiranSpremnik.kvarljivost=="da") || (unosiKvarljivi == false && selektiranSpremnik.kvarljivost == "da") || (unosiKvarljivi == false && selektiranSpremnik.kvarljivost == "ne")) {
+                                    if (dpStavkaIstekRoka.SelectedDate != null)
+                                    {
+                                        PrikazStavke.kreirajStavku(txbStavkaNoviNaziv.Text, selektiranSpremnik.idSpremnika, selektiraneOznake, dpStavkaIstekRoka.SelectedDate.Value.Date, zauzima, globalniKorisnikID);
+                                        txbStavkaNoviNaziv.Clear();
+                                        txbZauzimaKreirajStavku.Clear();
+                                        dpStavkaIstekRoka.SelectedDate = null;
+                                        cmbSpremniciKreirajStavku.SelectedItem = null;
+                                        lbOznakeKreirajStavku.SelectedItem = null;
+                                        naslovLabel.Content = "Stavke";
+                                        PrikaziStavke();
+                                        promjeniGrid("gridStavke");
+                                    }
+                                    else
+                                    {
+                                        DateTime? odabranDatum = null;
+                                        PrikazStavke.kreirajStavku(txbStavkaNoviNaziv.Text, selektiranSpremnik.idSpremnika, selektiraneOznake, odabranDatum, zauzima, globalniKorisnikID);
+                                        txbStavkaNoviNaziv.Clear();
+                                        txbZauzimaKreirajStavku.Clear();
+                                        dpStavkaIstekRoka.SelectedDate = null;
+                                        cmbSpremniciKreirajStavku.SelectedItem = null;
+                                        lbOznakeKreirajStavku.SelectedItem = null;
+                                        naslovLabel.Content = "Stavke";
+                                        PrikaziStavke();
+                                        promjeniGrid("gridStavke");
+                                    }
                                 }
                                 else
                                 {
-                                    DateTime? odabranDatum = null;
-                                    PrikazStavke.kreirajStavku(txbStavkaNoviNaziv.Text, selektiranSpremnik.idSpremnika, selektiraneOznake, odabranDatum, zauzima, globalniKorisnikID);
-                                    txbStavkaNoviNaziv.Clear();
-                                    txbZauzimaKreirajStavku.Clear();
-                                    dpStavkaIstekRoka.SelectedDate = null;
-                                    cmbSpremniciKreirajStavku.SelectedItem = null;
-                                    lbOznakeKreirajStavku.SelectedItem = null;
-                                    naslovLabel.Content = "Stavke";
-                                    PrikaziStavke();
-                                    promjeniGrid("gridStavke");
+                                    MessageBox.Show("Ne mozete unjeti kvarljiv proizvod u spremnik koji ne prihvača kvarljive proizvode");
                                 }
                             }
                             else
@@ -838,7 +858,7 @@ namespace WpfApp1
 
             List<PrikazOznaka> selektiraneOznake = new List<PrikazOznaka>();
 
-            int zauzima = Convert.ToInt32(txbIzmjeniStavkuNovoZauzece.Text);
+            double zauzima = Convert.ToDouble(txbIzmjeniStavkuNovoZauzece.Text);
             foreach (var item in lbIzmjeniStavkuNjeneOznake.SelectedItems)
             {
                 PrikazOznaka oznake = (PrikazOznaka)item;
@@ -854,9 +874,17 @@ namespace WpfApp1
             {
                 idSpremnika = odabranSpremnik.idSpremnika;
             }
+            if (dpStavkaIstekRoka.SelectedDate != null)
+            {
+                PrikazStavke.izmjeniStavku(Convert.ToInt32(txbStavkaID.Text), txbIzmjeniStavkuNoviNaziv.Text, idSpremnika, dpIzmjeniStavkuNoviIstekRoka.SelectedDate.Value.Date, zauzima, globalniKorisnikID);
+            }
+            else
+            {
+                DateTime? datum = null;
+                PrikazStavke.izmjeniStavku(Convert.ToInt32(txbStavkaID.Text), txbIzmjeniStavkuNoviNaziv.Text, idSpremnika, datum, zauzima, globalniKorisnikID);
+            }
 
-
-            PrikazStavke.izmjeniStavku(Convert.ToInt32(txbStavkaID.Text), txbIzmjeniStavkuNoviNaziv.Text, idSpremnika, dpIzmjeniStavkuNoviIstekRoka.SelectedDate.Value.Date, zauzima, globalniKorisnikID);
+               
 
             naslovLabel.Content = "Stavke";
             PrikaziStavke();

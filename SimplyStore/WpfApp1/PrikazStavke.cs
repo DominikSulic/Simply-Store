@@ -25,6 +25,7 @@ namespace WpfApp1
                 var query = (from s in db.stavka
                              join d in db.spremnik on s.spremnik_id equals d.id_spremnik
                              join p in db.prostorija on d.prostorija_id equals p.id_prostorija
+                             where s.zauzeće>0
                              select new PrikazStavke
                              {
                                  idStavke = s.id_stavka,
@@ -51,7 +52,7 @@ namespace WpfApp1
                 var query = (from s in db.stavka
                              join d in db.spremnik on s.spremnik_id equals d.id_spremnik
                              join p in db.prostorija on d.prostorija_id equals p.id_prostorija
-                             where s.naziv.ToLower().Contains(search)
+                             where s.naziv.ToLower().Contains(search) && s.zauzeće > 0
                              select new PrikazStavke
                              {
                                  idStavke = s.id_stavka,
@@ -78,7 +79,7 @@ namespace WpfApp1
                 var query = (from s in db.stavka
                              join d in db.spremnik on s.spremnik_id equals d.id_spremnik
                              join p in db.prostorija on d.prostorija_id equals p.id_prostorija
-                             where d.naziv_spremnika == nazivSpremnika
+                             where d.naziv_spremnika == nazivSpremnika && s.zauzeće > 0
                              select new PrikazStavke
                              {
                                  idStavke = s.id_stavka,
@@ -163,7 +164,7 @@ namespace WpfApp1
 
 
 
-        public static void izmjeniStavku(int id, string noviNaziv, int idSpremnika, DateTime datumIsteka, int zauzima, int korisnikID)
+        public static void izmjeniStavku(int id, string noviNaziv, int idSpremnika, DateTime? datumIsteka, double zauzima, int korisnikID)
         {
             dnevnik noviDnevnik = new dnevnik
             {
@@ -201,7 +202,7 @@ namespace WpfApp1
                 var query = (from stavka in db.stavka where stavka.id_stavka == idStavke select stavka).First();
                 db.stavka.Attach(query);
                 noviDnevnik.kolicina = query.zauzeće;
-                db.stavka.Remove(query);
+                query.zauzeće = 0;
                 db.dnevnik.Add(noviDnevnik);
                 db.SaveChanges();
             }
@@ -218,7 +219,7 @@ namespace WpfApp1
                 var query = (from s in db.stavka
                              join d in db.spremnik on s.spremnik_id equals d.id_spremnik
                              join p in db.prostorija on d.prostorija_id equals p.id_prostorija
-                             where System.Data.Objects.SqlClient.SqlFunctions.DateDiff("dd", now, s.datum_roka) < brojDana
+                             where System.Data.Objects.SqlClient.SqlFunctions.DateDiff("dd", now, s.datum_roka) < brojDana && s.zauzeće>0
                              select new PrikazStavke
                              {
                                  idStavke = s.id_stavka,
@@ -247,7 +248,7 @@ namespace WpfApp1
                 var query = (from s in db.stavka
                              join d in db.spremnik on s.spremnik_id equals d.id_spremnik
                              join p in db.prostorija on d.prostorija_id equals p.id_prostorija
-                             where now > s.datum_roka
+                             where now > s.datum_roka && s.zauzeće>0
                              select new PrikazStavke
                              {
                                  idStavke = s.id_stavka,
