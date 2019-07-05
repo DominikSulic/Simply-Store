@@ -714,7 +714,7 @@
                 </StackPanel>
             </Grid>
 
-            <Grid Grid.Column="1" Grid.Row="1" x:Name="gridIzmjeniStavku" Visibility="Collapsed">
+            <Grid Grid.Column="1" Grid.Row="1" x:Name="gridIzmjeniStavku" Visibility="Visible">
 
                 <Rectangle></Rectangle>
                 <StackPanel>
@@ -801,11 +801,15 @@
                 <Rectangle></Rectangle>
                 <Grid>
                     <Grid.RowDefinitions>
+                        <RowDefinition Height="2*"></RowDefinition>
                         <RowDefinition Height="10*"></RowDefinition>
+                        <RowDefinition Height="2*"></RowDefinition>
                         <RowDefinition Height="10*"></RowDefinition>
                     </Grid.RowDefinitions>
-                    <DataGrid Grid.Row="0" x:Name="dgStavkePredIstekom" HorizontalAlignment="Stretch"  Margin="10,50,10,10" VerticalAlignment="Top"></DataGrid>
-                    <DataGrid Grid.Row="1" x:Name="dgStavkeIstekle" HorizontalAlignment="Stretch"  Margin="10,50,10,10" VerticalAlignment="Top"></DataGrid>
+                    <Label Content="Stavke pred istekom roka trajanja:" Grid.Row="0" FontSize="18" Foreground="{DynamicResource labelsColor}"></Label>
+                    <DataGrid Grid.Row="1" x:Name="dgStavkePredIstekom" HorizontalAlignment="Stretch"   VerticalAlignment="Top"></DataGrid>
+                    <Label Content="Stavke kojima je istekao rok trajanja:" Grid.Row="2" FontSize="18" Foreground="{DynamicResource labelsColor}"></Label>
+                    <DataGrid Grid.Row="3" x:Name="dgStavkeIstekle" HorizontalAlignment="Stretch"   VerticalAlignment="Top"></DataGrid>
                 </Grid>
             </Grid>
 

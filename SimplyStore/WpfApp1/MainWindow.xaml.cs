@@ -575,7 +575,7 @@ namespace WpfApp1
                 double postotakZauz = popunjenost[1] / popunjenost[0];
                 postotakZauzetosti.Width = new GridLength(postotakZauz, GridUnitType.Star);
                 postotakSlobodnog.Width = new GridLength(1- postotakZauz, GridUnitType.Star);
-                postotakZauzetostiText.Content = 100*postotakZauz + "%(" + popunjenost[1] + "/" + popunjenost[0] + ")";
+                postotakZauzetostiText.Content = 100*Math.Round(postotakZauz,4) + "%(" + popunjenost[1] + "/" + popunjenost[0] + ")";
             }
             else
             {
@@ -634,19 +634,25 @@ namespace WpfApp1
                 selektiraneOznake.Add(oznake);
             }
 
-            int zauzima = Convert.ToInt32(txbZauzimaKreirajStavku.Text);
+            double zauzima = Convert.ToDouble(txbZauzimaKreirajStavku.Text);
+            double [] zapremninaSpremnika = PrikazSpremnici.dohvatiPopunjenost(selektiranSpremnik.idSpremnika);
+            if (zapremninaSpremnika[1]+zauzima<zapremninaSpremnika[0])
+            { 
+                PrikazStavke.kreirajStavku(txbStavkaNoviNaziv.Text, selektiranSpremnik.idSpremnika, selektiraneOznake, dpStavkaIstekRoka.SelectedDate.Value.Date, zauzima, globalniKorisnikID);
 
-            PrikazStavke.kreirajStavku(txbStavkaNoviNaziv.Text, selektiranSpremnik.idSpremnika, selektiraneOznake, dpStavkaIstekRoka.SelectedDate.Value.Date, zauzima, globalniKorisnikID);
-
-            txbStavkaNoviNaziv.Clear();
-            txbZauzimaKreirajStavku.Clear();
-            dpStavkaIstekRoka.SelectedDate = null;
-            cmbSpremniciKreirajStavku.SelectedItem = null;
-            lbOznakeKreirajStavku.SelectedItem = null;
-            naslovLabel.Content = "Stavke";
-            PrikaziStavke();
-            promjeniGrid("gridStavke");
-
+                txbStavkaNoviNaziv.Clear();
+                txbZauzimaKreirajStavku.Clear();
+                dpStavkaIstekRoka.SelectedDate = null;
+                cmbSpremniciKreirajStavku.SelectedItem = null;
+                lbOznakeKreirajStavku.SelectedItem = null;
+                naslovLabel.Content = "Stavke";
+                PrikaziStavke();
+                promjeniGrid("gridStavke");
+            }
+            else
+            {
+                MessageBox.Show("U odabrani spremnik ne stane zadana kolicina");
+            }
 
         }
 

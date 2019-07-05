@@ -24,13 +24,13 @@ namespace WpfApp1
         public System.DateTime datum_kreiranja { get; set; }
         public double zapremnina { get; set; }
         public string opis { get; set; }
+        public Nullable<int> korisnik_id { get; set; }
         public Nullable<int> prostorija_id { get; set; }
         public Nullable<int> tip_id { get; set; }
-        public Nullable<int> korisnik_id { get; set; }
     
+        public virtual korisnik korisnik { get; set; }
         public virtual prostorija prostorija { get; set; }
         public virtual tip_spremnika tip_spremnika { get; set; }
         public virtual ICollection<stavka> stavka { get; set; }
-        public virtual korisnik korisnik { get; set; }
     }
 }

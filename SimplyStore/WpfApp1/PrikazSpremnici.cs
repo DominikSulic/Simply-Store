@@ -173,8 +173,8 @@ namespace WpfApp1
         public static double[] dohvatiPopunjenost(int idSpremnika)
         {
             double[] popunjenost = new double[2];
-            string upit2 = "SELECT SUM(zauzeće) FROM stavka WHERE spremnik_id=" + idSpremnika + "";
             string upit1 = "SELECT zapremnina FROM spremnik WHERE id_spremnik=" + idSpremnika + "";
+            string upit2 = "SELECT SUM(zauzeće) FROM stavka WHERE spremnik_id=" + idSpremnika + "";
             string connectionString = @"Data Source=31.147.204.119\PISERVER,1433; Initial Catalog=19023_DB; User=19023_User; Password='z#X1iD;M'";
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -183,8 +183,8 @@ namespace WpfApp1
                 SqlCommand command2 = new SqlCommand(upit2, connection);
                 try
                 {
-                    popunjenost[0]=(double)command1.ExecuteScalar();
-                    popunjenost[1] = (double)command2.ExecuteScalar();
+                    popunjenost[0]=(double)command1.ExecuteScalar(); //sprema zapremninu spremnika na poziciju 0
+                    popunjenost[1] = (double)command2.ExecuteScalar(); //sprema ukupno zauzeće spremnika na poziciju 1
                 }
                 catch (Exception ex)
                 {

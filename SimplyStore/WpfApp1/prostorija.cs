@@ -26,7 +26,7 @@ namespace WpfApp1
         public string posebne_napomene { get; set; }
         public Nullable<int> korisnik_id { get; set; }
     
-        public virtual ICollection<spremnik> spremnik { get; set; }
         public virtual korisnik korisnik { get; set; }
+        public virtual ICollection<spremnik> spremnik { get; set; }
     }
 }

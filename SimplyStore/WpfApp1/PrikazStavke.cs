@@ -12,7 +12,7 @@ namespace WpfApp1
         public string nazivStavke { get; set; }
         public DateTime datumKreiranja { get; set; }
         public DateTime? datumRoka { get; set; }
-        public float zauzece { get; set; }
+        public double zauzece { get; set; }
         public string nazivSpremnika { get; set; }
         public string nazivProstorije { get; set; }
 
@@ -112,7 +112,7 @@ namespace WpfApp1
 
         }
 
-        public static void kreirajStavku(string nazivStavke, int idSpremnika, List<PrikazOznaka> listaSelektiranihOznaka, DateTime datumIsteka, int zauzima, int korisnikID)
+        public static void kreirajStavku(string nazivStavke, int idSpremnika, List<PrikazOznaka> listaSelektiranihOznaka, DateTime datumIsteka, double zauzima, int korisnikID)
         {
 
             ICollection<oznaka> oznake = new List<oznaka>();

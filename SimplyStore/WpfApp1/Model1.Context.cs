@@ -25,12 +25,12 @@ namespace WpfApp1
             throw new UnintentionalCodeFirstException();
         }
     
+        public DbSet<dnevnik> dnevnik { get; set; }
+        public DbSet<korisnik> korisnik { get; set; }
         public DbSet<oznaka> oznaka { get; set; }
         public DbSet<prostorija> prostorija { get; set; }
         public DbSet<spremnik> spremnik { get; set; }
         public DbSet<stavka> stavka { get; set; }
         public DbSet<tip_spremnika> tip_spremnika { get; set; }
-        public DbSet<dnevnik> dnevnik { get; set; }
-        public DbSet<korisnik> korisnik { get; set; }
     }
 }
