@@ -506,6 +506,7 @@ namespace WpfApp1
                 spremnik s = new spremnik();
                 s = PrikazSpremnici.dohvatiSpremnik(odabraniSpremnik.idSpremnika);
                 txbSpremnikNoviNaziv.Text = s.naziv_spremnika;
+                txbStaraProstorijaID.Text = s.prostorija_id.ToString();
                 txbSpremnikNoviOpis.Text = s.opis;
                 txbSpremnikNovaZapremnina.Text = s.zapremnina.ToString();
                 txbSpremnikID.Text = s.id_spremnik.ToString();

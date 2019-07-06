@@ -518,6 +518,7 @@
                     <Label Content="Prostorija kojoj pripada" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="{DynamicResource labelsColor}"/>
                     <ComboBox x:Name="cmbProstorijeIzmjenaSpremnika" HorizontalAlignment="Center" VerticalAlignment="Top" Width="120"/>
                     <TextBox x:Name="txbSpremnikID" HorizontalAlignment="Center" Height="23"  TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Visibility="Collapsed"/>
+                    <TextBox x:Name="txbStaraProstorijaID" HorizontalAlignment="Center" Height="23"  TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Visibility="Collapsed"/>
                     <Grid Height="40" HorizontalAlignment="Center" Width="282" Margin="176,0" >
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="0.5*"/>
