@@ -655,7 +655,7 @@ namespace WpfApp1
                     {
                         double zauzima = Convert.ToDouble(txbZauzimaKreirajStavku.Text);
                         double[] zapremninaSpremnika = PrikazSpremnici.dohvatiPopunjenost(selektiranSpremnik.idSpremnika);
-                        if (zapremninaSpremnika[1] + zauzima < zapremninaSpremnika[0])
+                        if (zapremninaSpremnika[1] + zauzima <= zapremninaSpremnika[0])
                         {
                             if (selektiraneOznake.Count() != 0)
                             {
