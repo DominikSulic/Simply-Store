@@ -520,8 +520,17 @@ namespace WpfApp1
         private void btnIzmjeniSpremnikSpremi_Click(object sender, RoutedEventArgs e)
         {
             PrikazProstorije odabranaProstorija = new PrikazProstorije();
-            odabranaProstorija = (PrikazProstorije)cmbProstorijeIzmjenaSpremnika.SelectedItem;
-            PrikazSpremnici.izmjeniSpremnik(Convert.ToInt32(txbSpremnikID.Text), txbSpremnikNoviNaziv.Text, Convert.ToDouble(txbSpremnikNovaZapremnina.Text), txbSpremnikNoviOpis.Text, odabranaProstorija.idProstorije);
+            int IdProstorije;
+            if (cmbProstorijeIzmjenaSpremnika.SelectedItem != null)
+            {
+                odabranaProstorija = (PrikazProstorije)cmbProstorijeIzmjenaSpremnika.SelectedItem;
+                IdProstorije = odabranaProstorija.idProstorije;   
+            }
+            else
+            {
+                IdProstorije = int.Parse(txbStaraProstorijaID.Text);
+            }            
+            PrikazSpremnici.izmjeniSpremnik(Convert.ToInt32(txbSpremnikID.Text), txbSpremnikNoviNaziv.Text, Convert.ToDouble(txbSpremnikNovaZapremnina.Text), txbSpremnikNoviOpis.Text, IdProstorije);
             txbSpremnikNoviNaziv.Clear();
             txbSpremnikNoviOpis.Clear();
             txbSpremnikNovaZapremnina.Clear();
