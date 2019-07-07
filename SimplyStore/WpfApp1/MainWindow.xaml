@@ -794,7 +794,13 @@
                     <CheckBox x:Name="chkDarkTheme" HorizontalAlignment="Center" VerticalAlignment="Top"  Click="chkDarkTheme_Click"/>
                     <Label Margin="0,10,0,0" HorizontalAlignment="Center" FontWeight="Bold" Foreground="{DynamicResource labelsColor}" Content="Koliko dana prije isteka roka trajanja stavke želite da vas obavijestimo?"></Label>
                     <TextBox Height="20"  Width="100" HorizontalAlignment="Center" VerticalAlignment="Top" x:Name="BrojDana"></TextBox>
+                    <TextBlock FontSize="16" TextDecorations="Underline" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,10,0,0">
+                        <Hyperlink NavigateUri="https://github.com/foivz/r19023/wiki/3.-Korisni%C4%8Dka-dokumentacija" RequestNavigate="Hyperlink_RequestNavigate">
+                            Help!
+                        </Hyperlink>
+                    </TextBlock>
                     <Button  x:Name="btnSpremiPostavke" HorizontalAlignment="Center" VerticalAlignment="Top" Content="Spremi postavke" Margin="0,10,0,0" Width="100" Height="20" Click="btnSpremiPostavke_Click"></Button>
+                    
                 </StackPanel>
      
             </Grid>
