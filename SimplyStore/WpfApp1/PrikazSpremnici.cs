@@ -150,7 +150,7 @@ namespace WpfApp1
             return spremnik;
         }
 
-        public static void obrisiSpremnik(int idSpremnika)
+        public static void obrisiSpremnik(int idSpremnika, int korisnikID)
         {
             using (var db = new SSDB())
             {
@@ -163,6 +163,16 @@ namespace WpfApp1
                 {
                     if (item.spremnik_id == idSpremnika)
                     {
+                        dnevnik noviDnevnik = new dnevnik
+                        {
+                            radnja = "bris. Spremnik",
+                            datum = DateTime.Now,
+                            korisnik_id = korisnikID,
+                            stavka_id = item.id_stavka,
+                            kolicina = item.zauzeće
+                            
+                        };
+                        db.dnevnik.Add(noviDnevnik);
                         db.stavka.Attach(item);
                         item.zauzeće = 0;
                     }

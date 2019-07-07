@@ -481,7 +481,7 @@ namespace WpfApp1
             {
                 foreach (PrikazSpremnici p in dgSpremnici.SelectedItems)
                 {
-                    PrikazSpremnici.obrisiSpremnik(p.idSpremnika);
+                    PrikazSpremnici.obrisiSpremnik(p.idSpremnika, globalniKorisnikID);
                 }
             }
             else
