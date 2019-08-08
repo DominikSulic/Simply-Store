@@ -162,15 +162,16 @@ namespace WpfApp1
 
         }
 
-
-
         public static void izmjeniStavku(int id, string noviNaziv, int idSpremnika, DateTime? datumIsteka, double zauzima, int korisnikID)
         {
+            double staroZauzece = dohvatiStaroZauzece(id);
+            double novaKolicina = zauzima - staroZauzece;
+
             dnevnik noviDnevnik = new dnevnik
             {
                 radnja = "ažuriranje",
                 datum = DateTime.Now,
-                kolicina = zauzima,
+                kolicina = novaKolicina,
                 korisnik_id = korisnikID,
                 stavka_id = id
             };
@@ -267,6 +268,15 @@ namespace WpfApp1
             return lista;
         }
 
-    }
-    
+        private static double dohvatiStaroZauzece(int stavkaId)
+        {
+            double zauzece;
+            using (var db = new SSDB())
+            {
+                var query = from s in db.stavka where s.id_stavka == stavkaId select s.zauzeće;
+                zauzece = Convert.ToDouble(query);
+            }
+            return zauzece;
+        }
+    }   
 }

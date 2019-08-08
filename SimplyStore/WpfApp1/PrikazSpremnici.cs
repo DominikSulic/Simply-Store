@@ -200,7 +200,7 @@ namespace WpfApp1
                 SqlCommand command2 = new SqlCommand(upit2, connection);
                 try
                 {
-                    popunjenost[0]=(double)command1.ExecuteScalar(); //sprema zapremninu spremnika na poziciju 0
+                    popunjenost[0] = (double)command1.ExecuteScalar(); //sprema zapremninu spremnika na poziciju 0
                     popunjenost[1] = (double)command2.ExecuteScalar(); //sprema ukupno zauzeće spremnika na poziciju 1
                 }
                 catch (Exception ex)
