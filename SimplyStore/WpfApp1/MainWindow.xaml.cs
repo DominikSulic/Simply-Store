@@ -86,8 +86,10 @@ namespace WpfApp1
             podaciDatoteke.Add(darkTheme);
             return podaciDatoteke;
         }
+
+
         #region Prikazi
-        public void PrikaziProstorije()
+            public void PrikaziProstorije()
         {
             dgProstorije.ItemsSource = PrikazProstorije.dohvatiProstorije();
         }
@@ -252,6 +254,8 @@ namespace WpfApp1
 
         }
 
+
+
         #region Prostorije
         private void BtnkreirajProstoriju_Click_1(object sender, RoutedEventArgs e)
         {
@@ -377,6 +381,11 @@ namespace WpfApp1
         {
             string tekst = ProstorijeSearch.Text;
             dgProstorije.ItemsSource = PrikazProstorije.dohvatiProstorije(tekst);
+        }
+
+        private void BtnkreirajPDFProstorije_Click(object sender, RoutedEventArgs e)
+        {
+            PDFConverter.ExportPDFProstorije();
         }
         #endregion
 
@@ -586,6 +595,11 @@ namespace WpfApp1
             {
                 gridPopunjenost.Visibility = Visibility.Collapsed;
             }
+        }
+
+        private void BtnkreirajPDFSpremnici_Click(object sender,RoutedEventArgs e)
+        {
+            PDFConverter.ExportPDFSpremnici();
         }
         #endregion
 
@@ -888,6 +902,21 @@ namespace WpfApp1
             promjeniGrid("gridStavke");
         }
 
+        private void BtnkreirajPDFStavke_Click(object sender, RoutedEventArgs e)
+        {
+            PDFConverter.ExportPDFStavke();
+        }
+
+        private void btnkreirajPDFStavkePredIstekom_Click(object sender, RoutedEventArgs e)
+        {
+            var podatci = dohvatiDatotekuPodatke();
+            PDFConverter.ExportPDFRokoviPredIstekom(podatci[0]);
+        }
+
+        private void btnkreirajPDFIstekleStavke_Click(object sender, RoutedEventArgs e)
+        {
+            PDFConverter.ExportPDFIsteceniRokovi();
+        }
         #endregion
 
         #region Postavke
@@ -993,6 +1022,11 @@ namespace WpfApp1
                     file.Close();
                 }
             }
+        }
+
+        private void btnkreirajPDFDnevnika_Click(object sender, RoutedEventArgs e)
+        {
+            PDFConverter.ExportPDFDnevnik();
         }
     }
 }

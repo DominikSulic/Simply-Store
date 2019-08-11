@@ -108,7 +108,7 @@
                 <Button x:Name="menuSpremnici" Content="Spremnici" HorizontalAlignment="Stretch" VerticalAlignment="Top" Click="menuSpremnici_Click"></Button>
                 <Button x:Name="menuStavke" Content="Stavke" HorizontalAlignment="Stretch" VerticalAlignment="Top" Click="menuStavke_Click"></Button>
                 <Button x:Name="menuStavkePredIstekom" Content="Stavke pred istekom" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Click="menuStavkePredIstekom_Click"></Button>
-                <Button x:Name="menuStatistika" Content="Statistika" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Click="menuStatistika_Click"></Button>
+                <Button x:Name="menuStatistika" Content="Dnevnik" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Click="menuStatistika_Click"></Button>
                 <Button x:Name="menuOpcije" Content="Opcije" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Click="menuOpcije_Click"></Button>
                 <Button x:Name="menuIzlaz" Content="Izlaz" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Click="menuIzlaz_Click"></Button>
             </StackPanel>
@@ -188,6 +188,19 @@
                                 </ToolTip>
                             </Button.ToolTip>
                         </Button>
+                    <Button Grid.Row="0" Grid.Column="0" Name="btnkreirajPDFProstorije" Click="BtnkreirajPDFProstorije_Click" VerticalAlignment="Center" HorizontalAlignment="Center" RenderTransformOrigin="1,0.5">
+                        <Button.Effect>
+                            <DropShadowEffect BlurRadius="1" Opacity="0.3" Color="White" ShadowDepth="1" Direction="180"/>
+                        </Button.Effect>
+                        <Button.ToolTip>
+                            <ToolTip>
+                                <StackPanel>
+                                    <TextBlock FontWeight="Bold">Kreiraj prostoriju</TextBlock>
+                                    <TextBlock>Otvara formu za kreiranje nove prostorije.</TextBlock>
+                                </StackPanel>
+                            </ToolTip>
+                        </Button.ToolTip>
+                    </Button>
 
                     <Button Grid.Row="0" Grid.Column="3" Name="btnizmjeniProstoriju" VerticalAlignment="Center" RenderTransformOrigin="0,0.5" Click="BtnizmjeniProstoriju_Click_1" HorizontalAlignment="Center" >
                         <Button.Effect>
@@ -361,6 +374,19 @@
                     <Button Grid.Row="1" Grid.Column="1"  x:Name="btnPrikaziSveSpremnike" Content="Prikaži sve" HorizontalAlignment="Left" VerticalAlignment="Center" Width="auto" Margin="5,0,0,0" Click="btnPrikaziSveSpremnike_Click"/>
                     <DataGrid Grid.Row="2" Grid.ColumnSpan="5" x:Name="dgSpremnici" HorizontalAlignment="Stretch"   VerticalAlignment="Top" SelectionChanged="dgSpremnici_SelectionChanged"></DataGrid>
 
+                    <Button Grid.Row="0" Grid.Column="0" Name="btnkreirajPDFSpremnici" Click="BtnkreirajPDFSpremnici_Click" VerticalAlignment="Center" HorizontalAlignment="Center" RenderTransformOrigin="1,0.5">
+                        <Button.Effect>
+                            <DropShadowEffect BlurRadius="1" Opacity="0.3" Color="White" ShadowDepth="1" Direction="180"/>
+                        </Button.Effect>
+                        <Button.ToolTip>
+                            <ToolTip>
+                                <StackPanel>
+                                    <TextBlock FontWeight="Bold">Kreiraj prostoriju</TextBlock>
+                                    <TextBlock>Otvara formu za kreiranje nove prostorije.</TextBlock>
+                                </StackPanel>
+                            </ToolTip>
+                        </Button.ToolTip>
+                    </Button>
                     <Button Grid.Row="0" Grid.Column="2" Name="btnKreirajSpremnik" Click="btnKreirajSpremnik_Click" VerticalAlignment="Center" HorizontalAlignment="Center" RenderTransformOrigin="1,0.5">
                         <Button.Effect>
                             <DropShadowEffect BlurRadius="1" Opacity="0.3" Color="White" ShadowDepth="1" Direction="180"/>
@@ -622,6 +648,21 @@
                             </ToolTip>
                         </Button.ToolTip>
                     </Button>
+
+                    <Button Grid.Row="0" Grid.Column="0" Name="btnkreirajPDFStavke" Click="BtnkreirajPDFStavke_Click" VerticalAlignment="Center" HorizontalAlignment="Center" RenderTransformOrigin="1,0.5">
+                        <Button.Effect>
+                            <DropShadowEffect BlurRadius="1" Opacity="0.3" Color="White" ShadowDepth="1" Direction="180"/>
+                        </Button.Effect>
+                        <Button.ToolTip>
+                            <ToolTip>
+                                <StackPanel>
+                                    <TextBlock FontWeight="Bold">Kreiraj prostoriju</TextBlock>
+                                    <TextBlock>Otvara formu za kreiranje nove prostorije.</TextBlock>
+                                </StackPanel>
+                            </ToolTip>
+                        </Button.ToolTip>
+                    </Button>
+
                     <Button Grid.Row="0" Grid.Column="4" Name="btnObrisiStavku" VerticalAlignment="Center" Click="BtnObrisiStavku_Click" HorizontalAlignment="Center" >
                         <Button.Effect>
                             <DropShadowEffect BlurRadius="1" Opacity="0.3" Color="White" ShadowDepth="1" Direction="180"/>
@@ -815,8 +856,34 @@
                         <RowDefinition Height="10*"></RowDefinition>
                     </Grid.RowDefinitions>
                     <Label Content="Stavke pred istekom roka trajanja:" Grid.Row="0" FontSize="18" Foreground="{DynamicResource labelsColor}"></Label>
+                    <Button Grid.Row="0" Grid.Column="0" Name="btnkreirajPDFStavkePredIstekom" Click="btnkreirajPDFStavkePredIstekom_Click" VerticalAlignment="Center" HorizontalAlignment="Center" RenderTransformOrigin="1,0.5">
+                        <Button.Effect>
+                            <DropShadowEffect BlurRadius="1" Opacity="0.3" Color="White" ShadowDepth="1" Direction="180"/>
+                        </Button.Effect>
+                        <Button.ToolTip>
+                            <ToolTip>
+                                <StackPanel>
+                                    <TextBlock FontWeight="Bold">Kreiraj prostoriju</TextBlock>
+                                    <TextBlock>Otvara formu za kreiranje nove prostorije.</TextBlock>
+                                </StackPanel>
+                            </ToolTip>
+                        </Button.ToolTip>
+                    </Button>
                     <DataGrid Grid.Row="1" x:Name="dgStavkePredIstekom" HorizontalAlignment="Stretch"   VerticalAlignment="Top"></DataGrid>
                     <Label Content="Stavke kojima je istekao rok trajanja:" Grid.Row="2" FontSize="18" Foreground="{DynamicResource labelsColor}"></Label>
+                    <Button Grid.Row="1" Grid.Column="0" Name="btnkreirajPDFIstekleStavke" Click="btnkreirajPDFIstekleStavke_Click" VerticalAlignment="Center" HorizontalAlignment="Center" RenderTransformOrigin="1,0.5">
+                        <Button.Effect>
+                            <DropShadowEffect BlurRadius="1" Opacity="0.3" Color="White" ShadowDepth="1" Direction="180"/>
+                        </Button.Effect>
+                        <Button.ToolTip>
+                            <ToolTip>
+                                <StackPanel>
+                                    <TextBlock FontWeight="Bold">Kreiraj prostoriju</TextBlock>
+                                    <TextBlock>Otvara formu za kreiranje nove prostorije.</TextBlock>
+                                </StackPanel>
+                            </ToolTip>
+                        </Button.ToolTip>
+                    </Button>
                     <DataGrid Grid.Row="3" x:Name="dgStavkeIstekle" HorizontalAlignment="Stretch"   VerticalAlignment="Top"></DataGrid>
                 </Grid>
             </Grid>
@@ -837,7 +904,19 @@
                     <ColumnDefinition Width="1*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
 
-
+                    <Button Grid.Row="0" Grid.Column="0" Name="btnkreirajPDFDnevnika" Click="btnkreirajPDFDnevnika_Click" VerticalAlignment="Center" HorizontalAlignment="Center" RenderTransformOrigin="1,0.5">
+                        <Button.Effect>
+                            <DropShadowEffect BlurRadius="1" Opacity="0.3" Color="White" ShadowDepth="1" Direction="180"/>
+                        </Button.Effect>
+                        <Button.ToolTip>
+                            <ToolTip>
+                                <StackPanel>
+                                    <TextBlock FontWeight="Bold">Kreiraj prostoriju</TextBlock>
+                                    <TextBlock>Otvara formu za kreiranje nove prostorije.</TextBlock>
+                                </StackPanel>
+                            </ToolTip>
+                        </Button.ToolTip>
+                    </Button>
                     <TextBox Grid.Row="0" Grid.Column="0" Height="20"  Width="100" HorizontalAlignment="Center" TextChanged="StatistikaSearch_TextChanged" VerticalAlignment="Top" x:Name="StatistikaSearch"></TextBox>
                     <DataGrid Grid.Row="1" Grid.ColumnSpan="5" x:Name="dgStatistika"></DataGrid>
                 </Grid>

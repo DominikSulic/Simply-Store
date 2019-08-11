@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28010.2016
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29201.188
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfApp1", "WpfApp1\WpfApp1.csproj", "{DC23AD23-551C-4A56-8B5B-CAF45F2D7881}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testovi", "Testovi\Testovi.csproj", "{AC3F5D7B-6974-4BAF-81CD-E4F60BD6A467}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{DC23AD23-551C-4A56-8B5B-CAF45F2D7881}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DC23AD23-551C-4A56-8B5B-CAF45F2D7881}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DC23AD23-551C-4A56-8B5B-CAF45F2D7881}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC3F5D7B-6974-4BAF-81CD-E4F60BD6A467}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC3F5D7B-6974-4BAF-81CD-E4F60BD6A467}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC3F5D7B-6974-4BAF-81CD-E4F60BD6A467}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC3F5D7B-6974-4BAF-81CD-E4F60BD6A467}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
