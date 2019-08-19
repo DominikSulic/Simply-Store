@@ -15,7 +15,6 @@ namespace WpfApp1
         public double zapremnina { get; set; }
         public string opis { get; set; }
         public string nazivProstorije { get; set; }
-        public string kvarljivost { get; set; }
 
         public static List<PrikazSpremnici> dohvatiSpremnike()
         {
@@ -34,7 +33,6 @@ namespace WpfApp1
                                  zapremnina = sp.zapremnina,
                                  opis = sp.opis,
                                  nazivProstorije = pros.naziv_prostorije,
-                                 kvarljivost=sp.prima_kvarljive
                              }).ToList();
                 sviSpremnici = query;
             }
@@ -103,8 +101,9 @@ namespace WpfApp1
             return naziviSpremnika;
         }
 
-        public static void kreirajSpremnik(string naziv, double zapremnina, string opis, int idProstorije,string kvarljivost, int brojUnosa = 1)
+        public static List<int> kreirajSpremnik(string naziv, double zapremnina, string opis, int idProstorije, int brojUnosa = 1)
         {
+            List<int> idNovogSpremnika = new List<int>();
             for (int i = 0; i < brojUnosa; i++)
             {
                 spremnik noviSpremnik = new spremnik
@@ -113,17 +112,34 @@ namespace WpfApp1
                     datum_kreiranja = DateTime.Now,
                     zapremnina = zapremnina,
                     opis = opis,
-                    prostorija_id = idProstorije,
-                    prima_kvarljive = kvarljivost
+                    prostorija_id = idProstorije
                 };
 
                 using (var db = new SSDB())
                 {
-                    db.spremnik.Add(noviSpremnik);
+                    spremnik a = db.spremnik.Add(noviSpremnik);
                     db.SaveChanges();
+                    idNovogSpremnika.Add(a.id_spremnik);
+                    
                 }
             }
-            
+            return idNovogSpremnika;
+        }
+
+        public static int kreirajSpremnikOznaka(int idSpremnik,int idOznaka)
+        {
+            int rezultat;
+            string upit = "INSERT INTO spremnik_oznaka(spremnik_id,oznaka_id) VALUES(" + idSpremnik + "," + idOznaka + ")";
+            string connectionString = @"Data Source=31.147.204.119\PISERVER,1433; Initial Catalog=19023_DB; User=19023_User; Password='z#X1iD;M'";
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                SqlCommand command = new SqlCommand(upit, connection);
+                int insert = command.ExecuteNonQuery();
+                rezultat = insert;
+                connection.Close();
+            }
+            return rezultat;
         }
 
         public static void izmjeniSpremnik(int id, string noviNaziv, double zapremnina,string noviOpis, int idProstorije)
@@ -210,5 +226,7 @@ namespace WpfApp1
             }
             return popunjenost;
         }
+
+       
     }
 }

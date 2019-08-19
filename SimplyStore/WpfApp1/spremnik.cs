@@ -17,6 +17,7 @@ namespace WpfApp1
         public spremnik()
         {
             this.stavka = new HashSet<stavka>();
+            this.oznaka = new HashSet<oznaka>();
         }
     
         public int id_spremnik { get; set; }
@@ -24,12 +25,12 @@ namespace WpfApp1
         public System.DateTime datum_kreiranja { get; set; }
         public double zapremnina { get; set; }
         public string opis { get; set; }
-        public string prima_kvarljive { get; set; }
         public Nullable<int> korisnik_id { get; set; }
         public Nullable<int> prostorija_id { get; set; }
     
         public virtual korisnik korisnik { get; set; }
         public virtual prostorija prostorija { get; set; }
         public virtual ICollection<stavka> stavka { get; set; }
+        public virtual ICollection<oznaka> oznaka { get; set; }
     }
 }

@@ -16,6 +16,7 @@ namespace WpfApp1
     {
         public oznaka()
         {
+            this.spremnik = new HashSet<spremnik>();
             this.stavka = new HashSet<stavka>();
         }
     
@@ -23,6 +24,12 @@ namespace WpfApp1
         public string naziv { get; set; }
         public string kvarljivost { get; set; }
     
+        public virtual ICollection<spremnik> spremnik { get; set; }
         public virtual ICollection<stavka> stavka { get; set; }
+
+        public override string ToString()
+        {
+            return this.naziv;
+        }
     }
 }

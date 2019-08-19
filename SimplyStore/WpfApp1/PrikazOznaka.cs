@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -43,6 +44,32 @@ namespace WpfApp1
             return naziv;
         }
 
+        public static List<PrikazOznaka> dohvatiOznakeSpremnika(int idSpremnika)
+        {
+            List<PrikazOznaka> oznake = new List<PrikazOznaka>();
+            string connectionString = @"Data Source=31.147.204.119\PISERVER,1433; Initial Catalog=19023_DB; User=19023_User; Password='z#X1iD;M'";
+            string upit = "SELECT oznaka.* FROM oznaka,spremnik_oznaka WHERE oznaka.id_oznaka=spremnik_oznaka.oznaka_id AND spremnik_oznaka.spremnik_id=" + idSpremnika;
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                SqlCommand command = new SqlCommand(upit, connection);
+                SqlDataReader reader = command.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        PrikazOznaka a = new PrikazOznaka();
+                        a.id_oznaka = reader.GetInt32(0);
+                        a.naziv = reader.GetString(1);
+                        a.kvarljivost = reader.GetString(2);
+                        oznake.Add(a);
+                    }
+                }
+                reader.Close();
+                connection.Close();
+            }
+            return oznake;
+        }
 
     }
 }

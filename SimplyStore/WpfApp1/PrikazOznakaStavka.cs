@@ -67,6 +67,29 @@ namespace WpfApp1
             connection.Close();
         }
 
+        public static bool provjeriStavkuOznakuUnos(int idSpremnika, List<PrikazOznaka> selektiraniTagovi)//vraća true ako stavka koja se unosi ima barem jedan tag spremnika u koji se unosi
+        {
+            string connectionString = @"Data Source=31.147.204.119\PISERVER,1433; Initial Catalog=19023_DB; User=19023_User; Password='z#X1iD;M'";
+            SqlConnection connection = new SqlConnection(connectionString);
+            connection.Open();
+            string upit = "SELECT COUNT(*) FROM spremnik_oznaka WHERE spremnik_id=" + idSpremnika+ " AND (";
+            foreach (var item in selektiraniTagovi)//tu se "gradi" upit koji se kasnije izvršava i provjerava se dal je broj pronađenih oznaka za spremnik jednaka broju oznaka u stavci 
+            {
+                upit = upit + " oznaka_id=" + item.id_oznaka +" OR ";
+            }
+            upit = upit + " 1!=1)";
+            SqlCommand command = new SqlCommand(upit, connection);
+            int brojPronadenihIstihOznakaSpremnika=(Int32)command.ExecuteScalar();
+            if (brojPronadenihIstihOznakaSpremnika == selektiraniTagovi.Count())
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         public override string ToString()
         {
             return nazivOznake;

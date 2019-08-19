@@ -122,7 +122,6 @@ namespace WpfApp1
                 pdfTable.AddCell(new Phrase(ps.zapremnina.ToString()));
                 pdfTable.AddCell(new Phrase(ps.opis));
                 pdfTable.AddCell(new Phrase(ps.nazivProstorije));
-                pdfTable.AddCell(new Phrase(ps.kvarljivost));
             }
 
             System.Windows.Forms.SaveFileDialog savedFileDialogue = new System.Windows.Forms.SaveFileDialog();
