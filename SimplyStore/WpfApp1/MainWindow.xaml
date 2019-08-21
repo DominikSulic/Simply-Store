@@ -36,7 +36,7 @@
                 <Button x:Name="btnPrijava" Content="Prijavi se" Margin="0,10,0,0" Width="70" Click="btnPrijava_Click"></Button>
             </StackPanel>
         </Grid>
-        <Grid x:Name="gridGlavni" Visibility="Collapsed">
+        <Grid x:Name="gridGlavni" Visibility="Visible">
             <Grid.Resources>
                 <Style TargetType="DataGrid">
                     <Setter Property="Background" Value="{DynamicResource dataGridBG}"></Setter>
@@ -528,21 +528,29 @@
 
             <Grid Grid.Column="1" Grid.Row="1" x:Name="gridIzmjeniSpremnik" Visibility="Collapsed">
                 <Rectangle></Rectangle>
-                <StackPanel>
-                    <Label Content="Naziv spremnika" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="{DynamicResource labelsColor}"/>
-                    <TextBox x:Name="txbSpremnikNoviNaziv" HorizontalAlignment="Center" Height="23" Text="" VerticalAlignment="Top" Width="120"/>
+                <ScrollViewer>
+                    <StackPanel>
+                        <Label Content="Naziv spremnika" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="{DynamicResource labelsColor}"/>
+                        <TextBox x:Name="txbSpremnikNoviNaziv" HorizontalAlignment="Center" Height="23" Text="" VerticalAlignment="Top" Width="120"/>
 
-                    <Label Content="Zapremnina spremnika" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="{DynamicResource labelsColor}"/>
-                    <TextBox x:Name="txbSpremnikNovaZapremnina" HorizontalAlignment="Center" Height="23"  Text="" VerticalAlignment="Top" Width="120"/>
+                        <Label Content="Zapremnina spremnika" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="{DynamicResource labelsColor}"/>
+                        <TextBox x:Name="txbSpremnikNovaZapremnina" HorizontalAlignment="Center" Height="23"  Text="" VerticalAlignment="Top" Width="120"/>
 
-                    <Label Content="Opis" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="{DynamicResource labelsColor}"/>
-                    <TextBox x:Name="txbSpremnikNoviOpis" HorizontalAlignment="Center" Height="23"  TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+                        <Label Content="Opis" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="{DynamicResource labelsColor}"/>
+                        <TextBox x:Name="txbSpremnikNoviOpis" HorizontalAlignment="Center" Height="23"  TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
 
-                    <Label Content="Prostorija kojoj pripada" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="{DynamicResource labelsColor}"/>
-                    <ComboBox x:Name="cmbProstorijeIzmjenaSpremnika" HorizontalAlignment="Center" VerticalAlignment="Top" Width="120"/>
-                    <TextBox x:Name="txbSpremnikID" HorizontalAlignment="Center" Height="23"  TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Visibility="Collapsed"/>
-                    <TextBox x:Name="txbStaraProstorijaID" HorizontalAlignment="Center" Height="23"  TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Visibility="Collapsed"/>
-                    <Grid Height="40" HorizontalAlignment="Center" Width="282" Margin="176,0" >
+                        <Label Content="Prostorija kojoj pripada" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="{DynamicResource labelsColor}"/>
+                        <ComboBox x:Name="cmbProstorijeIzmjenaSpremnika" HorizontalAlignment="Center" VerticalAlignment="Top" Width="120"/>
+                        <TextBox x:Name="txbSpremnikID" HorizontalAlignment="Center" Height="23"  TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Visibility="Collapsed"/>
+
+                        <TextBox x:Name="txbStaraProstorijaID" HorizontalAlignment="Center" Height="23"  TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Visibility="Collapsed"/>
+
+                        <Label Content="Oznake koje želite uklonit" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="{DynamicResource labelsColor}"/>
+                        <ListBox x:Name="lbxTrenutneOznakeSpremnikaUkloni" Width="120" SelectionMode="Multiple"></ListBox>
+                    
+                        <Label Content="Oznake koje želite dodati" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="{DynamicResource labelsColor}"/>
+                        <ListBox x:Name="lbxDodaneOznakeSpremnika" Width="120" SelectionMode="Multiple"></ListBox>
+                        <Grid Height="40" HorizontalAlignment="Center" Width="282" Margin="176,0" >
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="0.5*"/>
                             <ColumnDefinition Width="0.5*"/>
@@ -559,8 +567,8 @@
                         </Button>
                         <Button x:Name="btnIzmjeniSpremnikOdustani"  Content="Odustani" VerticalAlignment="Top" Click="btnIzmjeniSpremnikOdustani_Click" Margin="10,10,0,0" Grid.Column="1" Width="95" HorizontalAlignment="Left" IsCancel="True"/>
                     </Grid>
-
-                </StackPanel>
+                    </StackPanel>
+                </ScrollViewer>
 
             </Grid>
 

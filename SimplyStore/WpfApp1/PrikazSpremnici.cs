@@ -88,19 +88,6 @@ namespace WpfApp1
 
         }
 
-        public static List<string> dohvatiNaziveSpremnika()
-        {
-            List<string> naziviSpremnika = new List<string>();
-
-            using (var db = new SSDB())
-            {
-                var query = (from s in db.spremnik select s.naziv_spremnika).ToList();
-                naziviSpremnika = query;
-            }
-
-            return naziviSpremnika;
-        }
-
         public static List<int> kreirajSpremnik(string naziv, double zapremnina, string opis, int idProstorije, int brojUnosa = 1)
         {
             List<int> idNovogSpremnika = new List<int>();
@@ -155,6 +142,35 @@ namespace WpfApp1
             }
         }
 
+        public static List<PrikazOznaka> provjeraTagovaSpremnikaIStavke(int idSpremnika)//prije UPDATE provjerava dal u spremniku postoje stavke sa tagom koji želimo obrisati,ako da ne dopušta
+        {
+            List<PrikazOznaka> oznake = new List<PrikazOznaka>();
+            string upit = "SELECT DISTINCT oznaka.* FROM oznaka,stavka_oznaka,stavka WHERE oznaka.id_oznaka=stavka_oznaka.oznaka_id AND stavka.id_stavka=stavka_oznaka.stavka_id AND stavka.zauzeće>0 AND stavka.spremnik_id="+idSpremnika;
+            string connectionString = @"Data Source=31.147.204.119\PISERVER,1433; Initial Catalog=19023_DB; User=19023_User; Password='z#X1iD;M'";
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                SqlCommand command = new SqlCommand(upit, connection);
+                SqlDataReader reader = command.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        PrikazOznaka a = new PrikazOznaka();
+                        a.id_oznaka = reader.GetInt32(0);
+                        a.naziv = reader.GetString(1);
+                        a.kvarljivost = reader.GetString(2);
+                        oznake.Add(a);
+                    }
+                }
+
+                reader.Close();
+                connection.Close();
+               
+            }
+            return oznake;
+        }
+
         public static spremnik dohvatiSpremnik(int idSpremnika)
         {
             spremnik spremnik = new spremnik();
@@ -197,6 +213,23 @@ namespace WpfApp1
             }
 
         }
+
+        public static void obrisiOznakuSpremnika(int idSpremnika,List<PrikazOznaka> oznakeZaBrisanje)
+        {
+            string connectionString = @"Data Source=31.147.204.119\PISERVER,1433; Initial Catalog=19023_DB; User=19023_User; Password='z#X1iD;M'";
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                foreach(PrikazOznaka item in oznakeZaBrisanje)
+                {
+                    string upit = "DELETE FROM spremnik_oznaka WHERE spremnik_id="+idSpremnika+" AND oznaka_id=" + item.id_oznaka;
+                    SqlCommand command = new SqlCommand(upit, connection);
+                    command.ExecuteNonQuery();
+                    
+                }
+                connection.Close();
+            }
+            }
 
         public override string ToString()
         {

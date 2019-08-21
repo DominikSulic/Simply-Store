@@ -105,7 +105,7 @@ namespace WpfApp1
 
         public void PrikaziStavke()
         {
-            cmbSpremnici.ItemsSource = PrikazSpremnici.dohvatiNaziveSpremnika();
+            cmbSpremnici.ItemsSource = PrikazSpremnici.dohvatiSpremnike();
             dgStavke.ItemsSource = PrikazStavke.dohvatiStavke();
         }
 
@@ -521,8 +521,6 @@ namespace WpfApp1
         private void btnIzmjeniSpremnik_Click(object sender, RoutedEventArgs e)
         {
 
-
-
             if (dgSpremnici.SelectedItem != null)
             {
                 naslovLabel.Content = "Izmjeni Spremnik";
@@ -537,6 +535,8 @@ namespace WpfApp1
                 txbSpremnikNovaZapremnina.Text = s.zapremnina.ToString();
                 txbSpremnikID.Text = s.id_spremnik.ToString();
                 cmbProstorijeIzmjenaSpremnika.ItemsSource = PrikazProstorije.dohvatiProstorije();
+                lbxTrenutneOznakeSpremnikaUkloni.ItemsSource = PrikazOznaka.dohvatiOznakeSpremnika(s.id_spremnik);
+                lbxDodaneOznakeSpremnika.ItemsSource = PrikazOznaka.dohvatiOznakeNePripadajuSpremniku(s.id_spremnik);
             }
             else
             {
@@ -557,14 +557,53 @@ namespace WpfApp1
             {
                 IdProstorije = int.Parse(txbStaraProstorijaID.Text);
             }
-            PrikazSpremnici.izmjeniSpremnik(Convert.ToInt32(txbSpremnikID.Text), txbSpremnikNoviNaziv.Text, Convert.ToDouble(txbSpremnikNovaZapremnina.Text), txbSpremnikNoviOpis.Text, IdProstorije);
-            txbSpremnikNoviNaziv.Clear();
-            txbSpremnikNoviOpis.Clear();
-            txbSpremnikNovaZapremnina.Clear();
-            txbSpremnikID.Clear();
-            naslovLabel.Content = "Spremnici";
-            PrikaziSpremnike();
-            promjeniGrid("gridSpremnici");
+            bool dozvoljenaPromjena = true;
+            string naziviTagovaZaBrisanje="";
+            List<PrikazOznaka> oznakeStavke = PrikazSpremnici.provjeraTagovaSpremnikaIStavke(Convert.ToInt32(txbSpremnikID.Text));
+            List<PrikazOznaka> oznakeZaBrisanje = new List<PrikazOznaka>();
+            foreach (PrikazOznaka item in lbxTrenutneOznakeSpremnikaUkloni.SelectedItems)
+            {
+                oznakeZaBrisanje.Add(item);
+                foreach(PrikazOznaka item2 in oznakeStavke)
+                {
+                    if (item.id_oznaka == item2.id_oznaka)
+                    {
+                        naziviTagovaZaBrisanje += item.naziv + " ";
+                        dozvoljenaPromjena = false;
+                        break;
+                    }
+                }
+                if (!dozvoljenaPromjena)
+                {
+                    break;
+                }
+            }
+            if (dozvoljenaPromjena)
+            {
+                PrikazSpremnici.izmjeniSpremnik(Convert.ToInt32(txbSpremnikID.Text), txbSpremnikNoviNaziv.Text, Convert.ToDouble(txbSpremnikNovaZapremnina.Text), txbSpremnikNoviOpis.Text, IdProstorije);
+                if (lbxTrenutneOznakeSpremnikaUkloni.SelectedItems != null)
+                {
+                    PrikazSpremnici.obrisiOznakuSpremnika(Convert.ToInt32(txbSpremnikID.Text), oznakeZaBrisanje);
+                }
+                if (lbxDodaneOznakeSpremnika.SelectedItems != null)
+                {
+                    foreach (PrikazOznaka item in lbxDodaneOznakeSpremnika.SelectedItems)
+                    {
+                        PrikazSpremnici.kreirajSpremnikOznaka(Convert.ToInt32(txbSpremnikID.Text), item.id_oznaka);
+                    }
+                }
+                txbSpremnikNoviNaziv.Clear();
+                txbSpremnikNoviOpis.Clear();
+                txbSpremnikNovaZapremnina.Clear();
+                txbSpremnikID.Clear();
+                naslovLabel.Content = "Spremnici";
+                PrikaziSpremnike();
+                promjeniGrid("gridSpremnici");
+            }
+            else
+            {
+                MessageBox.Show("Ne možete obrisati sljedeću oznaku: '" + naziviTagovaZaBrisanje + "' jer se u spremniku nalaze stavke sa tom oznakom.");
+            }
         }
 
         private void btnIzmjeniSpremnikOdustani_Click(object sender, RoutedEventArgs e)

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -207,7 +208,7 @@ namespace WpfApp1
                 db.dnevnik.Add(noviDnevnik);
                 db.SaveChanges();
             }
-        }
+            }
 
         public static List<PrikazStavke> dohvatiStavkePredIstekom(int brojDana)
         {
