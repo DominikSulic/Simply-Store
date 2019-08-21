@@ -271,7 +271,7 @@ namespace WpfApp1
                 if (txtBrojProstorija.Text == "")
                 {
                     broj = 1;
-                    PrikazProstorije.kreirajProstoriju(txtNazivProstorije.Text, txtOpisProstorije.Text, txtNapomeneProstorije.Text, broj);
+                    PrikazProstorije.kreirajProstoriju(txtNazivProstorije.Text, txtOpisProstorije.Text, txtNapomeneProstorije.Text, broj, globalniKorisnikID);
                     txtNazivProstorije.Clear();
                     txtOpisProstorije.Clear();
                     txtNapomeneProstorije.Clear();
@@ -285,7 +285,7 @@ namespace WpfApp1
                     {
                         if (broj > 0)
                         {
-                            PrikazProstorije.kreirajProstoriju(txtNazivProstorije.Text, txtOpisProstorije.Text, txtNapomeneProstorije.Text, broj);
+                            PrikazProstorije.kreirajProstoriju(txtNazivProstorije.Text, txtOpisProstorije.Text, txtNapomeneProstorije.Text, broj, globalniKorisnikID);
                             txtNazivProstorije.Clear();
                             txtOpisProstorije.Clear();
                             txtNapomeneProstorije.Clear();
@@ -457,7 +457,7 @@ namespace WpfApp1
                                 }
                                 else
                                 {
-                                    List<int> idUnesenihSpremnika = PrikazSpremnici.kreirajSpremnik(txbNoviSpremnikNaziv.Text, zapremnina, txbNoviSpremnikOpis.Text, selektiranaProstorija.idProstorije);
+                                    List<int> idUnesenihSpremnika = PrikazSpremnici.kreirajSpremnik(txbNoviSpremnikNaziv.Text, zapremnina, txbNoviSpremnikOpis.Text, selektiranaProstorija.idProstorije, globalniKorisnikID);
                                     foreach (var idSpremnika in idUnesenihSpremnika)
                                     {
                                         foreach (PrikazOznaka item in lbxOznakeNovogSpremnika.SelectedItems)

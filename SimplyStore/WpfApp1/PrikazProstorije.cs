@@ -70,7 +70,7 @@ namespace WpfApp1
             return sviNazivi;
         }
 
-        public static void kreirajProstoriju(string naziv, string opis, string napomene, int brojProstorija)
+        public static void kreirajProstoriju(string naziv, string opis, string napomene, int brojProstorija,int idKorisnika)
         {
             int broj = brojProstorija;
 
@@ -81,7 +81,8 @@ namespace WpfApp1
                     naziv_prostorije = naziv,
                     datum_kreiranja = DateTime.Now,
                     opis = opis,
-                    posebne_napomene = napomene
+                    posebne_napomene = napomene,
+                    korisnik_id=idKorisnika
                 };
 
                 using (var db = new SSDB())
@@ -99,7 +100,8 @@ namespace WpfApp1
                         naziv_prostorije = naziv + " (" + i + ")",
                         datum_kreiranja = DateTime.Now,
                         opis = opis,
-                        posebne_napomene = napomene
+                        posebne_napomene = napomene,
+                        korisnik_id = idKorisnika
                     };
 
                     using (var db = new SSDB())

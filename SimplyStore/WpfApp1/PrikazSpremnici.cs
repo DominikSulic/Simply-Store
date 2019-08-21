@@ -88,7 +88,7 @@ namespace WpfApp1
 
         }
 
-        public static List<int> kreirajSpremnik(string naziv, double zapremnina, string opis, int idProstorije, int brojUnosa = 1)
+        public static List<int> kreirajSpremnik(string naziv, double zapremnina, string opis, int idProstorije,int idKorisnika, int brojUnosa = 1)
         {
             List<int> idNovogSpremnika = new List<int>();
             for (int i = 0; i < brojUnosa; i++)
@@ -99,7 +99,8 @@ namespace WpfApp1
                     datum_kreiranja = DateTime.Now,
                     zapremnina = zapremnina,
                     opis = opis,
-                    prostorija_id = idProstorije
+                    prostorija_id = idProstorije,
+                    korisnik_id = idKorisnika
                 };
 
                 using (var db = new SSDB())
