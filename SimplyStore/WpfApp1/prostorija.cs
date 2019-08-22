@@ -24,6 +24,7 @@ namespace WpfApp1
         public System.DateTime datum_kreiranja { get; set; }
         public string opis { get; set; }
         public string posebne_napomene { get; set; }
+        public string aktivna { get; set; }
         public Nullable<int> korisnik_id { get; set; }
     
         public virtual korisnik korisnik { get; set; }

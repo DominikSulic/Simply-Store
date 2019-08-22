@@ -26,10 +26,5 @@ namespace WpfApp1
     
         public virtual ICollection<spremnik> spremnik { get; set; }
         public virtual ICollection<stavka> stavka { get; set; }
-
-        public override string ToString()
-        {
-            return this.naziv;
-        }
     }
 }
