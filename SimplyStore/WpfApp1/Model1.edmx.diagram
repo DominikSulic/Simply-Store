@@ -4,22 +4,22 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="9e5c9b7d818b4cd0bfd0eb5f50afc737" Name="Diagram1">
-        <EntityTypeShape EntityType="DBModel.dnevnik" Width="1.5" PointX="3" PointY="2.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBModel.korisnik" Width="1.5" PointX="0.75" PointY="3.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBModel.oznaka" Width="1.5" PointX="3" PointY="10.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBModel.prostorija" Width="1.5" PointX="3" PointY="6.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBModel.spremnik" Width="1.5" PointX="5.25" PointY="4.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBModel.stavka" Width="1.5" PointX="7.5" PointY="3.875" IsExpanded="true" />
-        <AssociationConnector Association="DBModel.FK__dnevnik__korisni__0B5CAFEA" ManuallyRouted="false" />
-        <AssociationConnector Association="DBModel.FK__dnevnik__stavka___0A688BB1" ManuallyRouted="false" />
-        <AssociationConnector Association="DBModel.FK__prostorij__koris__74794A92" ManuallyRouted="false" />
-        <AssociationConnector Association="DBModel.FK__spremnik__korisn__793DFFAF" ManuallyRouted="false" />
-        <AssociationConnector Association="DBModel.FK__stavka__korisnik__03BB8E22" ManuallyRouted="false" />
-        <AssociationConnector Association="DBModel.FK__spremnik__prosto__7849DB76" ManuallyRouted="false" />
-        <AssociationConnector Association="DBModel.FK__stavka__spremnik__02C769E9" ManuallyRouted="false" />
-        <AssociationConnector Association="DBModel.spremnik_oznaka" ManuallyRouted="false" />
-        <AssociationConnector Association="DBModel.stavka_oznaka" ManuallyRouted="false" />
+      <Diagram DiagramId="4cd91a595e6e46e299e9e4efd3d8c839" Name="Diagram1">
+        <EntityTypeShape EntityType="SSModel.dnevnik" Width="1.5" PointX="3" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="SSModel.korisnik" Width="1.5" PointX="0.75" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="SSModel.oznaka" Width="1.5" PointX="3" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="SSModel.prostorija" Width="1.5" PointX="3" PointY="6.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="SSModel.spremnik" Width="1.5" PointX="5.25" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SSModel.stavka" Width="1.5" PointX="7.5" PointY="3.875" IsExpanded="true" />
+        <AssociationConnector Association="SSModel.FK__dnevnik__korisni__0B5CAFEA" ManuallyRouted="false" />
+        <AssociationConnector Association="SSModel.FK__dnevnik__stavka___0A688BB1" ManuallyRouted="false" />
+        <AssociationConnector Association="SSModel.FK__prostorij__koris__74794A92" ManuallyRouted="false" />
+        <AssociationConnector Association="SSModel.FK__spremnik__korisn__793DFFAF" ManuallyRouted="false" />
+        <AssociationConnector Association="SSModel.FK__stavka__korisnik__03BB8E22" ManuallyRouted="false" />
+        <AssociationConnector Association="SSModel.FK__spremnik__prosto__7849DB76" ManuallyRouted="false" />
+        <AssociationConnector Association="SSModel.FK__stavka__spremnik__02C769E9" ManuallyRouted="false" />
+        <AssociationConnector Association="SSModel.spremnik_oznaka" ManuallyRouted="false" />
+        <AssociationConnector Association="SSModel.stavka_oznaka" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

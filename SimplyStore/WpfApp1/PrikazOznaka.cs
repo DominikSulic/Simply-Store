@@ -13,6 +13,7 @@ namespace WpfApp1
         public int id_oznaka { get; set; }
         public string naziv { get; set; }
         public string kvarljivost { get; set; }
+        public bool aktivna { get; set; }
  
 
         public static List<PrikazOznaka> dohvatiOznake() {
@@ -22,13 +23,14 @@ namespace WpfApp1
             {
 
                 var query = (from oznaka in db.oznaka
-
+                             where oznaka.aktivna==true
                              select new PrikazOznaka
                              {
 
                                  id_oznaka = oznaka.id_oznaka,
                                  naziv = oznaka.naziv,
-                                 kvarljivost = oznaka.kvarljivost
+                                 kvarljivost = oznaka.kvarljivost,
+                                 aktivna=oznaka.aktivna
 
                              }).ToList();
 
@@ -38,6 +40,29 @@ namespace WpfApp1
             return sveOznake;
         }
 
+        public static List<PrikazOznaka> dohvatiSveOznake()
+        {
+
+            List<PrikazOznaka> sveOznake = new List<PrikazOznaka>();
+            using (var db = new SSDB())
+            {
+
+                var query = (from oznaka in db.oznaka
+                             select new PrikazOznaka
+                             {
+
+                                 id_oznaka = oznaka.id_oznaka,
+                                 naziv = oznaka.naziv,
+                                 kvarljivost = oznaka.kvarljivost,
+                                 aktivna = oznaka.aktivna
+
+                             }).ToList();
+
+                sveOznake = query;
+
+            }
+            return sveOznake;
+        }
 
         public override string ToString()
         {
@@ -75,7 +100,7 @@ namespace WpfApp1
         {
             List<PrikazOznaka> oznake = new List<PrikazOznaka>();
             string connectionString = @"Data Source=31.147.204.119\PISERVER,1433; Initial Catalog=19023_DB; User=19023_User; Password='z#X1iD;M'";
-            string upit = "SELECT oznaka.* FROM oznaka EXCEPT SELECT oznaka.* FROM oznaka,spremnik_oznaka WHERE oznaka.id_oznaka=spremnik_oznaka.oznaka_id AND spremnik_oznaka.spremnik_id=" + idSpremnika;
+            string upit = "SELECT oznaka.* FROM oznaka WHERE oznaka.aktivna=1 EXCEPT SELECT oznaka.* FROM oznaka,spremnik_oznaka WHERE oznaka.id_oznaka=spremnik_oznaka.oznaka_id AND spremnik_oznaka.spremnik_id=" + idSpremnika;
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
@@ -96,6 +121,22 @@ namespace WpfApp1
                 connection.Close();
             }
             return oznake;
+        }
+
+        public static int kreirajOznaku(string nazivOznake,int kvarljivost)
+        {
+            int rezultat;
+            string connectionString = @"Data Source=31.147.204.119\PISERVER,1433; Initial Catalog=19023_DB; User=19023_User; Password='z#X1iD;M'";
+            string upit = "INSERT INTO oznaka(naziv, kvarljivost) VALUES('"+nazivOznake+"',"+kvarljivost+")";
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                SqlCommand command = new SqlCommand(upit, connection);
+                int insert = command.ExecuteNonQuery();
+                rezultat = insert;
+                connection.Close();
+            }
+            return rezultat;
         }
 
     }

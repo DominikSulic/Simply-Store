@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="SSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="dnevnik">
           <Key>
             <PropertyRef Name="id_dnevnik" />
@@ -31,6 +31,7 @@
           <Property Name="id_oznaka" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="naziv" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="kvarljivost" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="aktivna" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="prostorija">
           <Key>
@@ -224,7 +225,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="DBModelStoreContainer">
+        <EntityContainer Name="SSModelStoreContainer">
           <EntitySet Name="dnevnik" EntityType="Self.dnevnik" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="korisnik" EntityType="Self.korisnik" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="oznaka" EntityType="Self.oznaka" Schema="dbo" store:Type="Tables" />
@@ -282,7 +283,7 @@
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="DBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="SSModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="dnevnik">
           <Key>
             <PropertyRef Name="id_dnevnik" />
@@ -315,6 +316,7 @@
           <Property Name="id_oznaka" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="naziv" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="kvarljivost" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="aktivna" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="spremnik" Relationship="Self.spremnik_oznaka" FromRole="oznaka" ToRole="spremnik" />
           <NavigationProperty Name="stavka" Relationship="Self.stavka_oznaka" FromRole="oznaka" ToRole="stavka" />
         </EntityType>
@@ -509,9 +511,9 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="DBModelStoreContainer" CdmEntityContainer="SSDB">
+        <EntityContainerMapping StorageEntityContainer="SSModelStoreContainer" CdmEntityContainer="SSDB">
           <EntitySetMapping Name="dnevnik">
-            <EntityTypeMapping TypeName="DBModel.dnevnik">
+            <EntityTypeMapping TypeName="SSModel.dnevnik">
               <MappingFragment StoreEntitySet="dnevnik">
                 <ScalarProperty Name="id_dnevnik" ColumnName="id_dnevnik" />
                 <ScalarProperty Name="radnja" ColumnName="radnja" />
@@ -523,7 +525,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="korisnik">
-            <EntityTypeMapping TypeName="DBModel.korisnik">
+            <EntityTypeMapping TypeName="SSModel.korisnik">
               <MappingFragment StoreEntitySet="korisnik">
                 <ScalarProperty Name="id_korisnik" ColumnName="id_korisnik" />
                 <ScalarProperty Name="korisnicko_ime" ColumnName="korisnicko_ime" />
@@ -532,16 +534,17 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="oznaka">
-            <EntityTypeMapping TypeName="DBModel.oznaka">
+            <EntityTypeMapping TypeName="SSModel.oznaka">
               <MappingFragment StoreEntitySet="oznaka">
                 <ScalarProperty Name="id_oznaka" ColumnName="id_oznaka" />
                 <ScalarProperty Name="naziv" ColumnName="naziv" />
                 <ScalarProperty Name="kvarljivost" ColumnName="kvarljivost" />
+                <ScalarProperty Name="aktivna" ColumnName="aktivna" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="prostorija">
-            <EntityTypeMapping TypeName="DBModel.prostorija">
+            <EntityTypeMapping TypeName="SSModel.prostorija">
               <MappingFragment StoreEntitySet="prostorija">
                 <ScalarProperty Name="id_prostorija" ColumnName="id_prostorija" />
                 <ScalarProperty Name="naziv_prostorije" ColumnName="naziv_prostorije" />
@@ -554,7 +557,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="spremnik">
-            <EntityTypeMapping TypeName="DBModel.spremnik">
+            <EntityTypeMapping TypeName="SSModel.spremnik">
               <MappingFragment StoreEntitySet="spremnik">
                 <ScalarProperty Name="id_spremnik" ColumnName="id_spremnik" />
                 <ScalarProperty Name="naziv_spremnika" ColumnName="naziv_spremnika" />
@@ -567,7 +570,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="stavka">
-            <EntityTypeMapping TypeName="DBModel.stavka">
+            <EntityTypeMapping TypeName="SSModel.stavka">
               <MappingFragment StoreEntitySet="stavka">
                 <ScalarProperty Name="id_stavka" ColumnName="id_stavka" />
                 <ScalarProperty Name="naziv" ColumnName="naziv" />
@@ -579,7 +582,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="spremnik_oznaka" TypeName="DBModel.spremnik_oznaka" StoreEntitySet="spremnik_oznaka">
+          <AssociationSetMapping Name="spremnik_oznaka" TypeName="SSModel.spremnik_oznaka" StoreEntitySet="spremnik_oznaka">
             <EndProperty Name="oznaka">
               <ScalarProperty Name="id_oznaka" ColumnName="oznaka_id" />
             </EndProperty>
@@ -587,7 +590,7 @@
               <ScalarProperty Name="id_spremnik" ColumnName="spremnik_id" />
             </EndProperty>
           </AssociationSetMapping>
-          <AssociationSetMapping Name="stavka_oznaka" TypeName="DBModel.stavka_oznaka" StoreEntitySet="stavka_oznaka">
+          <AssociationSetMapping Name="stavka_oznaka" TypeName="SSModel.stavka_oznaka" StoreEntitySet="stavka_oznaka">
             <EndProperty Name="oznaka">
               <ScalarProperty Name="id_oznaka" ColumnName="oznaka_id" />
             </EndProperty>

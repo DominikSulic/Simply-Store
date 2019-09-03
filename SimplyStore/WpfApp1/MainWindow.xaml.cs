@@ -47,9 +47,14 @@ namespace WpfApp1
             gridovi.Add("gridKreirajStavku", gridKreirajStavku);
             gridovi.Add("gridIzmjeniStavku", gridIzmjeniStavku);
 
-            gridovi.Add("gridOpcije", gridOpcije);
             gridovi.Add("gridStavkePredIstekom", gridStavkePredIstekom);
             gridovi.Add("gridStatistika", gridStatistika);
+
+            gridovi.Add("gridOznake", gridOznake);
+            gridovi.Add("gridKreirajOznaku", gridKreirajOznaku);
+
+            gridovi.Add("gridOpcije", gridOpcije);
+
         }
 
         void promjeniGrid(string nazivGrida)
@@ -92,21 +97,37 @@ namespace WpfApp1
         public void PrikaziProstorije()
         {
             dgProstorije.ItemsSource = PrikazProstorije.dohvatiProstorije();
+            dgProstorije.Columns[0].Header = "Id prostorije"; 
+            dgProstorije.Columns[1].Header = "Naziv prostorije";
+            dgProstorije.Columns[2].Header = "Datum kreiranja";
+            dgProstorije.Columns[3].Header = "Opis";
+            dgProstorije.Columns[4].Header = "Posebne napomene";
         }
+
 
         public void PrikaziSpremnike()
         {
             cmbProstorije.ItemsSource = PrikazProstorije.dohvatiProstorije();
-
             dgSpremnici.ItemsSource = PrikazSpremnici.dohvatiSpremnike();
-
-
+            dgSpremnici.Columns[0].Header = "Id spremnika";
+            dgSpremnici.Columns[1].Header = "Naziv spremnika";
+            dgSpremnici.Columns[2].Header = "Datum kreiranja";
+            dgSpremnici.Columns[3].Header = "Zapremnina";
+            dgSpremnici.Columns[4].Header = "Opis";
+            dgSpremnici.Columns[5].Header = "Pripadna prostorija";
         }
 
         public void PrikaziStavke()
         {
             cmbSpremnici.ItemsSource = PrikazSpremnici.dohvatiSpremnike();
             dgStavke.ItemsSource = PrikazStavke.dohvatiStavke();
+            dgStavke.Columns[0].Header = "Id stavke";
+            dgStavke.Columns[1].Header = "Naziv stavke";
+            dgStavke.Columns[2].Header = "Datum kreiranja";
+            dgStavke.Columns[3].Header = "Rok trajanja";
+            dgStavke.Columns[4].Header = "Količina";
+            dgStavke.Columns[5].Header = "Pripadni spremnik";
+            dgStavke.Columns[6].Header = "Pripadna prostorija";
         }
 
         #endregion
@@ -201,6 +222,21 @@ namespace WpfApp1
             }
 
             dgStavkeIstekle.ItemsSource = PrikazStavke.stavkeIstecenogRoka();
+            dgStavkeIstekle.Columns[0].Header = "Id stavke";
+            dgStavkeIstekle.Columns[1].Header = "Naziv stavke";
+            dgStavkeIstekle.Columns[2].Header = "Datum kreiranja";
+            dgStavkeIstekle.Columns[3].Header = "Rok trajanja";
+            dgStavkeIstekle.Columns[4].Header = "Količina";
+            dgStavkeIstekle.Columns[5].Header = "Pripadni spremnik";
+            dgStavkeIstekle.Columns[6].Header = "Pripadna prostorija";
+
+            dgStavkePredIstekom.Columns[0].Header = "Id stavke";
+            dgStavkePredIstekom.Columns[1].Header = "Naziv stavke";
+            dgStavkePredIstekom.Columns[2].Header = "Datum kreiranja";
+            dgStavkePredIstekom.Columns[3].Header = "Rok trajanja";
+            dgStavkePredIstekom.Columns[4].Header = "Količina";
+            dgStavkePredIstekom.Columns[5].Header = "Pripadni spremnik";
+            dgStavkePredIstekom.Columns[6].Header = "Pripadna prostorija";
         }
 
         private void menuOpcije_Click(object sender, RoutedEventArgs e)
@@ -225,6 +261,13 @@ namespace WpfApp1
             naslovLabel.Content = "Dnevnik";
             promjeniGrid("gridStatistika");
             dgStatistika.ItemsSource = PrikazStatistika.dohvatiStatistike();
+        }
+
+        private void menuOznake_Click(object sender, RoutedEventArgs e)
+        {
+            naslovLabel.Content = "Oznake";
+            dgOznake.ItemsSource = PrikazOznaka.dohvatiSveOznake();
+            promjeniGrid("gridOznake");
         }
         #endregion
 
@@ -971,6 +1014,61 @@ namespace WpfApp1
         }
         #endregion
 
+        #region Oznake
+        private void btnKreirajOznaku_Click(object sender, RoutedEventArgs e)
+        {
+            promjeniGrid("gridKreirajOznaku");
+            naslovLabel.Content = "Kreiraj oznaku";
+        }
+        private void btnKreirajOznakuSpremi_Click(object sender, RoutedEventArgs e)
+        {
+            bool oznaceno = false;
+            int rezultatUnosa;
+            if(rbtnKvarljiva.IsChecked == true || rbtnNeKvarljiva.IsChecked==true)
+            {
+                oznaceno = true;
+            }
+            if (txbNazivOznake.Text.Length > 0)
+            {
+                if (oznaceno)
+                {
+                    if (rbtnKvarljiva.IsChecked == true)
+                    {
+                        rezultatUnosa=PrikazOznaka.kreirajOznaku(txbNazivOznake.Text, 1);
+                    }
+                    else
+                    {
+                        rezultatUnosa=PrikazOznaka.kreirajOznaku(txbNazivOznake.Text, 0);
+                    }
+                    if (rezultatUnosa != 1)
+                    {
+                        MessageBox.Show("Došlo je do pogreške kod unosa,molimo pokušajte ponovo");
+                    }
+                    else
+                    {
+                        txbNazivOznake.Text = null;
+                        dgOznake.ItemsSource = PrikazOznaka.dohvatiSveOznake();
+                        promjeniGrid("gridOznake");
+                    }
+                    
+                }
+                else
+                {
+                    MessageBox.Show("Odaberite jedan od statusa kvarljivosti");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Unesite naziv nove oznake");
+            }
+        }
+        private void btnIzmjeniOznaku_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        #endregion
+
         #region Postavke
 
         private void postaviLight()
@@ -1080,5 +1178,7 @@ namespace WpfApp1
         {
             PDFConverter.ExportPDFDnevnik();
         }
+
+      
     }
 }
