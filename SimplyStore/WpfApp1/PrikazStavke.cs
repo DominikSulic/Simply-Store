@@ -26,7 +26,7 @@ namespace WpfApp1
                 var query = (from s in db.stavka
                              join d in db.spremnik on s.spremnik_id equals d.id_spremnik
                              join p in db.prostorija on d.prostorija_id equals p.id_prostorija
-                             where s.zauzeće>0
+                             where s.zauzeće > 0
                              select new PrikazStavke
                              {
                                  idStavke = s.id_stavka,
@@ -90,7 +90,7 @@ namespace WpfApp1
                                  zauzece = s.zauzeće,
                                  nazivSpremnika = d.naziv_spremnika,
                                  nazivProstorije = p.naziv_prostorije
-                                 
+
 
                              }).ToList();
                 sveStavke = query;
@@ -99,7 +99,8 @@ namespace WpfApp1
             return sveStavke;
         }
 
-        public static stavka dohvatiStavku(int idStavke) {
+        public static stavka dohvatiStavku(int idStavke)
+        {
 
             stavka stavka = new stavka();
             using (var db = new SSDB())
@@ -208,7 +209,7 @@ namespace WpfApp1
                 db.dnevnik.Add(noviDnevnik);
                 db.SaveChanges();
             }
-            }
+        }
 
         public static List<PrikazStavke> dohvatiStavkePredIstekom(int brojDana)
         {
@@ -251,7 +252,7 @@ namespace WpfApp1
                 var query = (from s in db.stavka
                              join d in db.spremnik on s.spremnik_id equals d.id_spremnik
                              join p in db.prostorija on d.prostorija_id equals p.id_prostorija
-                             where now > s.datum_roka && s.zauzeće>0
+                             where now > s.datum_roka && s.zauzeće > 0
                              select new PrikazStavke
                              {
                                  idStavke = s.id_stavka,
@@ -269,15 +270,34 @@ namespace WpfApp1
             return lista;
         }
 
-        private static double dohvatiStaroZauzece(int stavkaId)
+        public static double dohvatiStaroZauzece(int stavkaId)
         {
             double zauzece;
             using (var db = new SSDB())
             {
-                var query = from s in db.stavka where s.id_stavka == stavkaId select s.zauzeće;
+                var query = (from s in db.stavka where s.id_stavka == stavkaId select s.zauzeće).First();
                 zauzece = Convert.ToDouble(query);
             }
             return zauzece;
         }
-    }   
+
+        public static List<PrikazStavke> dohvatiStavke(int idSpremnika)
+        {
+            List<PrikazStavke> sveStavke = new List<PrikazStavke>();
+
+            using (var db = new SSDB())
+            {
+                var query = (from s in db.stavka
+                             where s.zauzeće > 0 && s.spremnik_id == idSpremnika
+                             select new PrikazStavke
+                             {
+                                 idStavke = s.id_stavka,
+                                 zauzece = s.zauzeće,
+                             }).ToList();
+                sveStavke = query;
+            }
+
+            return sveStavke;
+        }
+    }
 }

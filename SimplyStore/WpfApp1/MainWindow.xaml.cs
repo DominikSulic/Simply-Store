@@ -408,7 +408,7 @@ namespace WpfApp1
             {
                 foreach (PrikazProstorije p in dgProstorije.SelectedItems)
                 {
-                    prikaz.obrisiProstoriju(p.nazivProstorije);
+                    prikaz.obrisiProstoriju(p.nazivProstorije, globalniKorisnikID);
                 }
             }
             else

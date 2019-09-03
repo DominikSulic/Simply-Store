@@ -21,6 +21,7 @@ namespace WpfApp1
             using (var db = new SSDB())
             {
                 var query = (from p in db.prostorija
+                             where p.aktivna == "da"
                              select new PrikazProstorije
                              {
                                  idProstorije = p.id_prostorija,
@@ -70,7 +71,7 @@ namespace WpfApp1
             return sviNazivi;
         }
 
-        public static void kreirajProstoriju(string naziv, string opis, string napomene, int brojProstorija,int idKorisnika)
+        public static void kreirajProstoriju(string naziv, string opis, string napomene, int brojProstorija, int idKorisnika)
         {
             int broj = brojProstorija;
 
@@ -82,7 +83,8 @@ namespace WpfApp1
                     datum_kreiranja = DateTime.Now,
                     opis = opis,
                     posebne_napomene = napomene,
-                    korisnik_id=idKorisnika
+                    aktivna = "da",
+                    korisnik_id = idKorisnika
                 };
 
                 using (var db = new SSDB())
@@ -101,6 +103,7 @@ namespace WpfApp1
                         datum_kreiranja = DateTime.Now,
                         opis = opis,
                         posebne_napomene = napomene,
+                        aktivna = "da",
                         korisnik_id = idKorisnika
                     };
 
@@ -113,13 +116,43 @@ namespace WpfApp1
             }
         }
 
-        public void obrisiProstoriju(string nazivProstorije)
+        public void obrisiProstoriju(string nazivProstorije, int idKorisnik)
         {
+            List<PrikazSpremnici> listaSpremnika = new List<PrikazSpremnici>();
+            List<PrikazStavke> listaStavki = new List<PrikazStavke>();
+
             using (var db = new SSDB())
             {
                 var query = (from p in db.prostorija where p.naziv_prostorije == nazivProstorije select p).First();
-                db.prostorija.Attach(query);
-                db.prostorija.Remove(query);
+                query.aktivna = "ne";
+
+                listaSpremnika = PrikazSpremnici.dohvatiSpremnike(query.id_prostorija);
+                foreach (PrikazSpremnici ps in listaSpremnika)
+                {
+                    var query2 = (from s in db.spremnik where s.id_spremnik == ps.idSpremnika select s).First();
+                    query2.zapremnina = 0;
+                    listaStavki = PrikazStavke.dohvatiStavke(query2.id_spremnik);
+                    foreach (PrikazStavke ps2 in listaStavki)
+                    {
+                        double staroZauzece = PrikazStavke.dohvatiStaroZauzece(ps2.idStavke);
+                        double novaKolicina = 0 - staroZauzece;
+
+                        dnevnik noviDnevnik = new dnevnik
+                        {
+                            radnja = "ažuriranje",
+                            datum = DateTime.Now,
+                            kolicina = novaKolicina,
+                            korisnik_id = idKorisnik,
+                            stavka_id = ps2.idStavke
+                        };
+
+                        var query3 = (from stv in db.stavka where stv.id_stavka == ps2.idStavke select stv).First();
+                        query3.zauzeće = 0;
+                        db.dnevnik.Add(noviDnevnik);
+                        db.SaveChanges();
+                    }
+                }
+
                 db.SaveChanges();
             }
         }

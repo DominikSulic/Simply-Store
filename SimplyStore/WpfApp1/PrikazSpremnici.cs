@@ -261,6 +261,25 @@ namespace WpfApp1
             return popunjenost;
         }
 
-       
+        public static List<PrikazSpremnici> dohvatiSpremnike(int idProstorije)
+        {
+            List<PrikazSpremnici> sviSpremnici = new List<PrikazSpremnici>();
+
+            using (var db = new SSDB())
+            {
+                var query = (from sp in db.spremnik
+                             where sp.prostorija_id == idProstorije && sp.zapremnina > 0
+                             select new PrikazSpremnici
+                             {
+                                 idSpremnika = sp.id_spremnik, 
+                                 zapremnina = sp.zapremnina
+                             }).ToList();
+                sviSpremnici = query;
+            }
+            return sviSpremnici;
+
+        }
+
+
     }
 }
