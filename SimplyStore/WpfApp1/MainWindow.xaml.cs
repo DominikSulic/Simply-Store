@@ -145,6 +145,19 @@ namespace WpfApp1
             dgStavke.Columns[6].Header = "Pripadna prostorija";
         }
 
+        public void PrikaziOznake()
+        {
+            dgOznake.ItemsSource = PrikazOznaka.dohvatiSveOznake();
+            promjeniHeaderOznake();
+        }
+
+        private void promjeniHeaderOznake()
+        {
+            dgOznake.Columns[0].Header = "Id oznake";
+            dgOznake.Columns[1].Header = "Naziv oznake";
+            dgOznake.Columns[2].Header = "Predstavlja kvarljivu";
+            dgOznake.Columns[3].Header = "Aktivna";
+        }
         #endregion
 
         #region MenuItems
@@ -288,13 +301,10 @@ namespace WpfApp1
         private void menuOznake_Click(object sender, RoutedEventArgs e)
         {
             naslovLabel.Content = "Oznake";
-            dgOznake.ItemsSource = PrikazOznaka.dohvatiSveOznake();
+            PrikaziOznake();
             promjeniGrid("gridOznake");
 
-            dgOznake.Columns[0].Header = "Id oznake";
-            dgOznake.Columns[1].Header = "Naziv oznake";
-            dgOznake.Columns[2].Header = "Predstavlja kvarljivu";
-            dgOznake.Columns[3].Header = "Aktivna";
+
         }
         #endregion
 
@@ -1125,9 +1135,34 @@ namespace WpfApp1
                 MessageBox.Show("Unesite naziv nove oznake");
             }
         }
-        private void btnIzmjeniOznaku_Click(object sender, RoutedEventArgs e)
+        private void btnPromjeniStatusOznake_Click(object sender, RoutedEventArgs e)
         {
-
+            if (dgOznake.SelectedItems.Count != 0)
+            {
+                string noviStatus;
+                PrikazOznaka odabranaOznaka = new PrikazOznaka();
+                odabranaOznaka=(PrikazOznaka)dgOznake.SelectedItem;
+                if(odabranaOznaka.aktivna.Equals("da"))
+                {
+                    noviStatus = "ne";
+                }
+                else
+                {
+                    noviStatus = "da";
+                }
+                if (PrikazOznaka.promjeniStatusOznake(odabranaOznaka.id_oznaka,noviStatus) != 1)
+                {
+                    MessageBox.Show("Došlo je do pogreške,molimo pokušajte ponovo");
+                }
+                else
+                {
+                    PrikaziOznake();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Odaberite oznaku kojoj želite promjeniti status");
+            }
         }
 
         #endregion
@@ -1241,5 +1276,7 @@ namespace WpfApp1
         {
             PDFConverter.ExportPDFDnevnik();
         }
+
+
     }
 }

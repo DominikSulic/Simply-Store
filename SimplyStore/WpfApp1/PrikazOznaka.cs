@@ -139,5 +139,21 @@ namespace WpfApp1
             return rezultat;
         }
 
+        public static int promjeniStatusOznake(int idOznake,string noviStatus)
+        {
+            int rezultat;
+            string connectionString = @"Data Source=31.147.204.119\PISERVER,1433; Initial Catalog=19023_DB; User=19023_User; Password='z#X1iD;M'";
+            string upit = "UPDATE oznaka SET aktivna='"+noviStatus+"' WHERE id_oznaka="+idOznake;
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                SqlCommand command = new SqlCommand(upit, connection);
+                int update = command.ExecuteNonQuery();
+                rezultat = update;
+                connection.Close();
+            }
+            return rezultat;
+        }
+
     }
 }

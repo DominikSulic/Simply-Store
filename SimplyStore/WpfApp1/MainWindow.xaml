@@ -965,7 +965,7 @@
                             </ToolTip>
                         </Button.ToolTip>
                     </Button>
-                    <Button Grid.Row="0" Grid.Column="2" Name="btnIzmjeniOznaku" VerticalAlignment="Center"   HorizontalAlignment="Center" Click="btnIzmjeniOznaku_Click" >
+                    <Button Grid.Row="0" Grid.Column="2" Name="btnPromjeniStatusOznake" VerticalAlignment="Center"   HorizontalAlignment="Center" Click="btnPromjeniStatusOznake_Click" >
                         <Button.Effect>
                             <DropShadowEffect BlurRadius="1" Opacity="0.3" Color="White" ShadowDepth="1" Direction="180"/>
                         </Button.Effect>
