@@ -229,6 +229,11 @@
                         <Button.Effect>
                             <DropShadowEffect BlurRadius="1" Opacity="0.3" Color="White" ShadowDepth="1" Direction="180"/>
                         </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate>
+                                <Image Source="/images/print.ico"  Stretch="Uniform" MaxWidth="40" MaxHeight="40"/>
+                            </ControlTemplate>
+                        </Button.Template>
                         <Button.ToolTip>
                             <ToolTip>
                                 <StackPanel>
