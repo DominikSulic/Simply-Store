@@ -114,7 +114,7 @@
                 <Button x:Name="menuIzlaz" Content="Izlaz" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Click="menuIzlaz_Click"></Button>
             </StackPanel>
             
-            <Grid Grid.Column="1" Grid.Row="1" x:Name="gridPocetna" Visibility="Visible">
+            <Grid Grid.Column="1" Grid.Row="1" x:Name="gridPocetna" Visibility="Hidden">
                 <Rectangle></Rectangle>
                 <Image Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Height="300">
                     <Image.Source>
@@ -986,7 +986,7 @@
                     <DataGrid Grid.Row="1" Grid.Column="0" x:Name="dgOznake"></DataGrid>
                 </Grid>
             </Grid>
-            <Grid Grid.Column="1" Grid.Row="1" x:Name="gridKreirajOznaku" Visibility="Visible">
+            <Grid Grid.Column="1" Grid.Row="1" x:Name="gridKreirajOznaku" Visibility="Hidden">
                 <Rectangle></Rectangle>
                 <StackPanel>
                     <Label Content="Naziv oznake" HorizontalAlignment="Center"  VerticalAlignment="Top" FontSize="20" Foreground="{DynamicResource labelsColor}"/>

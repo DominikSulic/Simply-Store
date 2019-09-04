@@ -97,7 +97,12 @@ namespace WpfApp1
         public void PrikaziProstorije()
         {
             dgProstorije.ItemsSource = PrikazProstorije.dohvatiProstorije();
-            dgProstorije.Columns[0].Header = "Id prostorije"; 
+            promjeniHeaderProstorije();
+        }
+
+        private void promjeniHeaderProstorije()
+        {
+            dgProstorije.Columns[0].Header = "Id prostorije";
             dgProstorije.Columns[1].Header = "Naziv prostorije";
             dgProstorije.Columns[2].Header = "Datum kreiranja";
             dgProstorije.Columns[3].Header = "Opis";
@@ -109,6 +114,11 @@ namespace WpfApp1
         {
             cmbProstorije.ItemsSource = PrikazProstorije.dohvatiProstorije();
             dgSpremnici.ItemsSource = PrikazSpremnici.dohvatiSpremnike();
+            promjeniHeaderSpremnici();
+        }
+
+        private void promjeniHeaderSpremnici()
+        {
             dgSpremnici.Columns[0].Header = "Id spremnika";
             dgSpremnici.Columns[1].Header = "Naziv spremnika";
             dgSpremnici.Columns[2].Header = "Datum kreiranja";
@@ -121,6 +131,11 @@ namespace WpfApp1
         {
             cmbSpremnici.ItemsSource = PrikazSpremnici.dohvatiSpremnike();
             dgStavke.ItemsSource = PrikazStavke.dohvatiStavke();
+            promjeniHeaderStavke();
+        }
+
+        private void promjeniHeaderStavke()
+        {
             dgStavke.Columns[0].Header = "Id stavke";
             dgStavke.Columns[1].Header = "Naziv stavke";
             dgStavke.Columns[2].Header = "Datum kreiranja";
@@ -429,6 +444,7 @@ namespace WpfApp1
         {
             string tekst = ProstorijeSearch.Text;
             dgProstorije.ItemsSource = PrikazProstorije.dohvatiProstorije(tekst);
+            promjeniHeaderProstorije();
         }
 
         private void BtnkreirajPDFProstorije_Click(object sender, RoutedEventArgs e)
@@ -452,6 +468,7 @@ namespace WpfApp1
             cmbProstorije.ItemsSource = PrikazProstorije.dohvatiProstorije();
             cmbProstorije.SelectedIndex = -1;
             dgSpremnici.ItemsSource = PrikazSpremnici.dohvatiSpremnike();
+            promjeniHeaderSpremnici();
         }
 
         private void btnKreirajSpremnikSpremi_Click(object sender, RoutedEventArgs e)
@@ -676,6 +693,7 @@ namespace WpfApp1
         {
             string tekst = SpremniciSearch.Text;
             dgSpremnici.ItemsSource = PrikazSpremnici.dohvatiSpremnikeN(tekst);
+            promjeniHeaderSpremnici();
         }
 
         private void dgSpremnici_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -949,6 +967,7 @@ namespace WpfApp1
         {
             string tekst = StavkeSearch.Text;
             dgStavke.ItemsSource = PrikazStavke.dohvatiStavkeN(tekst);
+            promjeniHeaderStavke();
         }
 
         private void StatistikaSearch_TextChanged(object sender, RoutedEventArgs e)

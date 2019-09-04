@@ -112,7 +112,6 @@ namespace WpfApp1
                     spremnik a = db.spremnik.Add(noviSpremnik);
                     db.SaveChanges();
                     idNovogSpremnika.Add(a.id_spremnik);
-                    
                 }
             }
             return idNovogSpremnika;
