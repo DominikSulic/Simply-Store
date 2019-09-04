@@ -312,6 +312,7 @@ namespace WpfApp1
             {
                 dgSpremnici.ItemsSource = PrikazSpremnici.dohvatiSpremnike(selektiranaProstorija);
             }
+            promjeniHeaderSpremnici();
         }
 
         private void cmbSpremnici_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -321,6 +322,7 @@ namespace WpfApp1
                 string nazivSpremnika = cmbSpremnici.SelectedItem.ToString();
                 dgStavke.ItemsSource = PrikazStavke.dohvatiStavke(nazivSpremnika);
             }
+            promjeniHeaderStavke();
 
         }
 
@@ -447,11 +449,22 @@ namespace WpfApp1
 
         }
 
-        private void ProstorijeSearch_TextChanged(object sender, RoutedEventArgs e)
+        private void ProstorijeSearchEnter(object sender, KeyEventArgs e)
         {
-            string tekst = ProstorijeSearch.Text;
-            dgProstorije.ItemsSource = PrikazProstorije.dohvatiProstorije(tekst);
-            promjeniHeaderProstorije();
+            if(e.Key == Key.Return)
+            {
+                string tekst = ProstorijeSearch.Text;
+                if(tekst == "")
+                {
+                    dgProstorije.ItemsSource = PrikazProstorije.dohvatiProstorije();
+                    promjeniHeaderProstorije();
+                }
+                else
+                {
+                    dgProstorije.ItemsSource = PrikazProstorije.dohvatiProstorijeEnter(tekst);
+                    promjeniHeaderProstorije();
+                }
+            }
         }
 
         private void BtnkreirajPDFProstorije_Click(object sender, RoutedEventArgs e)
@@ -695,12 +708,14 @@ namespace WpfApp1
 
         }
 
-        private void SpremniciSearch_TextChanged(object sender, RoutedEventArgs e)
-
+        private void SpremniciSearchEnter(object sender, KeyEventArgs e)
         {
-            string tekst = SpremniciSearch.Text;
-            dgSpremnici.ItemsSource = PrikazSpremnici.dohvatiSpremnikeN(tekst);
-            promjeniHeaderSpremnici();
+            if (e.Key == Key.Return)
+            {
+                string tekst = SpremniciSearch.Text;
+                dgSpremnici.ItemsSource = PrikazSpremnici.dohvatiSpremnikeEnter(tekst);
+                promjeniHeaderSpremnici();
+            }
         }
 
         private void dgSpremnici_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -968,20 +983,28 @@ namespace WpfApp1
                 }
             }
             cmbSpremniciOdabraneProstorije.ItemsSource = popisSpremnikaPoProstoriji;
-        }
-
-        private void StavkeSearch_TextChanged(object sender, RoutedEventArgs e)
-        {
-            string tekst = StavkeSearch.Text;
-            dgStavke.ItemsSource = PrikazStavke.dohvatiStavkeN(tekst);
             promjeniHeaderStavke();
         }
 
-        private void StatistikaSearch_TextChanged(object sender, RoutedEventArgs e)
+        private void StavkeSearchEnter(object sender, KeyEventArgs e)
         {
-            string tekst = StatistikaSearch.Text;
-            dgStatistika.ItemsSource = PrikazStatistika.dohvatiStatistike(tekst);
-            dgStatistika.ItemsSource = PrikazStatistika.dohvatiStatistike();
+            if (e.Key == Key.Return)
+            {
+                string tekst = StavkeSearch.Text;
+                dgStavke.ItemsSource = PrikazStavke.dohvatiStavkeEnter(tekst);
+                promjeniHeaderStavke();
+            }
+
+        }
+
+        private void StatistikaSearchEnter(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Return)
+            {
+                string tekst = StatistikaSearch.Text;
+                dgStatistika.ItemsSource = PrikazStatistika.dohvatiStatistike(tekst);
+            }
+
             dgStatistika.Columns[0].Header = "Radnja";
             dgStatistika.Columns[1].Header = "Datum";
             dgStatistika.Columns[2].Header = "Kolicina";
@@ -1218,7 +1241,5 @@ namespace WpfApp1
         {
             PDFConverter.ExportPDFDnevnik();
         }
-
-      
     }
 }

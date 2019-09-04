@@ -36,14 +36,13 @@ namespace WpfApp1
 
         }
 
-        public static List<PrikazProstorije> dohvatiProstorije(string tekst)
+        public static List<PrikazProstorije> dohvatiProstorijeEnter(string tekst)
         {
             List<PrikazProstorije> prostorije = new List<PrikazProstorije>();
-            string search = tekst.ToLower();
             using (var db = new SSDB())
             {
                 var query = (from p in db.prostorija
-                             where p.naziv_prostorije.ToLower().Contains(search)
+                             where p.naziv_prostorije.ToLower().Contains(tekst.ToLower())
                              select new PrikazProstorije
                              {
                                  idProstorije = p.id_prostorija,
@@ -55,7 +54,6 @@ namespace WpfApp1
                 prostorije = query;
             }
             return prostorije;
-
         }
 
         public static List<string> dohvatiNaziveProstorija()

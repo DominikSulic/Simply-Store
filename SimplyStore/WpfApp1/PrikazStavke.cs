@@ -44,16 +44,15 @@ namespace WpfApp1
             return sveStavke;
         }
 
-        public static List<PrikazStavke> dohvatiStavkeN(string tekst)
+        public static List<PrikazStavke> dohvatiStavkeEnter(string tekst)
         {
             List<PrikazStavke> stavke = new List<PrikazStavke>();
-            string search = tekst.ToLower();
             using (var db = new SSDB())
             {
                 var query = (from s in db.stavka
                              join d in db.spremnik on s.spremnik_id equals d.id_spremnik
                              join p in db.prostorija on d.prostorija_id equals p.id_prostorija
-                             where s.naziv.ToLower().Contains(search) && s.zauzeće > 0
+                             where s.naziv.ToLower().Contains(tekst.ToLower()) && s.zauzeće > 0
                              select new PrikazStavke
                              {
                                  idStavke = s.id_stavka,
@@ -63,18 +62,15 @@ namespace WpfApp1
                                  zauzece = s.zauzeće,
                                  nazivSpremnika = d.naziv_spremnika,
                                  nazivProstorije = p.naziv_prostorije
-
                              }).OrderBy(s => s.datumRoka).ToList();
                 stavke = query;
             }
             return stavke;
-
         }
 
         public static List<PrikazStavke> dohvatiStavke(string nazivSpremnika)
         {
             List<PrikazStavke> sveStavke = new List<PrikazStavke>();
-
             using (var db = new SSDB())
             {
                 var query = (from s in db.stavka
@@ -90,12 +86,9 @@ namespace WpfApp1
                                  zauzece = s.zauzeće,
                                  nazivSpremnika = d.naziv_spremnika,
                                  nazivProstorije = p.naziv_prostorije
-
-
                              }).OrderBy(s => s.datumRoka).ToList();
                 sveStavke = query;
             }
-
             return sveStavke;
         }
 

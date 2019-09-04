@@ -140,7 +140,7 @@
                         <ColumnDefinition Width="1*"></ColumnDefinition>
                         <ColumnDefinition Width="1*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-                    <TextBox Grid.Row="0" Height="20"  VerticalAlignment="Center" HorizontalAlignment="Stretch" TextChanged="ProstorijeSearch_TextChanged" x:Name="ProstorijeSearch" Margin="5">
+                    <TextBox Grid.Row="0" Height="20"  VerticalAlignment="Center" HorizontalAlignment="Stretch" KeyDown="ProstorijeSearchEnter" x:Name="ProstorijeSearch" Margin="5">
                         <TextBox.ToolTip>
                             <ToolTip>
                                 <StackPanel>
@@ -349,8 +349,8 @@
                         <ColumnDefinition Width="1*"></ColumnDefinition>
                         <ColumnDefinition Width="1*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-                    
-                    <TextBox Grid.Row="0" Grid.Column="0" Height="20" VerticalAlignment="Center" HorizontalAlignment="Stretch" TextChanged="SpremniciSearch_TextChanged" x:Name="SpremniciSearch">
+
+                    <TextBox Grid.Row="0" Grid.Column="0" Height="20" VerticalAlignment="Center" HorizontalAlignment="Stretch" KeyDown="SpremniciSearchEnter" x:Name="SpremniciSearch">
                         <TextBox.ToolTip>
                             <ToolTip>
                                 <StackPanel>
@@ -596,7 +596,7 @@
                         <ColumnDefinition Width="1*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
 
-                    <TextBox Grid.Row="0" Grid.Column="0" Height="20" VerticalAlignment="Center" HorizontalAlignment="Stretch" TextChanged="StavkeSearch_TextChanged" x:Name="StavkeSearch">
+                    <TextBox Grid.Row="0" Grid.Column="0" Height="20" VerticalAlignment="Center" HorizontalAlignment="Stretch" KeyDown="StavkeSearchEnter" x:Name="StavkeSearch">
                         <TextBox.ToolTip>
                             <ToolTip>
                                 <StackPanel>
@@ -927,7 +927,7 @@
                             </ToolTip>
                         </Button.ToolTip>
                     </Button>
-                    <TextBox Grid.Row="0" Grid.Column="0" Height="20"  Width="100" HorizontalAlignment="Center" TextChanged="StatistikaSearch_TextChanged" VerticalAlignment="Top" x:Name="StatistikaSearch"></TextBox>
+                    <TextBox Grid.Row="0" Grid.Column="0" Height="20"  Width="100" HorizontalAlignment="Center" KeyDown="StatistikaSearchEnter" VerticalAlignment="Top" x:Name="StatistikaSearch"></TextBox>
                     <DataGrid Grid.Row="1" Grid.ColumnSpan="5" x:Name="dgStatistika"></DataGrid>
                 </Grid>
             </Grid>

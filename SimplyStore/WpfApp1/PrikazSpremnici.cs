@@ -40,15 +40,14 @@ namespace WpfApp1
 
         }
 
-        public static List<PrikazSpremnici> dohvatiSpremnikeN(string tekst)
+        public static List<PrikazSpremnici> dohvatiSpremnikeEnter(string tekst)
         {
             List<PrikazSpremnici> spremnici = new List<PrikazSpremnici>();
-            string search = tekst.ToLower();
             using (var db = new SSDB())
             {
                 var query = (from s in db.spremnik
                              join pros in db.prostorija on s.prostorija_id equals pros.id_prostorija
-                             where s.naziv_spremnika.ToLower().Contains(search) && s.zapremnina > 0 && s.zapremnina > 0
+                             where s.naziv_spremnika.ToLower().Contains(tekst.ToLower()) && s.zapremnina > 0
                              select new PrikazSpremnici
                              {
                                  idSpremnika = s.id_spremnik,
@@ -61,7 +60,6 @@ namespace WpfApp1
                 spremnici = query;
             }
             return spremnici;
-
         }
 
         public static List<PrikazSpremnici> dohvatiSpremnike(PrikazProstorije nazivProstorije)
@@ -90,16 +88,17 @@ namespace WpfApp1
 
         public static List<int> kreirajSpremnik(string naziv, double zapremnina, string opis, int idProstorije,int idKorisnika, int brojUnosa)
         {
+            string naziv2 = naziv;
             List<int> idNovogSpremnika = new List<int>();
             for (int i = 0; i < brojUnosa; i++)
             {
                 if (brojUnosa > 1)
                 {
-                    naziv = naziv + " (" + (i + 1) + ")";
+                    naziv2 = naziv + " (" + (i + 1) + ")";
                 }
                 spremnik noviSpremnik = new spremnik
                 {
-                    naziv_spremnika = naziv,
+                    naziv_spremnika = naziv2,
                     datum_kreiranja = DateTime.Now,
                     zapremnina = zapremnina,
                     opis = opis,
@@ -282,7 +281,5 @@ namespace WpfApp1
             return sviSpremnici;
 
         }
-
-
     }
 }
