@@ -624,6 +624,56 @@
                     <Button Grid.Row="1" Grid.Column="1"  x:Name="btnPrikaziSveStavke" Content="Prikaži sve" HorizontalAlignment="Left" VerticalAlignment="Center" Width="auto" Margin="5,0,0,0" Click="btnPrikaziSveStavke_Click"/>
                     <DataGrid Grid.Row="2" Grid.ColumnSpan="2" x:Name="dgStavke" HorizontalAlignment="Stretch" VerticalAlignment="Top" SelectionChanged="DgStavke_SelectionChanged"></DataGrid>
                     <ListBox Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="3" x:Name="lbOznakeStavke" HorizontalAlignment="Stretch"  VerticalAlignment="Top" Margin="5,0,0,0"/>
+
+                    <TextBox Grid.Row="3" Grid.Column="2" Width="50" Height="20" VerticalAlignment="Top" HorizontalAlignment="Left" x:Name="txbStavkePromjeniKolicinu">
+                        <TextBox.ToolTip>
+                            <ToolTip>
+                                <StackPanel>
+                                    <TextBlock FontWeight="Bold">Pretraži stavke</TextBlock>
+                                    <TextBlock>Upišite naziv ili dio naziva stavke...</TextBlock>
+                                </StackPanel>
+                            </ToolTip>
+                        </TextBox.ToolTip>
+                    </TextBox>
+                    
+                    <Button Grid.Row="3" Grid.Column="2" Name="btnInkrementirajStavku" Click="btnInkrementirajStavku_Click" VerticalAlignment="Top" HorizontalAlignment="Center">
+                        <Button.Effect>
+                            <DropShadowEffect BlurRadius="1" Opacity="0.3" Color="White" ShadowDepth="1" Direction="180"/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate>
+                                <Image Source="/images/kreiraj.ico" Stretch="Uniform" MaxWidth="40" MaxHeight="40"/>
+                            </ControlTemplate>
+                        </Button.Template>
+                        <Button.ToolTip>
+                            <ToolTip>
+                                <StackPanel>
+                                    <TextBlock FontWeight="Bold">Kreiraj stavku</TextBlock>
+                                    <TextBlock>Otvara formu za kreiranje nove stavke</TextBlock>
+                                </StackPanel>
+                            </ToolTip>
+                        </Button.ToolTip>
+                    </Button>
+
+                    <Button Grid.Row="3" Grid.Column="2" Name="btnDekrementirajStavku" Click="btnDekrementirajStavku_Click" VerticalAlignment="Top" HorizontalAlignment="Right">
+                        <Button.Effect>
+                            <DropShadowEffect BlurRadius="1" Opacity="0.3" Color="White" ShadowDepth="1" Direction="180"/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate>
+                                <Image Source="/images/delete.ico" Stretch="Uniform" MaxWidth="40" MaxHeight="40"/>
+                            </ControlTemplate>
+                        </Button.Template>
+                        <Button.ToolTip>
+                            <ToolTip>
+                                <StackPanel>
+                                    <TextBlock FontWeight="Bold">Kreiraj stavku</TextBlock>
+                                    <TextBlock>Otvara formu za kreiranje nove stavke</TextBlock>
+                                </StackPanel>
+                            </ToolTip>
+                        </Button.ToolTip>
+                    </Button>
+
                     <Button Grid.Row="0" Grid.Column="2" Name="btnKreirajStavku" Click="BtnKreirajStavku_Click" VerticalAlignment="Center" HorizontalAlignment="Center">
                         <Button.Effect>
                             <DropShadowEffect BlurRadius="1" Opacity="0.3" Color="White" ShadowDepth="1" Direction="180"/>

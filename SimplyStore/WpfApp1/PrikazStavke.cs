@@ -292,5 +292,15 @@ namespace WpfApp1
 
             return sveStavke;
         }
+
+        public static void promjeniKolicinuStavke(int promjeniKolicinu, int stavkaID)
+        {
+            using( var db = new SSDB())
+            {
+                var query = (from s in db.stavka where s.id_stavka == stavkaID select s).First();
+                query.zauzeće += promjeniKolicinu;
+                db.SaveChanges();
+            }
+        }
     }
 }
