@@ -276,6 +276,13 @@ namespace WpfApp1
             naslovLabel.Content = "Dnevnik";
             promjeniGrid("gridStatistika");
             dgStatistika.ItemsSource = PrikazStatistika.dohvatiStatistike();
+            dgStatistika.Columns[0].Header = "Radnja";
+            dgStatistika.Columns[1].Header = "Datum";
+            dgStatistika.Columns[2].Header = "Kolicina";
+            dgStatistika.Columns[3].Header = "Naziv stavke";
+            dgStatistika.Columns[4].Header = "Naziv korisnika";
+            dgStatistika.Columns[5].Header = "ID stavke";
+            dgStatistika.Columns[6].Header = "Oznake";
         }
 
         private void menuOznake_Click(object sender, RoutedEventArgs e)
@@ -974,6 +981,14 @@ namespace WpfApp1
         {
             string tekst = StatistikaSearch.Text;
             dgStatistika.ItemsSource = PrikazStatistika.dohvatiStatistike(tekst);
+            dgStatistika.ItemsSource = PrikazStatistika.dohvatiStatistike();
+            dgStatistika.Columns[0].Header = "Radnja";
+            dgStatistika.Columns[1].Header = "Datum";
+            dgStatistika.Columns[2].Header = "Kolicina";
+            dgStatistika.Columns[3].Header = "Naziv stavke";
+            dgStatistika.Columns[4].Header = "Naziv korisnika";
+            dgStatistika.Columns[5].Header = "ID stavke";
+            dgStatistika.Columns[6].Header = "Oznake";
         }
 
         private void btnIzmjeniStavkuOdustani_Click(object sender, RoutedEventArgs e)
