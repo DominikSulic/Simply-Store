@@ -1085,6 +1085,46 @@ namespace WpfApp1
         {
             PDFConverter.ExportPDFIsteceniRokovi();
         }
+
+        private void btnInkrementirajStavku_Click(object sender, RoutedEventArgs e)
+        {
+            if(dgStavke.SelectedItems.Count == 1)
+            {
+                PrikazStavke ps = (PrikazStavke)dgStavke.SelectedItem;
+                int broj;
+                if (int.TryParse(txbStavkePromjeniKolicinu.Text, out broj))
+                {
+                    if (broj < 0) broj = broj * -1;
+                    PrikazStavke.promjeniKolicinuStavke(broj, ps.idStavke);
+                }
+                else
+                {
+                    PrikazStavke.promjeniKolicinuStavke(1, ps.idStavke);
+                }
+                dgStavke.ItemsSource = PrikazStavke.dohvatiStavke();
+                promjeniHeaderStavke();
+            }
+        }
+
+        private void btnDekrementirajStavku_Click(object sender, RoutedEventArgs e)
+        {
+            if (dgStavke.SelectedItems.Count == 1)
+            {
+                PrikazStavke ps = (PrikazStavke)dgStavke.SelectedItem;
+                int broj;
+                if (int.TryParse(txbStavkePromjeniKolicinu.Text, out broj))
+                {
+                    if (broj > 0) broj = broj * -1;
+                    PrikazStavke.promjeniKolicinuStavke(broj, ps.idStavke);
+                }
+                else
+                {
+                    PrikazStavke.promjeniKolicinuStavke(-1, ps.idStavke);
+                }
+                dgStavke.ItemsSource = PrikazStavke.dohvatiStavke();
+                promjeniHeaderStavke();
+            }
+        }
         #endregion
 
         #region Oznake
