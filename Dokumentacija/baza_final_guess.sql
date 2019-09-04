@@ -16,7 +16,7 @@ CREATE TABLE korisnik (
 
 CREATE TABLE prostorija (
     id_prostorija int primary key IDENTITY(1,1),
-    naziv_prostorije varchar(50) not null unique,
+    naziv_prostorije varchar(50) not null,
     datum_kreiranja datetime not null,
     opis varchar(5000),
     posebne_napomene varchar(1000),

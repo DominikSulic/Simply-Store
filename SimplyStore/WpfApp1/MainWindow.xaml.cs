@@ -477,7 +477,8 @@ namespace WpfApp1
                                     {
                                         if (brojUnosa > 0)
                                         {
-                                            List<int> idUnesenihSpremnika = PrikazSpremnici.kreirajSpremnik(txbNoviSpremnikNaziv.Text, zapremnina, txbNoviSpremnikOpis.Text, selektiranaProstorija.idProstorije, brojUnosa);
+                                            MessageBox.Show(brojUnosa.ToString());//delete this
+                                            List<int> idUnesenihSpremnika = PrikazSpremnici.kreirajSpremnik(txbNoviSpremnikNaziv.Text, zapremnina, txbNoviSpremnikOpis.Text, selektiranaProstorija.idProstorije, globalniKorisnikID,brojUnosa);
                                             foreach (var idSpremnika in idUnesenihSpremnika)
                                             {
                                                 foreach (PrikazOznaka item in lbxOznakeNovogSpremnika.SelectedItems)
@@ -505,7 +506,7 @@ namespace WpfApp1
                                 }
                                 else
                                 {
-                                    List<int> idUnesenihSpremnika = PrikazSpremnici.kreirajSpremnik(txbNoviSpremnikNaziv.Text, zapremnina, txbNoviSpremnikOpis.Text, selektiranaProstorija.idProstorije, globalniKorisnikID);
+                                    List<int> idUnesenihSpremnika = PrikazSpremnici.kreirajSpremnik(txbNoviSpremnikNaziv.Text, zapremnina, txbNoviSpremnikOpis.Text, selektiranaProstorija.idProstorije, globalniKorisnikID,1);
                                     foreach (var idSpremnika in idUnesenihSpremnika)
                                     {
                                         foreach (PrikazOznaka item in lbxOznakeNovogSpremnika.SelectedItems)

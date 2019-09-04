@@ -88,14 +88,18 @@ namespace WpfApp1
 
         }
 
-        public static List<int> kreirajSpremnik(string naziv, double zapremnina, string opis, int idProstorije,int idKorisnika, int brojUnosa = 1)
+        public static List<int> kreirajSpremnik(string naziv, double zapremnina, string opis, int idProstorije,int idKorisnika, int brojUnosa)
         {
             List<int> idNovogSpremnika = new List<int>();
             for (int i = 0; i < brojUnosa; i++)
             {
+                if (brojUnosa > 1)
+                {
+                    naziv = naziv + " (" + (i + 1) + ")";
+                }
                 spremnik noviSpremnik = new spremnik
                 {
-                    naziv_spremnika = naziv + " (" + (i + 1) + ")",
+                    naziv_spremnika = naziv,
                     datum_kreiranja = DateTime.Now,
                     zapremnina = zapremnina,
                     opis = opis,

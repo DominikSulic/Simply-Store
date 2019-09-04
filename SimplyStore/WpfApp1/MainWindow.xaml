@@ -36,7 +36,7 @@
                 <Button x:Name="btnPrijava" Content="Prijavi se" Margin="0,10,0,0" Width="70" Click="btnPrijava_Click"></Button>
             </StackPanel>
         </Grid>
-        <Grid x:Name="gridGlavni" Visibility="Visible">
+        <Grid x:Name="gridGlavni" Visibility="Hidden">
             <Grid.Resources>
                 <Style TargetType="DataGrid">
                     <Setter Property="Background" Value="{DynamicResource dataGridBG}"></Setter>
@@ -932,7 +932,7 @@
                 </Grid>
             </Grid>
 
-            <Grid Grid.Column="1" Grid.Row="1" x:Name="gridOznake" Visibility="Visible">
+            <Grid Grid.Column="1" Grid.Row="1" x:Name="gridOznake" Visibility="Hidden">
                 <Rectangle></Rectangle>
                 <Grid>
                     <Grid.RowDefinitions>
