@@ -37,7 +37,7 @@ namespace WpfApp1
                                  nazivSpremnika = d.naziv_spremnika,
                                  nazivProstorije = p.naziv_prostorije,
 
-                             }).ToList();
+                             }).OrderBy(s => s.datumRoka).ToList();
                 sveStavke = query;
             }
 
@@ -64,7 +64,7 @@ namespace WpfApp1
                                  nazivSpremnika = d.naziv_spremnika,
                                  nazivProstorije = p.naziv_prostorije
 
-                             }).ToList();
+                             }).OrderBy(s => s.datumRoka).ToList();
                 stavke = query;
             }
             return stavke;
@@ -92,7 +92,7 @@ namespace WpfApp1
                                  nazivProstorije = p.naziv_prostorije
 
 
-                             }).ToList();
+                             }).OrderBy(s => s.datumRoka).ToList();
                 sveStavke = query;
             }
 
@@ -234,7 +234,7 @@ namespace WpfApp1
                                  nazivSpremnika = d.naziv_spremnika,
                                  nazivProstorije = p.naziv_prostorije
 
-                             }).ToList();
+                             }).OrderBy(s => s.datumRoka).ToList();
                 sveStavke = query;
             }
 
@@ -263,7 +263,7 @@ namespace WpfApp1
                                  nazivSpremnika = d.naziv_spremnika,
                                  nazivProstorije = p.naziv_prostorije
 
-                             }).ToList();
+                             }).OrderBy(s => s.datumRoka).ToList();
                 lista = query;
             }
 
