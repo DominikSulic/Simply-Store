@@ -23,7 +23,7 @@ namespace WpfApp1
         public int id_oznaka { get; set; }
         public string naziv { get; set; }
         public string kvarljivost { get; set; }
-        public bool aktivna { get; set; }
+        public string aktivna { get; set; }
     
         public virtual ICollection<spremnik> spremnik { get; set; }
         public virtual ICollection<stavka> stavka { get; set; }

@@ -268,6 +268,11 @@ namespace WpfApp1
             naslovLabel.Content = "Oznake";
             dgOznake.ItemsSource = PrikazOznaka.dohvatiSveOznake();
             promjeniGrid("gridOznake");
+
+            dgOznake.Columns[0].Header = "Id oznake";
+            dgOznake.Columns[1].Header = "Naziv oznake";
+            dgOznake.Columns[2].Header = "Predstavlja kvarljivu";
+            dgOznake.Columns[3].Header = "Aktivna";
         }
         #endregion
 
@@ -1034,11 +1039,11 @@ namespace WpfApp1
                 {
                     if (rbtnKvarljiva.IsChecked == true)
                     {
-                        rezultatUnosa=PrikazOznaka.kreirajOznaku(txbNazivOznake.Text, 1);
+                        rezultatUnosa=PrikazOznaka.kreirajOznaku(txbNazivOznake.Text, "da");
                     }
                     else
                     {
-                        rezultatUnosa=PrikazOznaka.kreirajOznaku(txbNazivOznake.Text, 0);
+                        rezultatUnosa=PrikazOznaka.kreirajOznaku(txbNazivOznake.Text, "ne");
                     }
                     if (rezultatUnosa != 1)
                     {
