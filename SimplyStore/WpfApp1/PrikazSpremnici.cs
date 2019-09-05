@@ -13,6 +13,7 @@ namespace WpfApp1
         public string nazivSpremnika { get; set; }
         public DateTime datumKreiranja { get; set; }
         public double zapremnina { get; set; }
+        public double zauzece { get; set; }
         public string opis { get; set; }
         public string nazivProstorije { get; set; }
 
@@ -250,14 +251,17 @@ namespace WpfApp1
                 connection.Open();
                 SqlCommand command1 = new SqlCommand(upit1, connection);
                 SqlCommand command2 = new SqlCommand(upit2, connection);
-                try
+                popunjenost[0] = (double)command1.ExecuteScalar(); //sprema zapremninu spremnika na poziciju 0
+                object popunjenost1 = command2.ExecuteScalar();
+                if (popunjenost1 == System.DBNull.Value)
                 {
-                    popunjenost[0] = (double)command1.ExecuteScalar(); //sprema zapremninu spremnika na poziciju 0
-                    popunjenost[1] = (double)command2.ExecuteScalar(); //sprema ukupno zauzeće spremnika na poziciju 1
+                    popunjenost[1] = 0;
                 }
-                catch (Exception ex)
+                else
                 {
+                    popunjenost[1] = Convert.ToDouble(popunjenost1);
                 }
+                 //sprema ukupno zauzeće spremnika na poziciju 1
                 connection.Close();
             }
             return popunjenost;

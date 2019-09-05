@@ -764,7 +764,7 @@
                 </Grid>
             </Grid>
 
-            <Grid Grid.Column="1" Grid.Row="1" x:Name="gridKreirajStavku" Visibility="Collapsed">
+            <Grid Grid.Column="1" Grid.Row="1" x:Name="gridKreirajStavku" Visibility="Visible">
 
                 <Rectangle></Rectangle>
                 <StackPanel>
@@ -772,31 +772,19 @@
                     <Label Content="Naziv stavke" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="{DynamicResource labelsColor}"/>
                     <TextBox x:Name="txbStavkaNoviNaziv" HorizontalAlignment="Center" Height="23" Text="" VerticalAlignment="Top" Width="120"/>
 
-                    <Grid Height="135" HorizontalAlignment="Center" Width="460" Margin="92,0,82,0" >
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="7*"/>
-                            <RowDefinition/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="0.5*"/>
-                            <ColumnDefinition Width="0.5*"/>
-                        </Grid.ColumnDefinitions>
-
-                        <Label Content="Spremnik" HorizontalAlignment="Right" Margin="0,0,60,0" VerticalAlignment="Top" FontSize="24" Foreground="{DynamicResource labelsColor}" Grid.Column="0" MinWidth="110"/>
-                        <ComboBox x:Name="cmbSpremniciKreirajStavku" HorizontalAlignment="Right" VerticalAlignment="Top" Width="210" Margin="0,47,10,0"  Grid.Column="0"/>
-
-                        <Label Content="Oznake" HorizontalAlignment="Left" Margin="71,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="{DynamicResource labelsColor}" Grid.Column="1" MinWidth="89" />
-                        <ListBox x:Name="lbOznakeKreirajStavku" HorizontalAlignment="Left" VerticalAlignment="Top" Width="210" Height="66"  SelectionMode="Multiple" Margin="10,42,0,0" Grid.Column="1"/>
-
-
-
-                    </Grid>
+                    <Label Content="Oznake" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="24" Foreground="{DynamicResource labelsColor}" MinWidth="89" />
+                    <ListBox x:Name="lbOznakeKreirajStavku" HorizontalAlignment="Center" VerticalAlignment="Top" Width="210" Height="66"  SelectionMode="Multiple" SelectionChanged="lbOznakeKreirajStavku_SelectionChanged" />
 
                     <Label Content="Datum isteka" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="{DynamicResource labelsColor}"/>
                     <DatePicker x:Name="dpStavkaIstekRoka" FirstDayOfWeek="Monday" IsDropDownOpen="False" SelectedDateFormat="Short" Margin="0" Width="120" MinWidth="120" />
 
                     <Label Content="Zauzima (L/Kg)" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="{DynamicResource labelsColor}"/>
-                    <TextBox x:Name="txbZauzimaKreirajStavku" HorizontalAlignment="Center" Height="23" Text="" VerticalAlignment="Top" Width="120"/>
+                    <TextBox x:Name="txbZauzimaKreirajStavku" HorizontalAlignment="Center" Height="23" Text="" VerticalAlignment="Top" Width="120" KeyUp="txbZauzimaKreirajStavku_KeyUp"/>
+                    
+                    <Label Content="Spremnik" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="24" Foreground="{DynamicResource labelsColor}"  MinWidth="110"/>
+                    <ComboBox x:Name="cmbSpremniciKreirajStavku" HorizontalAlignment="Center" VerticalAlignment="Top" Width="210" IsEnabled="False"/>
+                    <ComboBox x:Name="cmbSpremniciKreirajStavkuHidden" Visibility="Hidden"/>
+
                     <Grid Height="40" HorizontalAlignment="Center" Width="197" Margin="0" >
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="0.5*"/>

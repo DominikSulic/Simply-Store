@@ -80,6 +80,7 @@ namespace WpfApp1
             upit = upit + " 1!=1)";
             SqlCommand command = new SqlCommand(upit, connection);
             int brojPronadenihIstihOznakaSpremnika=(Int32)command.ExecuteScalar();
+            connection.Close();
             if (brojPronadenihIstihOznakaSpremnika == selektiraniTagovi.Count())
             {
                 return true;

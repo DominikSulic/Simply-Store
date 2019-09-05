@@ -786,6 +786,79 @@ namespace WpfApp1
 
         }
 
+        private void txbZauzimaKreirajStavku_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (txbZauzimaKreirajStavku.Text != "")
+            {
+                double zauzece;
+                if (double.TryParse(txbZauzimaKreirajStavku.Text, out zauzece))
+                {
+                    if(lbOznakeKreirajStavku.SelectedItems.Count > 0)
+                    {
+                        List<PrikazSpremnici> filtriraniPoZauzecu;
+                        filtriraniPoZauzecu=PrikazStavke.dohvatiDopusteneSpremnikeKolicine(zauzece, cmbSpremniciKreirajStavkuHidden.Items.Cast<PrikazSpremnici>().ToList());
+                        cmbSpremniciKreirajStavku.ItemsSource = filtriraniPoZauzecu;
+                        cmbSpremniciKreirajStavku.IsEnabled = true;
+                    }
+                    else
+                    {
+                        cmbSpremniciKreirajStavku.IsEnabled = false;
+                    }
+                }
+                else
+                {
+                    cmbSpremniciKreirajStavku.IsEnabled = false;
+                }
+            }
+            else
+            {
+                cmbSpremniciKreirajStavku.IsEnabled = false;
+            }
+            //daj mi postojeću listu prvo filtriranih po oznakama
+            //pošalji u funkciju PrikazStavke.dohvatiDopusteneSpremnikeKolicine(double kolicina,filtriranaLista);
+        }
+
+        private void lbOznakeKreirajStavku_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (lbOznakeKreirajStavku.SelectedItems.Count > 0)
+            {
+                MessageBox.Show(txbZauzimaKreirajStavku.Text + "\n" + lbOznakeKreirajStavku.SelectedItems);//delete kasnije
+                List<PrikazOznaka> odabraneOznake = lbOznakeKreirajStavku.SelectedItems.Cast<PrikazOznaka>().ToList();
+                List<PrikazSpremnici> dopusteniSpremnici = PrikazStavke.dohvatiDopusteneSpremnikeOznake(0, odabraneOznake);
+                cmbSpremniciKreirajStavku.ItemsSource = dopusteniSpremnici;
+                cmbSpremniciKreirajStavkuHidden.ItemsSource = dopusteniSpremnici;
+                if (txbZauzimaKreirajStavku.Text != "")
+                {
+
+                    double zauzece;
+                    if (double.TryParse(txbZauzimaKreirajStavku.Text, out zauzece))
+                    {
+                        List<PrikazSpremnici> filtriraniPoZauzecu;
+                        filtriraniPoZauzecu = PrikazStavke.dohvatiDopusteneSpremnikeKolicine(zauzece, cmbSpremniciKreirajStavkuHidden.Items.Cast<PrikazSpremnici>().ToList());
+                        cmbSpremniciKreirajStavku.ItemsSource = filtriraniPoZauzecu;
+                        cmbSpremniciKreirajStavku.IsEnabled = true;
+                    }
+                    else
+                    {
+                        cmbSpremniciKreirajStavku.IsEnabled = false;
+                    }
+                }
+                else
+                {
+                    cmbSpremniciKreirajStavku.IsEnabled = false;
+                }
+            }
+            else
+            {
+                cmbSpremniciKreirajStavku.IsEnabled = false;
+            }
+        }
+
+        private void provjeraUnosaKreiranjeStavke()
+        {
+            
+        }
+
         private void btnKreirajStavkuOdustani_Click(object sender, RoutedEventArgs e)
         {
 

@@ -30,6 +30,7 @@ CREATE TABLE spremnik(
     naziv_spremnika varchar(50) not null unique,
     datum_kreiranja datetime not null,
     zapremnina float not null,
+    zauzeće float DEFAULT 0,
     opis varchar(5000),
     korisnik_id int,
     prostorija_id int references prostorija(id_prostorija) ON DELETE CASCADE,

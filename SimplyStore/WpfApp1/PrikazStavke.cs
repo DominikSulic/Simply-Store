@@ -155,7 +155,17 @@ namespace WpfApp1
                 db.SaveChanges();
             }
 
-        }
+            string connectionString = @"Data Source=31.147.204.119\PISERVER,1433; Initial Catalog=19023_DB; User=19023_User; Password='z#X1iD;M'";
+            string upit = "UPDATE spremnik SET zauzeće=zauzeće+" + zauzima + " WHERE id_spremnik=" + idSpremnika;
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                SqlCommand command = new SqlCommand(upit, connection);
+                command.ExecuteNonQuery();
+                connection.Close();
+            }
+
+            }
 
         public static void izmjeniStavku(int id, string noviNaziv, int idSpremnika, DateTime? datumIsteka, double zauzima, int korisnikID)
         {
@@ -181,6 +191,16 @@ namespace WpfApp1
                 db.dnevnik.Add(noviDnevnik);
                 db.SaveChanges();
             }
+
+            string connectionString = @"Data Source=31.147.204.119\PISERVER,1433; Initial Catalog=19023_DB; User=19023_User; Password='z#X1iD;M'";
+            string upit = "UPDATE spremnik SET zauzeće=zauzeće+" + novaKolicina + " WHERE id_spremnik=" + idSpremnika;
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                SqlCommand command = new SqlCommand(upit, connection);
+                command.ExecuteNonQuery();
+                connection.Close();
+            }
         }
 
         public static void obrisiStavku(int idStavke, int korisnikID)
@@ -192,15 +212,27 @@ namespace WpfApp1
                 korisnik_id = korisnikID,
                 stavka_id = idStavke
             };
-
+            double zauzeceStavke;
+            int? idSpremnika;
             using (var db = new SSDB())
             {
                 var query = (from stavka in db.stavka where stavka.id_stavka == idStavke select stavka).First();
                 db.stavka.Attach(query);
                 noviDnevnik.kolicina = query.zauzeće;
+                zauzeceStavke = query.zauzeće;
+                idSpremnika = query.spremnik_id;
                 query.zauzeće = 0;
                 db.dnevnik.Add(noviDnevnik);
                 db.SaveChanges();
+            }
+            string connectionString = @"Data Source=31.147.204.119\PISERVER,1433; Initial Catalog=19023_DB; User=19023_User; Password='z#X1iD;M'";
+            string upit = "UPDATE spremnik SET zauzeće=zauzeće-" + zauzeceStavke + " WHERE id_spremnik=" + idSpremnika;
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                SqlCommand command = new SqlCommand(upit, connection);
+                command.ExecuteNonQuery();
+                connection.Close();
             }
         }
 
@@ -295,12 +327,83 @@ namespace WpfApp1
 
         public static void promjeniKolicinuStavke(int promjeniKolicinu, int stavkaID)
         {
-            using( var db = new SSDB())
+            int? idSpremnika;
+            double promjena;
+            using (var db = new SSDB())
             {
                 var query = (from s in db.stavka where s.id_stavka == stavkaID select s).First();
-                query.zauzeće += promjeniKolicinu;
+                idSpremnika = query.spremnik_id;
+                if (query.zauzeće+promjeniKolicinu<0)
+                {
+                    promjena = ((query.zauzeće + promjeniKolicinu) * -1)+promjeniKolicinu;
+                    query.zauzeće = promjena;
+                }
+                else
+                {
+                    query.zauzeće += promjeniKolicinu;
+                    promjena = promjeniKolicinu;
+                }
                 db.SaveChanges();
             }
+            string connectionString = @"Data Source=31.147.204.119\PISERVER,1433; Initial Catalog=19023_DB; User=19023_User; Password='z#X1iD;M'";
+            string upit = "UPDATE spremnik SET zauzeće=zauzeće+" + promjena + " WHERE id_spremnik=" + idSpremnika;
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                SqlCommand command = new SqlCommand(upit, connection);
+                command.ExecuteNonQuery();
+                connection.Close();
+            }
         }
+
+        public static List<PrikazSpremnici> dohvatiDopusteneSpremnikeOznake(double unesenoZauzece,List<PrikazOznaka> odabraneOznake)
+        {
+            List<PrikazSpremnici> dopusteniSpremnici = new List<PrikazSpremnici>();
+            List<PrikazSpremnici> dopusteniSpremnici2 = new List<PrikazSpremnici>();//delete
+            string upit1 = "Select id_spremnik,naziv_spremnika,zapremnina,zauzeće FROM spremnik where zapremnina>0 AND zauzeće<zapremnina AND zauzeće+" + unesenoZauzece+"<zapremnina";
+            string connectionString = @"Data Source=31.147.204.119\PISERVER,1433; Initial Catalog=19023_DB; User=19023_User; Password='z#X1iD;M'";
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                SqlCommand command = new SqlCommand(upit1, connection);
+                SqlDataReader reader = command.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        dopusteniSpremnici.Add(new PrikazSpremnici
+                        {
+                            idSpremnika = reader.GetInt32(0),
+                            nazivSpremnika=reader.GetString(1),
+                            zapremnina=reader.GetDouble(2),
+                            zauzece=reader.GetDouble(3)
+                        });
+                    }   
+                }
+                foreach(PrikazSpremnici item in dopusteniSpremnici)
+                {
+                    if (PrikazOznakaStavka.provjeriStavkuOznakuUnos(item.idSpremnika, odabraneOznake))
+                    {
+                        dopusteniSpremnici2.Add(item);
+                    }
+                }
+                connection.Close();
+            }
+            return dopusteniSpremnici2;
+        }
+
+        public static List<PrikazSpremnici> dohvatiDopusteneSpremnikeKolicine(double unesenoZauzece, List<PrikazSpremnici> filtriraniSpremnici)
+        {
+            List<PrikazSpremnici> filtriraniSpremnici2 = new List<PrikazSpremnici>();
+            foreach(PrikazSpremnici item in filtriraniSpremnici)
+            {
+                if (unesenoZauzece + item.zauzece <= item.zapremnina)
+                {
+                    filtriraniSpremnici2.Add(item);
+                }
+            }
+            return filtriraniSpremnici2;
+        }
+
     }
 }
