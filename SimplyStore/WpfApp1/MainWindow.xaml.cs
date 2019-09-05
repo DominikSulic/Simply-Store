@@ -814,17 +814,14 @@ namespace WpfApp1
             {
                 cmbSpremniciKreirajStavku.IsEnabled = false;
             }
-            //daj mi postojeću listu prvo filtriranih po oznakama
-            //pošalji u funkciju PrikazStavke.dohvatiDopusteneSpremnikeKolicine(double kolicina,filtriranaLista);
         }
 
         private void lbOznakeKreirajStavku_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (lbOznakeKreirajStavku.SelectedItems.Count > 0)
             {
-                MessageBox.Show(txbZauzimaKreirajStavku.Text + "\n" + lbOznakeKreirajStavku.SelectedItems);//delete kasnije
                 List<PrikazOznaka> odabraneOznake = lbOznakeKreirajStavku.SelectedItems.Cast<PrikazOznaka>().ToList();
-                List<PrikazSpremnici> dopusteniSpremnici = PrikazStavke.dohvatiDopusteneSpremnikeOznake(0, odabraneOznake);
+                List<PrikazSpremnici> dopusteniSpremnici = PrikazStavke.dohvatiDopusteneSpremnikeOznake(odabraneOznake);
                 cmbSpremniciKreirajStavku.ItemsSource = dopusteniSpremnici;
                 cmbSpremniciKreirajStavkuHidden.ItemsSource = dopusteniSpremnici;
                 if (txbZauzimaKreirajStavku.Text != "")

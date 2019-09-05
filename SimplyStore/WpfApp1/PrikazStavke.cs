@@ -356,11 +356,15 @@ namespace WpfApp1
             }
         }
 
-        public static List<PrikazSpremnici> dohvatiDopusteneSpremnikeOznake(double unesenoZauzece,List<PrikazOznaka> odabraneOznake)
+        public static List<PrikazSpremnici> dohvatiDopusteneSpremnikeOznake(List<PrikazOznaka> odabraneOznake)
         {
             List<PrikazSpremnici> dopusteniSpremnici = new List<PrikazSpremnici>();
-            List<PrikazSpremnici> dopusteniSpremnici2 = new List<PrikazSpremnici>();//delete
-            string upit1 = "Select id_spremnik,naziv_spremnika,zapremnina,zauzeće FROM spremnik where zapremnina>0 AND zauzeće<zapremnina AND zauzeće+" + unesenoZauzece+"<zapremnina";
+            string upit1 = "SELECT spremnik_id,COUNT(oznaka_id),zauzeće,zapremnina,naziv_spremnika FROM spremnik JOIN spremnik_oznaka ON id_spremnik = spremnik_id JOIN oznaka ON oznaka_id = id_oznaka WHERE zapremnina> 0 AND (";
+            foreach(PrikazOznaka item in odabraneOznake)
+            {
+                upit1 = upit1 + "oznaka_id=" + item.id_oznaka + " OR ";
+            }
+            upit1 = upit1 + " 1!=1) GROUP BY spremnik_id,zauzeće,zapremnina,naziv_spremnika HAVING count(oznaka_id)=" + odabraneOznake.Count();
             string connectionString = @"Data Source=31.147.204.119\PISERVER,1433; Initial Catalog=19023_DB; User=19023_User; Password='z#X1iD;M'";
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -371,25 +375,20 @@ namespace WpfApp1
                 {
                     while (reader.Read())
                     {
+
                         dopusteniSpremnici.Add(new PrikazSpremnici
                         {
                             idSpremnika = reader.GetInt32(0),
-                            nazivSpremnika=reader.GetString(1),
-                            zapremnina=reader.GetDouble(2),
-                            zauzece=reader.GetDouble(3)
+                            nazivSpremnika=reader.GetString(4),
+                            zapremnina=reader.GetDouble(3),
+                            zauzece=reader.GetDouble(2)
                         });
                     }   
                 }
-                foreach(PrikazSpremnici item in dopusteniSpremnici)
-                {
-                    if (PrikazOznakaStavka.provjeriStavkuOznakuUnos(item.idSpremnika, odabraneOznake))
-                    {
-                        dopusteniSpremnici2.Add(item);
-                    }
-                }
+                reader.Close();
                 connection.Close();
             }
-            return dopusteniSpremnici2;
+            return dopusteniSpremnici;
         }
 
         public static List<PrikazSpremnici> dohvatiDopusteneSpremnikeKolicine(double unesenoZauzece, List<PrikazSpremnici> filtriraniSpremnici)
