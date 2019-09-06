@@ -114,14 +114,14 @@ namespace WpfApp1
             }
         }
 
-        public void obrisiProstoriju(string nazivProstorije, int idKorisnik)
+        public void obrisiProstoriju(int idProstorije, int idKorisnik)
         {
             List<PrikazSpremnici> listaSpremnika = new List<PrikazSpremnici>();
             List<PrikazStavke> listaStavki = new List<PrikazStavke>();
 
             using (var db = new SSDB())
             {
-                var query = (from p in db.prostorija where p.naziv_prostorije == nazivProstorije select p).First();
+                var query = (from p in db.prostorija where p.id_prostorija == idProstorije select p).First();
                 query.aktivna = "ne";
 
                 listaSpremnika = PrikazSpremnici.dohvatiSpremnike(query.id_prostorija);
