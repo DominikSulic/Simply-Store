@@ -164,6 +164,13 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\print.ico" />
+    <Resource Include="Images\decrement.png" />
+    <Resource Include="Images\increment.png" />
+    <Resource Include="Images\add.png" />
+    <Resource Include="Images\modify.png" />
+    <Resource Include="Images\print.png" />
+    <Resource Include="Images\remove.png" />
+    <Resource Include="Images\search.png" />
     <Content Include="Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Model1.edmx</DependentUpon>

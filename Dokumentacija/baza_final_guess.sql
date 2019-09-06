@@ -7,6 +7,13 @@ DROP TABLE IF EXISTS stavka;
 DROP TABLE IF EXISTS stavka_oznaka;
 DROP TABLE IF EXISTS dnevnik;
 
+TRUNCATE TABLE dnevnik;
+TRUNCATE TABLE stavka_oznaka;
+TRUNCATE TABLE stavka;
+TRUNCATE TABLE spremnik_oznaka;
+TRUNCATE TABLE oznaka;
+TRUNCATE TABLE spremnik;
+TRUNCATE TABLE prostorija;
 
 CREATE TABLE korisnik (
     id_korisnik int primary key IDENTITY(1,1),
