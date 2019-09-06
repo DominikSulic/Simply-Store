@@ -1060,7 +1060,7 @@
                                 </ToolTip>
                             </Button.ToolTip>
                         </Button>
-                        <Button x:Name="btnKreirajOznakuOdustani"  Content="Odustani" VerticalAlignment="Top" Margin="10,10,0,0" Grid.Column="1" Width="95" HorizontalAlignment="Left" IsCancel="True" Style="{DynamicResource gumbi}" Background="#b54141"/>
+                        <Button x:Name="btnKreirajOznakuOdustani" Click="btnKreirajOznakuOdustani_Click" Content="Odustani" VerticalAlignment="Top" Margin="10,10,0,0" Grid.Column="1" Width="95" HorizontalAlignment="Left" IsCancel="True" Style="{DynamicResource gumbi}" Background="#b54141"/>
                     </Grid>
                 </StackPanel>
             </Grid>

@@ -115,16 +115,18 @@ namespace WpfApp1
             cmbProstorije.ItemsSource = PrikazProstorije.dohvatiProstorije();
             dgSpremnici.ItemsSource = PrikazSpremnici.dohvatiSpremnike();
             promjeniHeaderSpremnici();
+            dgSpremnici.Columns[4].Visibility = Visibility.Hidden;
         }
 
         private void promjeniHeaderSpremnici()
         {
-            dgSpremnici.Columns[0].Header = "Id spremnika";
+            dgSpremnici.Columns[0].Header = "ID spremnika";
             dgSpremnici.Columns[1].Header = "Naziv spremnika";
             dgSpremnici.Columns[2].Header = "Datum kreiranja";
             dgSpremnici.Columns[3].Header = "Zapremnina";
-            dgSpremnici.Columns[4].Header = "Opis";
-            dgSpremnici.Columns[5].Header = "Pripadna prostorija";
+            // 4. je hidden - zauzece
+            dgSpremnici.Columns[5].Header = "Opis";
+            dgSpremnici.Columns[6].Header = "Pripadna prostorija";
         }
 
         public void PrikaziStavke()
@@ -337,7 +339,6 @@ namespace WpfApp1
         }
 
 
-
         #region Prostorije
         private void BtnkreirajProstoriju_Click_1(object sender, RoutedEventArgs e)
         {
@@ -403,7 +404,6 @@ namespace WpfApp1
 
         private void BtnizmjeniProstoriju_Click_1(object sender, RoutedEventArgs e)
         {
-
             PrikazProstorije pp = new PrikazProstorije();
             prostorija p = new prostorija();
 
@@ -413,22 +413,31 @@ namespace WpfApp1
                 promjeniGrid("gridIzmjeniProstoriju");
                 pp = (PrikazProstorije)dgProstorije.SelectedItem;
                 p = pp.dohvatiProstoriju(pp.nazivProstorije);
+
+                txtNoveNapomeneProstorije.Text = p.posebne_napomene;
+                txtNoviNazivProstorije.Text = p.naziv_prostorije;
+                txtNoviOpisProstorije.Text = p.opis;
+                txtIdProstorije.Text = p.id_prostorija.ToString();
             }
             else
             {
                 MessageBox.Show("Niste odabrali prostoriju za izmjenu!");
             }
-
-            txtNoveNapomeneProstorije.Text = p.posebne_napomene;
-            txtNoviNazivProstorije.Text = p.naziv_prostorije;
-            txtNoviOpisProstorije.Text = p.opis;
-            txtIdProstorije.Text = p.id_prostorija.ToString();
-
         }
 
         private void btnIzmjeniProstoriju_Click(object sender, RoutedEventArgs e)
         {
-            PrikazProstorije.izmjeniProstoriju(int.Parse(txtIdProstorije.Text), txtNoviNazivProstorije.Text, txtNoviOpisProstorije.Text, txtNoveNapomeneProstorije.Text);
+            if (txtNoviNazivProstorije.Text != "" && ((from c in txtNoviNazivProstorije.Text where c != ' ' select c).Count() != 0))
+            {
+                PrikazProstorije.izmjeniProstoriju(int.Parse(txtIdProstorije.Text), txtNoviNazivProstorije.Text, txtNoviOpisProstorije.Text, txtNoveNapomeneProstorije.Text);
+                promjeniGrid("gridProstorije");
+                naslovLabel.Content = "Prostorije";
+                PrikaziProstorije();
+            }
+            else
+            {
+                MessageBox.Show("Prostorija mora imati naziv!");
+            }
 
         }
 
@@ -461,10 +470,10 @@ namespace WpfApp1
 
         private void ProstorijeSearchEnter(object sender, KeyEventArgs e)
         {
-            if(e.Key == Key.Return)
+            if (e.Key == Key.Return)
             {
                 string tekst = ProstorijeSearch.Text;
-                if(tekst == "")
+                if (tekst == "")
                 {
                     dgProstorije.ItemsSource = PrikazProstorije.dohvatiProstorije();
                     promjeniHeaderProstorije();
@@ -525,7 +534,7 @@ namespace WpfApp1
                                         if (brojUnosa > 0)
                                         {
                                             MessageBox.Show(brojUnosa.ToString());//delete this
-                                            List<int> idUnesenihSpremnika = PrikazSpremnici.kreirajSpremnik(txbNoviSpremnikNaziv.Text, zapremnina, txbNoviSpremnikOpis.Text, selektiranaProstorija.idProstorije, globalniKorisnikID,brojUnosa);
+                                            List<int> idUnesenihSpremnika = PrikazSpremnici.kreirajSpremnik(txbNoviSpremnikNaziv.Text, zapremnina, txbNoviSpremnikOpis.Text, selektiranaProstorija.idProstorije, globalniKorisnikID, brojUnosa);
                                             foreach (var idSpremnika in idUnesenihSpremnika)
                                             {
                                                 foreach (PrikazOznaka item in lbxOznakeNovogSpremnika.SelectedItems)
@@ -553,7 +562,7 @@ namespace WpfApp1
                                 }
                                 else
                                 {
-                                    List<int> idUnesenihSpremnika = PrikazSpremnici.kreirajSpremnik(txbNoviSpremnikNaziv.Text, zapremnina, txbNoviSpremnikOpis.Text, selektiranaProstorija.idProstorije, globalniKorisnikID,1);
+                                    List<int> idUnesenihSpremnika = PrikazSpremnici.kreirajSpremnik(txbNoviSpremnikNaziv.Text, zapremnina, txbNoviSpremnikOpis.Text, selektiranaProstorija.idProstorije, globalniKorisnikID, 1);
                                     foreach (var idSpremnika in idUnesenihSpremnika)
                                     {
                                         foreach (PrikazOznaka item in lbxOznakeNovogSpremnika.SelectedItems)
@@ -654,13 +663,13 @@ namespace WpfApp1
                 IdProstorije = int.Parse(txbStaraProstorijaID.Text);
             }
             bool dozvoljenaPromjena = true;
-            string naziviTagovaZaBrisanje="";
+            string naziviTagovaZaBrisanje = "";
             List<PrikazOznaka> oznakeStavke = PrikazSpremnici.provjeraTagovaSpremnikaIStavke(Convert.ToInt32(txbSpremnikID.Text));
             List<PrikazOznaka> oznakeZaBrisanje = new List<PrikazOznaka>();
             foreach (PrikazOznaka item in lbxTrenutneOznakeSpremnikaUkloni.SelectedItems)
             {
                 oznakeZaBrisanje.Add(item);
-                foreach(PrikazOznaka item2 in oznakeStavke)
+                foreach (PrikazOznaka item2 in oznakeStavke)
                 {
                     if (item.id_oznaka == item2.id_oznaka)
                     {
@@ -715,7 +724,6 @@ namespace WpfApp1
             promjeniGrid("gridSpremnici");
             naslovLabel.Content = "Spremnici";
             PrikaziSpremnike();
-
         }
 
         private void SpremniciSearchEnter(object sender, KeyEventArgs e)
@@ -723,8 +731,16 @@ namespace WpfApp1
             if (e.Key == Key.Return)
             {
                 string tekst = SpremniciSearch.Text;
-                dgSpremnici.ItemsSource = PrikazSpremnici.dohvatiSpremnikeEnter(tekst);
-                promjeniHeaderSpremnici();
+                if(tekst == "")
+                {
+                    dgSpremnici.ItemsSource = PrikazSpremnici.dohvatiSpremnike();
+                    promjeniHeaderSpremnici();
+                }
+                else
+                {
+                    dgSpremnici.ItemsSource = PrikazSpremnici.dohvatiSpremnikeEnter(tekst);
+                    promjeniHeaderSpremnici();
+                }
             }
         }
 
@@ -793,10 +809,10 @@ namespace WpfApp1
                 double zauzece;
                 if (double.TryParse(txbZauzimaKreirajStavku.Text, out zauzece))
                 {
-                    if(lbOznakeKreirajStavku.SelectedItems.Count > 0)
+                    if (lbOznakeKreirajStavku.SelectedItems.Count > 0)
                     {
                         List<PrikazSpremnici> filtriraniPoZauzecu;
-                        filtriraniPoZauzecu=PrikazStavke.dohvatiDopusteneSpremnikeKolicine(zauzece, cmbSpremniciKreirajStavkuHidden.Items.Cast<PrikazSpremnici>().ToList());
+                        filtriraniPoZauzecu = PrikazStavke.dohvatiDopusteneSpremnikeKolicine(zauzece, cmbSpremniciKreirajStavkuHidden.Items.Cast<PrikazSpremnici>().ToList());
                         cmbSpremniciKreirajStavku.ItemsSource = filtriraniPoZauzecu;
                         cmbSpremniciKreirajStavku.IsEnabled = true;
                     }
@@ -853,7 +869,7 @@ namespace WpfApp1
 
         private void provjeraUnosaKreiranjeStavke()
         {
-            
+
         }
 
         private void btnKreirajStavkuOdustani_Click(object sender, RoutedEventArgs e)
@@ -888,7 +904,7 @@ namespace WpfApp1
                         {
                             if (selektiraneOznake.Count() != 0)
                             {
-                               if (PrikazOznakaStavka.provjeriStavkuOznakuUnos(selektiranSpremnik.idSpremnika, selektiraneOznake)) {//ako su ispravni(ako vrati true) onda nastavlja s unosom
+                                if (PrikazOznakaStavka.provjeriStavkuOznakuUnos(selektiranSpremnik.idSpremnika, selektiraneOznake)) {//ako su ispravni(ako vrati true) onda nastavlja s unosom
                                     if (dpStavkaIstekRoka.SelectedDate != null)
                                     {
                                         PrikazStavke.kreirajStavku(txbStavkaNoviNaziv.Text, selektiranSpremnik.idSpremnika, selektiraneOznake, dpStavkaIstekRoka.SelectedDate.Value.Date, zauzima, globalniKorisnikID);
@@ -918,7 +934,7 @@ namespace WpfApp1
                                 else
                                 {
                                     MessageBox.Show("Spremnik koji ste odabrali ne podržava odabrane oznake stavke.");
-                               }
+                                }
                             }
                             else
                             {
@@ -1158,7 +1174,7 @@ namespace WpfApp1
 
         private void btnInkrementirajStavku_Click(object sender, RoutedEventArgs e)
         {
-            if(dgStavke.SelectedItems.Count == 1)
+            if (dgStavke.SelectedItems.Count == 1)
             {
                 PrikazStavke ps = (PrikazStavke)dgStavke.SelectedItem;
                 int broj;
@@ -1207,7 +1223,7 @@ namespace WpfApp1
         {
             bool oznaceno = false;
             int rezultatUnosa;
-            if(rbtnKvarljiva.IsChecked == true || rbtnNeKvarljiva.IsChecked==true)
+            if (rbtnKvarljiva.IsChecked == true || rbtnNeKvarljiva.IsChecked == true)
             {
                 oznaceno = true;
             }
@@ -1217,11 +1233,11 @@ namespace WpfApp1
                 {
                     if (rbtnKvarljiva.IsChecked == true)
                     {
-                        rezultatUnosa=PrikazOznaka.kreirajOznaku(txbNazivOznake.Text, "da");
+                        rezultatUnosa = PrikazOznaka.kreirajOznaku(txbNazivOznake.Text, "da");
                     }
                     else
                     {
-                        rezultatUnosa=PrikazOznaka.kreirajOznaku(txbNazivOznake.Text, "ne");
+                        rezultatUnosa = PrikazOznaka.kreirajOznaku(txbNazivOznake.Text, "ne");
                     }
                     if (rezultatUnosa != 1)
                     {
@@ -1233,7 +1249,7 @@ namespace WpfApp1
                         dgOznake.ItemsSource = PrikazOznaka.dohvatiSveOznake();
                         promjeniGrid("gridOznake");
                     }
-                    
+
                 }
                 else
                 {
@@ -1245,36 +1261,41 @@ namespace WpfApp1
                 MessageBox.Show("Unesite naziv nove oznake");
             }
         }
+        private void btnKreirajOznakuOdustani_Click(object sender, RoutedEventArgs e)
+        {
+            promjeniGrid("gridOznake");
+            naslovLabel.Content = "Oznake";
+            PrikaziOznake();
+        }
         private void btnPromjeniStatusOznake_Click(object sender, RoutedEventArgs e)
         {
             if (dgOznake.SelectedItems.Count != 0)
             {
-                string noviStatus;
-                PrikazOznaka odabranaOznaka = new PrikazOznaka();
-                odabranaOznaka=(PrikazOznaka)dgOznake.SelectedItem;
-                if(odabranaOznaka.aktivna.Equals("da"))
+                foreach (PrikazOznaka item in dgOznake.SelectedItems)
                 {
-                    noviStatus = "ne";
+                    string noviStatus;
+                    PrikazOznaka odabranaOznaka = new PrikazOznaka();
+                    odabranaOznaka = item;
+                    if (odabranaOznaka.aktivna.Equals("da"))
+                    {
+                        noviStatus = "ne";
+                    }
+                    else
+                    {
+                        noviStatus = "da";
+                    }
+                    if (PrikazOznaka.promjeniStatusOznake(odabranaOznaka.id_oznaka, noviStatus) != 1)
+                    {
+                        MessageBox.Show("Došlo je do pogreške,molimo pokušajte ponovo");
+                    }
                 }
-                else
-                {
-                    noviStatus = "da";
-                }
-                if (PrikazOznaka.promjeniStatusOznake(odabranaOznaka.id_oznaka,noviStatus) != 1)
-                {
-                    MessageBox.Show("Došlo je do pogreške,molimo pokušajte ponovo");
-                }
-                else
-                {
-                    PrikaziOznake();
-                }
+                PrikaziOznake();
             }
             else
             {
                 MessageBox.Show("Odaberite oznaku kojoj želite promjeniti status");
             }
         }
-
         #endregion
 
         #region Postavke
