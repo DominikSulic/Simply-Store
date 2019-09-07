@@ -42,7 +42,7 @@ namespace WpfApp1
             using (var db = new SSDB())
             {
                 var query = (from p in db.prostorija
-                             where p.naziv_prostorije.ToLower().Contains(tekst.ToLower())
+                             where p.naziv_prostorije.ToLower().Contains(tekst.ToLower()) && p.aktivna == "da"
                              select new PrikazProstorije
                              {
                                  idProstorije = p.id_prostorija,
