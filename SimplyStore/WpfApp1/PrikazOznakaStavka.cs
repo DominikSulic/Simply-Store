@@ -14,25 +14,7 @@ namespace WpfApp1
         public int idOznaka { get; set; }
         public string nazivOznake { get; set; }
 
-        public static List<PrikazOznakaStavka> dohvatiOznakeStavke(int idStavke)
-        {
-            List<PrikazOznakaStavka> sveOznakeZaStavku = new List<PrikazOznakaStavka>();
-            using (var db = new SSDB())
-            {
-                var querry = (from oznaka in db.oznaka
-                              where oznaka.stavka.Any(s => s.id_stavka == idStavke)
-                              select new PrikazOznakaStavka
-                              {
-                                  idOznaka = oznaka.id_oznaka,
-                                  idStavka = idStavke,
-                                  nazivOznake = oznaka.naziv
-                              }).ToList();
-                sveOznakeZaStavku = querry;
-            }
 
-
-            return sveOznakeZaStavku;
-        }
 
         public static int dodajStavkuOznaku(int idStavke, int idOznake)
         {
@@ -95,6 +77,15 @@ namespace WpfApp1
         {
             return nazivOznake;
         }
-
+        public static void obrisiSveOznakeStavke(int idStavka)
+        {
+            string connectionString = @"Data Source=31.147.204.119\PISERVER,1433; Initial Catalog=19023_DB; User=19023_User; Password='z#X1iD;M'";
+            string upit = "DELETE FROM stavka_oznaka where stavka_id="+idStavka;
+            SqlConnection connection = new SqlConnection(connectionString);
+            connection.Open();
+            SqlCommand command = new SqlCommand(upit, connection);
+            command.ExecuteNonQuery();
+            connection.Close();
+        }
     }
 }

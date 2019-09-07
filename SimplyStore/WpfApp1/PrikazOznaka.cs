@@ -150,6 +150,33 @@ namespace WpfApp1
                 return oznake;
         }
 
+        public static List<PrikazOznaka> dohvatiOznakePripadajuStavci(int idStavke)
+        {
+            List<PrikazOznaka> oznake = new List<PrikazOznaka>();
+            string connectionString = @"Data Source=31.147.204.119\PISERVER,1433; Initial Catalog=19023_DB; User=19023_User; Password='z#X1iD;M'";
+            string upit = "SELECT oznaka.* FROM oznaka,stavka_oznaka WHERE oznaka.aktivna='da' AND oznaka.id_oznaka=stavka_oznaka.oznaka_id AND stavka_oznaka.stavka_id=" + idStavke;
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                SqlCommand command = new SqlCommand(upit, connection);
+                SqlDataReader reader = command.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        PrikazOznaka a = new PrikazOznaka();
+                        a.id_oznaka = reader.GetInt32(0);
+                        a.naziv = reader.GetString(1);
+                        a.kvarljivost = reader.GetString(2);
+                        oznake.Add(a);
+                    }
+                }
+                reader.Close();
+                connection.Close();
+            }
+            return oznake;
+        }
+
         public static int kreirajOznaku(string nazivOznake,string kvarljivost)
         {
             int rezultat;

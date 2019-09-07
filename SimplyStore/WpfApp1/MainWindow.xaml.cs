@@ -830,7 +830,7 @@ namespace WpfApp1
             PrikazStavke stavka = (PrikazStavke)dgStavke.SelectedItem;
             if (stavka != null)
             {
-                lbOznakeStavke.ItemsSource = PrikazOznakaStavka.dohvatiOznakeStavke(stavka.idStavke);
+                lbOznakeStavke.ItemsSource = PrikazOznaka.dohvatiOznakePripadajuStavci(stavka.idStavke);
             }
 
         }
@@ -851,7 +851,7 @@ namespace WpfApp1
             if (txbZauzimaKreirajStavku.Text != "")
             {
                 double zauzece;
-                if (double.TryParse(txbZauzimaKreirajStavku.Text, out zauzece))
+                if (double.TryParse(txbZauzimaKreirajStavku.Text, out zauzece) && zauzece>0)
                 {
                     if (lbOznakeKreirajStavku.SelectedItems.Count > 0)
                     {
@@ -1047,22 +1047,54 @@ namespace WpfApp1
                 sveOznake.AddRange(PrikazOznaka.dohvatiOznake());
                 lbIzmjeniStavkuOznake.ItemsSource = sveOznake;
 
-                List<PrikazOznakaStavka> oznakeZaOdabranuStavku = new List<PrikazOznakaStavka>();
-                oznakeZaOdabranuStavku.AddRange(PrikazOznakaStavka.dohvatiOznakeStavke(s.id_stavka));
+                List<PrikazOznaka> oznakeZaOdabranuStavku = new List<PrikazOznaka>();
+                oznakeZaOdabranuStavku = PrikazOznaka.dohvatiOznakePripadajuStavci(Convert.ToInt32(txbStavkaID.Text));
                 lbIzmjeniStavkuNjeneOznake.ItemsSource = oznakeZaOdabranuStavku;
-                //HIDDEN LISTBOX=oznakeZaOdabranuStavku;
+                lbPocetneOznakeStavkeHidden.ItemsSource = oznakeZaOdabranuStavku;
 
                 if (s.datum_roka.HasValue)
                 {
                     var inMyString = s.datum_roka.Value.ToShortDateString();
                     dpIzmjeniStavkuNoviIstekRoka.SelectedDate = DateTime.Parse(inMyString);
                 }
+
+                dohvatiIspravneSpremnike();
             }
             else
             {
                 MessageBox.Show("Niste odabrali stavku za izmjenu!");
             }
 
+        }
+
+        private void txbIzmjeniStavkuNovoZauzece_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (txbIzmjeniStavkuNovoZauzece.Text != "")
+            {
+                double zauzece;
+                if (double.TryParse(txbIzmjeniStavkuNovoZauzece.Text, out zauzece) && zauzece > 0)
+                {
+                    if (lbIzmjeniStavkuNjeneOznake.Items.Count > 0)
+                    {
+                        List<PrikazSpremnici> filtriraniPoZauzecu;
+                        filtriraniPoZauzecu = PrikazStavke.dohvatiDopusteneSpremnikeKolicine(zauzece, cmbDopusteniSpremniciZaStavkuModifyHidden.Items.Cast<PrikazSpremnici>().ToList());
+                        cmbDopusteniSpremniciZaStavkuModify.ItemsSource = filtriraniPoZauzecu;
+                        cmbDopusteniSpremniciZaStavkuModify.IsEnabled = true;
+                    }
+                    else
+                    {
+                        cmbDopusteniSpremniciZaStavkuModify.IsEnabled = false;
+                    }
+                }
+                else
+                {
+                    cmbDopusteniSpremniciZaStavkuModify.IsEnabled = false;
+                }
+            }
+            else
+            {
+                cmbDopusteniSpremniciZaStavkuModify.IsEnabled = false;
+            }
         }
 
         private void lbIzmjeniStavkuNjeneOznake_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -1074,6 +1106,7 @@ namespace WpfApp1
                 int idStavke = Convert.ToInt32(txbIzmjeniStavkuStavkaIdSkriven.Text);
                 PrikazOznakaStavka.obrisiStavkuOznaku(odabranaOznaka.idStavka, odabranaOznaka.idOznaka);
                 osvjeziStavkineOznake();
+                dohvatiIspravneSpremnike();
 
             }
 
@@ -1093,19 +1126,26 @@ namespace WpfApp1
                 }
 
                 osvjeziStavkineOznake();
+                dohvatiIspravneSpremnike();
             }
         }
 
         private void osvjeziStavkineOznake()
         {
             int idStavke = Convert.ToInt32(txbIzmjeniStavkuStavkaIdSkriven.Text);
-            List<PrikazOznakaStavka> oznakeZaOdabranuStavku = new List<PrikazOznakaStavka>();
-            oznakeZaOdabranuStavku.AddRange(PrikazOznakaStavka.dohvatiOznakeStavke(idStavke));
+            List<PrikazOznaka> oznakeZaOdabranuStavku = new List<PrikazOznaka>();
+            oznakeZaOdabranuStavku=PrikazOznaka.dohvatiOznakePripadajuStavci(idStavke);
             lbIzmjeniStavkuNjeneOznake.ItemsSource = oznakeZaOdabranuStavku;
 
             List<PrikazOznaka> oznakeNePripadajuStavci = new List<PrikazOznaka>();
             oznakeNePripadajuStavci=PrikazOznaka.dohvatiOznakeNePripadajuStavci(idStavke);
             lbIzmjeniStavkuOznake.ItemsSource = oznakeNePripadajuStavci;
+        }
+        private void dohvatiIspravneSpremnike()
+        {
+            List<PrikazSpremnici> dopusteniSpremnici = PrikazStavke.dohvatiDopusteneSpremnikeOznake(lbIzmjeniStavkuNjeneOznake.Items.Cast<PrikazOznaka>().ToList());
+            cmbDopusteniSpremniciZaStavkuModify.ItemsSource = dopusteniSpremnici;
+            cmbDopusteniSpremniciZaStavkuModifyHidden.ItemsSource = dopusteniSpremnici;
         }
 
         private void StavkeSearchEnter(object sender, KeyEventArgs e)
@@ -1138,6 +1178,12 @@ namespace WpfApp1
 
         private void btnIzmjeniStavkuOdustani_Click(object sender, RoutedEventArgs e)
         {
+            PrikazOznakaStavka.obrisiSveOznakeStavke(Convert.ToInt32(txbStavkaID.Text));
+            List<PrikazOznakaStavka> stareOznake = lbPocetneOznakeStavkeHidden.Items.Cast<PrikazOznakaStavka>().ToList();
+            foreach(PrikazOznakaStavka item in stareOznake)
+            {
+                PrikazOznakaStavka.dodajStavkuOznaku(Convert.ToInt32(txbStavkaID.Text), item.idOznaka);
+            }
             promjeniGrid("gridStavke");
             naslovLabel.Content = "Stavke";
             PrikaziStavke();
@@ -1146,7 +1192,7 @@ namespace WpfApp1
         private void btnIzmjeniStavkuSpremi_Click(object sender, RoutedEventArgs e)
         {
             PrikazSpremnici odabranSpremnik = new PrikazSpremnici();
-            odabranSpremnik = (PrikazSpremnici)cmbSpremniciOdabraneProstorije.SelectedItem;
+            odabranSpremnik = (PrikazSpremnici)cmbDopusteniSpremniciZaStavkuModify.SelectedItem;
 
             List<PrikazOznaka> selektiraneOznake = new List<PrikazOznaka>();
 

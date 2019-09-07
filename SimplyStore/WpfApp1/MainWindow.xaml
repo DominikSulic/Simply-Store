@@ -813,6 +813,8 @@
                 <Rectangle></Rectangle>
                 <ScrollViewer>
                     <StackPanel>
+                        <ListBox x:Name="lbPocetneOznakeStavkeHidden" Visibility="Collapsed"></ListBox>
+                        
                         <Label Content="Naziv stavke" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="24" Foreground="{DynamicResource labelsColor}"/>
                         <TextBox x:Name="txbIzmjeniStavkuNoviNaziv" HorizontalAlignment="Center" Height="23" Text="" VerticalAlignment="Top" Width="120"/>
                         
@@ -834,7 +836,8 @@
                         <TextBox x:Name="txbIzmjeniStavkuSpremnikID" HorizontalAlignment="Center" Height="23"  TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Visibility="Collapsed"/>
 
                         <Label Content="Spremnik" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="{DynamicResource labelsColor}"/>
-                        <ComboBox x:Name="cmbSpremniciOdabraneProstorije" HorizontalAlignment="Center" VerticalAlignment="Top" Width="282" Margin="176,0"/>
+                        <ComboBox x:Name="cmbDopusteniSpremniciZaStavkuModify" HorizontalAlignment="Center" VerticalAlignment="Top" Width="282" Margin="176,0"/>
+                        <ComboBox x:Name="cmbDopusteniSpremniciZaStavkuModifyHidden" Visibility="Collapsed"/>
 
                         <Grid Height="40" HorizontalAlignment="Center" Width="282" Margin="176,0" >
                             <Grid.ColumnDefinitions>
@@ -927,7 +930,6 @@
                 </Grid.ColumnDefinitions>
 
                     <Button Grid.Row="0" Grid.Column="3" Name="btnkreirajPDFDnevnika" Click="btnkreirajPDFDnevnika_Click" VerticalAlignment="Center" HorizontalAlignment="Center" RenderTransformOrigin="1,0.5">
-                         
                         <Button.Template>
                             <ControlTemplate>
                                  <Image Source="/images/print.png" Stretch="Uniform" MaxWidth="40" MaxHeight="40" MinWidth="25"/>
@@ -943,7 +945,7 @@
                         </Button.ToolTip>
                     </Button>
                     <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="0">
-                    <Label Content="Pretraži:"  Foreground="{DynamicResource labelsColor}" FontSize="15" HorizontalAlignment="Left"></Label>
+                    <Label Content="Pretraži:"  Foreground="{DynamicResource labelsColor}" FontSize="15" HorizontalAlignment="Left" VerticalAlignment="Center"></Label>
                     <TextBox  Height="20"  Width="100" HorizontalAlignment="Right" VerticalAlignment="Center" KeyDown="StatistikaSearchEnter" x:Name="StatistikaSearch"  Margin="10,0,10,0"></TextBox>
                     </StackPanel>
                         <DataGrid Grid.Row="1" Grid.ColumnSpan="5" x:Name="dgStatistika"></DataGrid>
