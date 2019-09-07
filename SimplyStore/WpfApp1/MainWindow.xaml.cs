@@ -1039,8 +1039,10 @@ namespace WpfApp1
 
                 txbIzmjeniStavkuNoviNaziv.Text = s.naziv;
                 txbIzmjeniStavkuNovoZauzece.Text = s.zauzeće.ToString();
+                txbIzmjeniStavkuStaroZauzeceHidden.Text= s.zauzeće.ToString();
                 txbStavkaID.Text = s.id_stavka.ToString();
                 txbIzmjeniStavkuSpremnikID.Text = s.spremnik_id.ToString();
+                txbIzmjeniStavkuStariSpremnikID.Text= s.spremnik_id.ToString();
                 txbIzmjeniStavkuStavkaIdSkriven.Text = Convert.ToString(s.id_stavka);
 
                 List<PrikazOznaka> sveOznake = new List<PrikazOznaka>();
@@ -1099,12 +1101,12 @@ namespace WpfApp1
 
         private void lbIzmjeniStavkuNjeneOznake_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            PrikazOznakaStavka odabranaOznaka = new PrikazOznakaStavka();
-            odabranaOznaka = (PrikazOznakaStavka)lbIzmjeniStavkuNjeneOznake.SelectedItem;
+            PrikazOznaka odabranaOznaka = new PrikazOznaka();
+            odabranaOznaka = (PrikazOznaka)lbIzmjeniStavkuNjeneOznake.SelectedItem;
             if (odabranaOznaka != null)
             {
                 int idStavke = Convert.ToInt32(txbIzmjeniStavkuStavkaIdSkriven.Text);
-                PrikazOznakaStavka.obrisiStavkuOznaku(odabranaOznaka.idStavka, odabranaOznaka.idOznaka);
+                PrikazOznakaStavka.obrisiStavkuOznaku(idStavke, odabranaOznaka.id_oznaka);
                 osvjeziStavkineOznake();
                 dohvatiIspravneSpremnike();
 
@@ -1144,6 +1146,13 @@ namespace WpfApp1
         private void dohvatiIspravneSpremnike()
         {
             List<PrikazSpremnici> dopusteniSpremnici = PrikazStavke.dohvatiDopusteneSpremnikeOznake(lbIzmjeniStavkuNjeneOznake.Items.Cast<PrikazOznaka>().ToList());
+            foreach(PrikazSpremnici item in dopusteniSpremnici)
+            {
+                if (item.idSpremnika == Convert.ToInt32(txbIzmjeniStavkuStariSpremnikID.Text))
+                {
+                    item.zauzece = item.zauzece - Convert.ToDouble(txbIzmjeniStavkuStaroZauzeceHidden.Text);
+                }
+            }
             cmbDopusteniSpremniciZaStavkuModify.ItemsSource = dopusteniSpremnici;
             cmbDopusteniSpremniciZaStavkuModifyHidden.ItemsSource = dopusteniSpremnici;
         }
@@ -1179,10 +1188,10 @@ namespace WpfApp1
         private void btnIzmjeniStavkuOdustani_Click(object sender, RoutedEventArgs e)
         {
             PrikazOznakaStavka.obrisiSveOznakeStavke(Convert.ToInt32(txbStavkaID.Text));
-            List<PrikazOznakaStavka> stareOznake = lbPocetneOznakeStavkeHidden.Items.Cast<PrikazOznakaStavka>().ToList();
-            foreach(PrikazOznakaStavka item in stareOznake)
+            List<PrikazOznaka> stareOznake = lbPocetneOznakeStavkeHidden.Items.Cast<PrikazOznaka>().ToList();
+            foreach(PrikazOznaka item in stareOznake)
             {
-                PrikazOznakaStavka.dodajStavkuOznaku(Convert.ToInt32(txbStavkaID.Text), item.idOznaka);
+                PrikazOznakaStavka.dodajStavkuOznaku(Convert.ToInt32(txbStavkaID.Text), item.id_oznaka);
             }
             promjeniGrid("gridStavke");
             naslovLabel.Content = "Stavke";

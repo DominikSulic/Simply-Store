@@ -827,13 +827,16 @@
                         <ListBox x:Name="lbIzmjeniStavkuNjeneOznake" HorizontalAlignment="Center" VerticalAlignment="Center" Width="210" Height="66"  SelectionMode="Multiple" SelectionChanged="lbIzmjeniStavkuNjeneOznake_SelectionChanged"/>
 
                         <Label Content="Zauzima (L/Kg)" HorizontalAlignment="Center"  FontSize="24" Foreground="{DynamicResource labelsColor}"/>
-                        <TextBox x:Name="txbIzmjeniStavkuNovoZauzece" HorizontalAlignment="Center" Height="23"  Text="" VerticalAlignment="Top" Width="120" Grid.Column="0" />
+                        <TextBox x:Name="txbIzmjeniStavkuNovoZauzece" HorizontalAlignment="Center" Height="23"  Text="" VerticalAlignment="Top" Width="120" Grid.Column="0" KeyUp="txbIzmjeniStavkuNovoZauzece_KeyUp" />
+                        
                         
                         <Label Content="Datum isteka" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="24" Foreground="{DynamicResource labelsColor}"/>
                         <DatePicker x:Name="dpIzmjeniStavkuNoviIstekRoka"  FirstDayOfWeek="Monday" IsDropDownOpen="False" SelectedDateFormat="Short" Width="120" MinWidth="120" />
 
-                        <TextBox x:Name="txbStavkaID" HorizontalAlignment="Center" Height="23"  TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Visibility="Collapsed"/>
-                        <TextBox x:Name="txbIzmjeniStavkuSpremnikID" HorizontalAlignment="Center" Height="23"  TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Visibility="Collapsed"/>
+                        <TextBox x:Name="txbStavkaID" Visibility="Collapsed"/>
+                        <TextBox x:Name="txbIzmjeniStavkuSpremnikID" Visibility="Collapsed"/>
+                        <TextBox x:Name="txbIzmjeniStavkuStariSpremnikID" Visibility="Collapsed"></TextBox>
+                        <TextBox x:Name="txbIzmjeniStavkuStaroZauzeceHidden" Visibility="Collapsed"></TextBox>
 
                         <Label Content="Spremnik" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="{DynamicResource labelsColor}"/>
                         <ComboBox x:Name="cmbDopusteniSpremniciZaStavkuModify" HorizontalAlignment="Center" VerticalAlignment="Top" Width="282" Margin="176,0"/>
