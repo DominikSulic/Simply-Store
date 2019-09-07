@@ -1050,6 +1050,7 @@ namespace WpfApp1
                 List<PrikazOznakaStavka> oznakeZaOdabranuStavku = new List<PrikazOznakaStavka>();
                 oznakeZaOdabranuStavku.AddRange(PrikazOznakaStavka.dohvatiOznakeStavke(s.id_stavka));
                 lbIzmjeniStavkuNjeneOznake.ItemsSource = oznakeZaOdabranuStavku;
+                //HIDDEN LISTBOX=oznakeZaOdabranuStavku;
 
                 if (s.datum_roka.HasValue)
                 {
