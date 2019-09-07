@@ -851,7 +851,7 @@ namespace WpfApp1
             promjeniGrid("gridKreirajStavku");
             naslovLabel.Content = "Kreiraj stavku";
             txbStavkaNoviNaziv.Clear();
-            dpStavkaIstekRoka.SelectedDate = DateTime.Today;
+            dpStavkaIstekRoka.SelectedDate = null;
             txbZauzimaKreirajStavku.Clear();
 
 
@@ -1375,6 +1375,7 @@ namespace WpfApp1
                 }
                 dgStavke.ItemsSource = PrikazStavke.dohvatiStavke();
                 promjeniHeaderStavke();
+                lbOznakeStavke.Visibility = Visibility.Hidden;
             }
         }
         #endregion
