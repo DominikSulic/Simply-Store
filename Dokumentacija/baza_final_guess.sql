@@ -34,7 +34,7 @@ CREATE TABLE prostorija (
 
 CREATE TABLE spremnik(
     id_spremnik int primary key IDENTITY(1,1),
-    naziv_spremnika varchar(50) not null unique,
+    naziv_spremnika varchar(50) not null,
     datum_kreiranja datetime not null,
     zapremnina float not null,
     zauzeće float DEFAULT 0,

@@ -812,69 +812,48 @@
 
                 <Rectangle></Rectangle>
                 <ScrollViewer>
-                <StackPanel>
-
-                    <Grid Height="205" HorizontalAlignment="Center" Width="460" Margin="92,0,82,0" >
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="1*"/>
-                            <RowDefinition Height="1*"/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="21*"/>
-                            <ColumnDefinition Width="2*"/>
-                            <ColumnDefinition Width="23*"/>
-                        </Grid.ColumnDefinitions>
-
-                        <Label Content="Zauzima (L/Kg)" HorizontalAlignment="Center" Margin="2,49,40,0" VerticalAlignment="Top" FontSize="24" Foreground="{DynamicResource labelsColor}" Grid.Column="0" Grid.RowSpan="2"/>
-                        <TextBox x:Name="txbIzmjeniStavkuNovoZauzece" HorizontalAlignment="Center" Height="23"  Text="" VerticalAlignment="Top" Width="120" Grid.Column="0" Margin="20,96,70,0" Grid.RowSpan="2"/>
-
+                    <StackPanel>
+                        <Label Content="Naziv stavke" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="24" Foreground="{DynamicResource labelsColor}"/>
+                        <TextBox x:Name="txbIzmjeniStavkuNoviNaziv" HorizontalAlignment="Center" Height="23" Text="" VerticalAlignment="Top" Width="120"/>
+                        
                         <TextBox x:Name="txbIzmjeniStavkuStavkaIdSkriven" Visibility="Collapsed"></TextBox>
 
-                        <Label Content="Oznake" HorizontalAlignment="Left" Margin="70,-8,0,0" VerticalAlignment="Top" FontSize="24" Foreground="{DynamicResource labelsColor}" Grid.Column="2" MinWidth="89" />
-                        <ListBox x:Name="lbIzmjeniStavkuOznake" HorizontalAlignment="Left" VerticalAlignment="Top" Width="210" Height="66"  SelectionMode="Multiple" Margin="10,31,0,0" Grid.Column="2" SelectionChanged="lbIzmjeniStavkuOznake_SelectionChanged"/>
+                        <Label Content="Oznake koje zelite dodati" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="24" Foreground="{DynamicResource labelsColor}" />
+                        <ListBox x:Name="lbIzmjeniStavkuOznake"  VerticalAlignment="Top" Width="210" Height="66"  SelectionMode="Multiple" SelectionChanged="lbIzmjeniStavkuOznake_SelectionChanged"/>
 
-                        <Label Content="Oznake stavke" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" Foreground="{DynamicResource labelsColor}" MinWidth="89" Margin="35,86,33,77" Grid.Column="2" Grid.RowSpan="2" />
-                        <ListBox x:Name="lbIzmjeniStavkuNjeneOznake" HorizontalAlignment="Center" VerticalAlignment="Center" Width="210" Height="66"  SelectionMode="Multiple" SelectionChanged="lbIzmjeniStavkuNjeneOznake_SelectionChanged" Grid.Column="2" Margin="10,21,10,16" Grid.Row="1" />
+                        <Label Content="Oznake koje zelite ukloniti" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" Foreground="{DynamicResource labelsColor}"  />
+                        <ListBox x:Name="lbIzmjeniStavkuNjeneOznake" HorizontalAlignment="Center" VerticalAlignment="Center" Width="210" Height="66"  SelectionMode="Multiple" SelectionChanged="lbIzmjeniStavkuNjeneOznake_SelectionChanged"/>
 
+                        <Label Content="Zauzima (L/Kg)" HorizontalAlignment="Center"  FontSize="24" Foreground="{DynamicResource labelsColor}"/>
+                        <TextBox x:Name="txbIzmjeniStavkuNovoZauzece" HorizontalAlignment="Center" Height="23"  Text="" VerticalAlignment="Top" Width="120" Grid.Column="0" />
+                        
+                        <Label Content="Datum isteka" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="24" Foreground="{DynamicResource labelsColor}"/>
+                        <DatePicker x:Name="dpIzmjeniStavkuNoviIstekRoka"  FirstDayOfWeek="Monday" IsDropDownOpen="False" SelectedDateFormat="Short" Width="120" MinWidth="120" />
 
-                        <StackPanel Grid.Row="1" Grid.ColumnSpan="3"/>
+                        <TextBox x:Name="txbStavkaID" HorizontalAlignment="Center" Height="23"  TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Visibility="Collapsed"/>
+                        <TextBox x:Name="txbIzmjeniStavkuSpremnikID" HorizontalAlignment="Center" Height="23"  TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Visibility="Collapsed"/>
 
-                        <Label Content="Datum isteka" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="24" Foreground="{DynamicResource labelsColor}" Margin="10,21,51,0" Grid.Row="1"/>
-                        <DatePicker x:Name="dpIzmjeniStavkuNoviIstekRoka"  FirstDayOfWeek="Monday" IsDropDownOpen="False" SelectedDateFormat="Short" Width="120" MinWidth="120" Margin="31,58,59,10" Grid.Row="1" />
+                        <Label Content="Spremnik" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="{DynamicResource labelsColor}"/>
+                        <ComboBox x:Name="cmbSpremniciOdabraneProstorije" HorizontalAlignment="Center" VerticalAlignment="Top" Width="282" Margin="176,0"/>
 
-                        <TextBox x:Name="txbStavkaID" HorizontalAlignment="Center" Height="23"  TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Visibility="Collapsed" Margin="55,0,35,0"/>
-                        <TextBox x:Name="txbIzmjeniStavkuSpremnikID" HorizontalAlignment="Center" Height="23"  TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Visibility="Collapsed" Margin="55,0,35,0"/>
-                        <TextBox x:Name="txbIzmjeniStavkuNoviNaziv" HorizontalAlignment="Center" Height="23" Text="" VerticalAlignment="Top" Width="120" Margin="20,28,70,0"/>
-                        <Label Content="Naziv stavke" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="24" Foreground="{DynamicResource labelsColor}" Margin="10,-8,59,0"/>
-
-                    </Grid>
-
-                    <Label Content="Prostorija" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="{DynamicResource labelsColor}"/>
-                    <ComboBox x:Name="cmbProstorijeIzmjenaStavke" HorizontalAlignment="Center" VerticalAlignment="Top" Width="282" Margin="176,0" SelectionChanged="CmbProstorijeIzmjenaStavke_SelectionChanged"/>
-
-                    <Label Content="Spremnik" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="{DynamicResource labelsColor}"/>
-                    <ComboBox x:Name="cmbSpremniciOdabraneProstorije" HorizontalAlignment="Center" VerticalAlignment="Top" Width="282" Margin="176,0"/>
-
-                    <Grid Height="40" HorizontalAlignment="Center" Width="282" Margin="176,0" >
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="0.5*"/>
-                            <ColumnDefinition Width="0.5*"/>
-                        </Grid.ColumnDefinitions>
+                        <Grid Height="40" HorizontalAlignment="Center" Width="282" Margin="176,0" >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="0.5*"/>
+                                <ColumnDefinition Width="0.5*"/>
+                            </Grid.ColumnDefinitions>
                             <Button x:Name="btnIzmjeniStavkuSpremi"  Content="Izmjeni" Width="100" VerticalAlignment="Top" HorizontalAlignment="Center" Click="btnIzmjeniStavkuSpremi_Click" Margin="31,10,10,0" Style="{DynamicResource gumbi}">
-                            <Button.ToolTip>
-                                <ToolTip>
-                                    <StackPanel>
-                                        <TextBlock FontWeight="Bold">Izmjeni stavku</TextBlock>
-                                        <TextBlock>Mijenja podatke u bazi podataka na temelju vaših izmjena.</TextBlock>
-                                    </StackPanel>
-                                </ToolTip>
-                            </Button.ToolTip>
-                        </Button>
+                                <Button.ToolTip>
+                                    <ToolTip>
+                                        <StackPanel>
+                                            <TextBlock FontWeight="Bold">Izmjeni stavku</TextBlock>
+                                            <TextBlock>Mijenja podatke u bazi podataka na temelju vaših izmjena.</TextBlock>
+                                        </StackPanel>
+                                    </ToolTip>
+                                </Button.ToolTip>
+                            </Button>
                             <Button x:Name="btnIzmjeniStavkuOdustani"  Content="Odustani" VerticalAlignment="Top" Click="btnIzmjeniStavkuOdustani_Click" Margin="10,10,0,0" Grid.Column="1" Width="95" HorizontalAlignment="Left" IsCancel="True" Style="{DynamicResource gumbi}" Background="#b54141"/>
-                    </Grid>
-
-
-                </StackPanel>
+                        </Grid>
+                    </StackPanel>
                 </ScrollViewer>
             </Grid>
 

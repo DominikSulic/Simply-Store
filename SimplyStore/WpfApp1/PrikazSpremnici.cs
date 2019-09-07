@@ -249,17 +249,17 @@ namespace WpfApp1
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
-                SqlCommand command1 = new SqlCommand(upit1, connection);
-                SqlCommand command2 = new SqlCommand(upit2, connection);
-                popunjenost[0] = (double)command1.ExecuteScalar(); //sprema zapremninu spremnika na poziciju 0
-                object popunjenost1 = command2.ExecuteScalar();
-                if (popunjenost1 == System.DBNull.Value)
+                SqlCommand zapremnina = new SqlCommand(upit1, connection);
+                SqlCommand zauzece = new SqlCommand(upit2, connection);
+                popunjenost[0] = (double)zapremnina.ExecuteScalar(); //sprema zapremninu spremnika na poziciju 0
+                object zauzece1 = zauzece.ExecuteScalar();
+                if (zauzece1 == System.DBNull.Value)
                 {
                     popunjenost[1] = 0;
                 }
                 else
                 {
-                    popunjenost[1] = Convert.ToDouble(popunjenost1);
+                    popunjenost[1] = Convert.ToDouble(zauzece1);
                 }
                  //sprema ukupno zauzeće spremnika na poziciju 1
                 connection.Close();
