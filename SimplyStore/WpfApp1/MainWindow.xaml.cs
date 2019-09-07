@@ -1204,39 +1204,59 @@ namespace WpfApp1
 
         private void btnIzmjeniStavkuSpremi_Click(object sender, RoutedEventArgs e)
         {
-            PrikazSpremnici odabranSpremnik = new PrikazSpremnici();
-            odabranSpremnik = (PrikazSpremnici)cmbDopusteniSpremniciZaStavkuModify.SelectedItem;
-
-
-            double zauzima = Convert.ToDouble(txbIzmjeniStavkuNovoZauzece.Text);
-
-            int idSpremnika;
-            if (odabranSpremnik == null)
+            if(txbIzmjeniStavkuNoviNaziv.Text!="" && ((from c in txbIzmjeniStavkuNoviNaziv.Text where c != ' ' select c).Count() != 0))
             {
-                idSpremnika = int.Parse(txbIzmjeniStavkuSpremnikID.Text);
-            }
-            else
-            {
-                idSpremnika = odabranSpremnik.idSpremnika;
-            }
-
-            PrikazSpremnici.izmjeniZauzeceSpremnika(int.Parse(txbIzmjeniStavkuSpremnikID.Text), zauzima*-1); //tu se oduzima iz postojećeg
-            PrikazSpremnici.izmjeniZauzeceSpremnika(idSpremnika, zauzima); //tu se dodaje novom(koji moze bit i stari zapravo)
-
-            //sljedeca 2 ifa se uvijek moraju izvrsit za uspjesni unos
-                if (dpStavkaIstekRoka.SelectedDate != null)
+                double zauzima;
+                if(double.TryParse(txbIzmjeniStavkuNovoZauzece.Text,out zauzima) && zauzima>0)
                 {
-                    PrikazStavke.izmjeniStavku(Convert.ToInt32(txbStavkaID.Text), txbIzmjeniStavkuNoviNaziv.Text, idSpremnika, dpIzmjeniStavkuNoviIstekRoka.SelectedDate.Value.Date, zauzima, globalniKorisnikID);
+                    PrikazSpremnici odabranSpremnik = (PrikazSpremnici)cmbDopusteniSpremniciZaStavkuModify.SelectedItem;
+                    int idSpremnika;
+                    DateTime? datum;
+                    if (odabranSpremnik == null)//provjerava dal je selektiran novi spremnik,ako ne onda se sprema u stari
+                    {
+                        idSpremnika = int.Parse(txbIzmjeniStavkuSpremnikID.Text);
+
+                    }
+                    else
+                    {
+                        idSpremnika = odabranSpremnik.idSpremnika;
+                    }
+
+                    if (dpStavkaIstekRoka.SelectedDate == null)//ako je selektiran datum postavlja se novi,ako nije onda se postavlja na NULL (tu bi zapravo trebali stavit da se postavlja na staru vrijednost/ne mijenja se)
+                    {
+                        datum = null;
+                    }
+                    else
+                    {
+                        datum = dpIzmjeniStavkuNoviIstekRoka.SelectedDate.Value.Date;
+                    }
+
+                    if (PrikazOznakaStavka.provjeriStavkuOznakuUnos(idSpremnika, lbIzmjeniStavkuNjeneOznake.Items.Cast<PrikazOznaka>().ToList()))//svejedno se provjerava da spremnik podržava oznake,trebalo bi uvijek true bit
+                    {
+                        double zauzimaStaro = Convert.ToDouble(txbIzmjeniStavkuStaroZauzeceHidden.Text);
+                        PrikazSpremnici.izmjeniZauzeceSpremnika(int.Parse(txbIzmjeniStavkuSpremnikID.Text), zauzimaStaro * -1); //tu se oduzima iz postojećeg
+                        PrikazSpremnici.izmjeniZauzeceSpremnika(idSpremnika, zauzima); //tu se dodaje novom(koji moze bit i stari zapravo)
+                        PrikazStavke.izmjeniStavku(Convert.ToInt32(txbStavkaID.Text), txbIzmjeniStavkuNoviNaziv.Text, idSpremnika, datum, zauzima, globalniKorisnikID);
+                        naslovLabel.Content = "Stavke";
+                        PrikaziStavke();
+                        promjeniGrid("gridStavke");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Trenutni spremnik ne podržava odabrane oznake");
+                    }
+
                 }
                 else
                 {
-                    DateTime? datum = null;
-                    PrikazStavke.izmjeniStavku(Convert.ToInt32(txbStavkaID.Text), txbIzmjeniStavkuNoviNaziv.Text, idSpremnika, datum, zauzima, globalniKorisnikID);
+                    MessageBox.Show("Kolicina mora biti broj i veći od 0");
                 }
+            }
+            else
+            {
+                MessageBox.Show("Naziv stavke ne može biti prazan");
+            }
 
-            naslovLabel.Content = "Stavke";
-            PrikaziStavke();
-            promjeniGrid("gridStavke");
         }
 
         private void BtnkreirajPDFStavke_Click(object sender, RoutedEventArgs e)

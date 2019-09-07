@@ -293,7 +293,7 @@ namespace WpfApp1
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
-                string upit = "UPDATE spremnik SET zauzeće=zauzeće+"+promjena+" WHERE spremnik_id=" + idSpremnika;
+                string upit = "UPDATE spremnik SET zauzeće=zauzeće+"+promjena+" WHERE id_spremnik=" + idSpremnika;
                 SqlCommand command = new SqlCommand(upit, connection);
                 command.ExecuteNonQuery();
                 connection.Close();
