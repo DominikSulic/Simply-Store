@@ -325,7 +325,7 @@ namespace WpfApp1
             return sveStavke;
         }
 
-        public static bool promjeniKolicinuStavke(int promjeniKolicinu, int stavkaID)//NEGDJE U OVOJ FUNKCIJI NE ŠTIMA NEŠ,ZAUZEĆE SVEJEDNO ODE U NEGATIVNO AKO SMANJIS ZA VISE
+        public static bool promjeniKolicinuStavke(int promjeniKolicinu, int stavkaID)
         {
             int? idSpremnika;
             double promjena;
@@ -340,9 +340,9 @@ namespace WpfApp1
                 }
                 else
                 {
-                    if (query.zauzeće + promjeniKolicinu < 0)//VJV OVDE NES NE STIMA
+                    if (query.zauzeće + promjeniKolicinu < 0)
                     {
-                        promjena = ((query.zauzeće + promjeniKolicinu) * -1) + promjeniKolicinu;//MORE LIKE TU
+                        promjena = ((query.zauzeće + promjeniKolicinu) * -1) + promjeniKolicinu;
                         query.zauzeće += promjena;
                     }
                     else

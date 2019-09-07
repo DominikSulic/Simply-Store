@@ -234,7 +234,7 @@ namespace WpfApp1
                 }
                 connection.Close();
             }
-            }
+         }
 
         public override string ToString()
         {
@@ -286,5 +286,19 @@ namespace WpfApp1
             return sviSpremnici;
 
         }
+
+        public static void izmjeniZauzeceSpremnika(int idSpremnika, double promjena)
+        {
+            string connectionString = @"Data Source=31.147.204.119\PISERVER,1433; Initial Catalog=19023_DB; User=19023_User; Password='z#X1iD;M'";
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                string upit = "UPDATE spremnik SET zauzeće=zauzeće+"+promjena+" WHERE spremnik_id=" + idSpremnika;
+                SqlCommand command = new SqlCommand(upit, connection);
+                command.ExecuteNonQuery();
+                connection.Close();
+            }
+
+        } 
     }
 }

@@ -1045,14 +1045,18 @@ namespace WpfApp1
                 txbIzmjeniStavkuStariSpremnikID.Text= s.spremnik_id.ToString();
                 txbIzmjeniStavkuStavkaIdSkriven.Text = Convert.ToString(s.id_stavka);
 
-                List<PrikazOznaka> sveOznake = new List<PrikazOznaka>();
-                sveOznake.AddRange(PrikazOznaka.dohvatiOznake());
-                lbIzmjeniStavkuOznake.ItemsSource = sveOznake;
+                int idStavke = Convert.ToInt32(txbIzmjeniStavkuStavkaIdSkriven.Text);
+
 
                 List<PrikazOznaka> oznakeZaOdabranuStavku = new List<PrikazOznaka>();
-                oznakeZaOdabranuStavku = PrikazOznaka.dohvatiOznakePripadajuStavci(Convert.ToInt32(txbStavkaID.Text));
+                oznakeZaOdabranuStavku = PrikazOznaka.dohvatiOznakePripadajuStavci(idStavke);
                 lbIzmjeniStavkuNjeneOznake.ItemsSource = oznakeZaOdabranuStavku;
                 lbPocetneOznakeStavkeHidden.ItemsSource = oznakeZaOdabranuStavku;
+
+                List<PrikazOznaka> oznakeNePripadajuStavci = new List<PrikazOznaka>();
+                oznakeNePripadajuStavci = PrikazOznaka.dohvatiOznakeNePripadajuStavci(idStavke);
+                lbIzmjeniStavkuOznake.ItemsSource = oznakeNePripadajuStavci;
+
 
                 if (s.datum_roka.HasValue)
                 {
@@ -1203,15 +1207,8 @@ namespace WpfApp1
             PrikazSpremnici odabranSpremnik = new PrikazSpremnici();
             odabranSpremnik = (PrikazSpremnici)cmbDopusteniSpremniciZaStavkuModify.SelectedItem;
 
-            List<PrikazOznaka> selektiraneOznake = new List<PrikazOznaka>();
 
             double zauzima = Convert.ToDouble(txbIzmjeniStavkuNovoZauzece.Text);
-
-            foreach (var item in lbIzmjeniStavkuNjeneOznake.SelectedItems)
-            {
-                PrikazOznaka oznake = (PrikazOznaka)item;
-                selektiraneOznake.Add(oznake);
-            }
 
             int idSpremnika;
             if (odabranSpremnik == null)
@@ -1222,15 +1219,20 @@ namespace WpfApp1
             {
                 idSpremnika = odabranSpremnik.idSpremnika;
             }
-            if (dpStavkaIstekRoka.SelectedDate != null)
-            {
-                PrikazStavke.izmjeniStavku(Convert.ToInt32(txbStavkaID.Text), txbIzmjeniStavkuNoviNaziv.Text, idSpremnika, dpIzmjeniStavkuNoviIstekRoka.SelectedDate.Value.Date, zauzima, globalniKorisnikID);
-            }
-            else
-            {
-                DateTime? datum = null;
-                PrikazStavke.izmjeniStavku(Convert.ToInt32(txbStavkaID.Text), txbIzmjeniStavkuNoviNaziv.Text, idSpremnika, datum, zauzima, globalniKorisnikID);
-            }
+
+            PrikazSpremnici.izmjeniZauzeceSpremnika(int.Parse(txbIzmjeniStavkuSpremnikID.Text), zauzima*-1); //tu se oduzima iz postojećeg
+            PrikazSpremnici.izmjeniZauzeceSpremnika(idSpremnika, zauzima); //tu se dodaje novom(koji moze bit i stari zapravo)
+
+            //sljedeca 2 ifa se uvijek moraju izvrsit za uspjesni unos
+                if (dpStavkaIstekRoka.SelectedDate != null)
+                {
+                    PrikazStavke.izmjeniStavku(Convert.ToInt32(txbStavkaID.Text), txbIzmjeniStavkuNoviNaziv.Text, idSpremnika, dpIzmjeniStavkuNoviIstekRoka.SelectedDate.Value.Date, zauzima, globalniKorisnikID);
+                }
+                else
+                {
+                    DateTime? datum = null;
+                    PrikazStavke.izmjeniStavku(Convert.ToInt32(txbStavkaID.Text), txbIzmjeniStavkuNoviNaziv.Text, idSpremnika, datum, zauzima, globalniKorisnikID);
+                }
 
             naslovLabel.Content = "Stavke";
             PrikaziStavke();
