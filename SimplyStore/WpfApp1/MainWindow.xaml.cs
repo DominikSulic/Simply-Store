@@ -116,6 +116,7 @@ namespace WpfApp1
             dgSpremnici.ItemsSource = PrikazSpremnici.dohvatiSpremnike();
             promjeniHeaderSpremnici();
             dgSpremnici.Columns[4].Visibility = Visibility.Hidden;
+            lbOznakeStavke.Visibility = Visibility.Hidden;
         }
 
         private void promjeniHeaderSpremnici()
@@ -134,7 +135,6 @@ namespace WpfApp1
             cmbSpremnici.ItemsSource = PrikazSpremnici.dohvatiSpremnike();
             dgStavke.ItemsSource = PrikazStavke.dohvatiStavke();
             promjeniHeaderStavke();
-            lbOznakeStavke.Visibility = Visibility.Hidden;
         }
 
         private void promjeniHeaderStavke()
