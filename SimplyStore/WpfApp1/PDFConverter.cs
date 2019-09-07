@@ -70,6 +70,7 @@ namespace WpfApp1
                         pdfDocument.Add(pdfTable);
                         pdfDocument.Close();
                         fs.Close();
+                        MessageBox.Show("Podaci su spremljeni u .pdf format!");
                     }
                 }
                 catch (IOException ex)
@@ -77,14 +78,14 @@ namespace WpfApp1
                     MessageBox.Show("Datoteka u koju želite zapisati podatke je već otvorena!");
                 }
             }
-            MessageBox.Show("Podaci su spremljeni u .pdf format!");
+
         }
 
         public static void ExportPDFSpremnici()
         {
             Document pdfDocument = new Document(PageSize.A4, 10f, 10f, 10f, 0f);
 
-            PdfPTable pdfTable = new PdfPTable(7);
+            PdfPTable pdfTable = new PdfPTable(6);
             pdfTable.DefaultCell.Padding = 3;
             pdfTable.WidthPercentage = 100;
             pdfTable.HorizontalAlignment = Element.ALIGN_LEFT;
@@ -94,7 +95,7 @@ namespace WpfApp1
             Font HeaderFont = new Font(Font.FontFamily.TIMES_ROMAN, 18, Font.BOLD);
 
             PdfPCell cell = new PdfPCell(new Phrase("Spremnici, " + DateTime.Now.ToString(), HeaderFont));
-            cell.Colspan = 7;
+            cell.Colspan = 6;
             cell.HorizontalAlignment = Element.ALIGN_CENTER;
             pdfTable.AddCell(cell);
 
@@ -104,7 +105,6 @@ namespace WpfApp1
             pdfTable.AddCell(new Phrase("Zapremnina"));
             pdfTable.AddCell(new Phrase("Opis"));
             pdfTable.AddCell(new Phrase("Naziv prostorije"));
-            pdfTable.AddCell(new Phrase("Kvarljivost"));
 
             List<PrikazSpremnici> lista = PrikazSpremnici.dohvatiSpremnike();
 
@@ -139,6 +139,7 @@ namespace WpfApp1
                         pdfDocument.Add(pdfTable);
                         pdfDocument.Close();
                         fs.Close();
+                        MessageBox.Show("Podaci su spremljeni u .pdf format!");
                     }
                 }
                 catch (IOException ex)
@@ -146,7 +147,6 @@ namespace WpfApp1
                     MessageBox.Show("Datoteka u koju želite zapisati podatke je već otvorena!");
                 }
             }
-            MessageBox.Show("Podaci su spremljeni u .pdf format!");
         }
 
         public static void ExportPDFStavke()
@@ -209,6 +209,7 @@ namespace WpfApp1
                         pdfDocument.Add(pdfTable);
                         pdfDocument.Close();
                         fs.Close();
+                        MessageBox.Show("Podaci su spremljeni u .pdf format!");
                     }
                 }
                 catch (IOException ex)
@@ -216,7 +217,6 @@ namespace WpfApp1
                     MessageBox.Show("Datoteka u koju želite zapisati podatke je već otvorena!");
                 }
             }
-            MessageBox.Show("Podaci su spremljeni u .pdf format!");
         }
 
         public static void ExportPDFDnevnik()
@@ -279,6 +279,7 @@ namespace WpfApp1
                         pdfDocument.Add(pdfTable);
                         pdfDocument.Close();
                         fs.Close();
+                        MessageBox.Show("Podaci su spremljeni u .pdf format!");
                     }
                 }
                 catch (IOException ex)
@@ -286,7 +287,6 @@ namespace WpfApp1
                     MessageBox.Show("Datoteka u koju želite zapisati podatke je već otvorena!");
                 }
             }
-            MessageBox.Show("Podaci su spremljeni u .pdf format!");
         }
 
         public static void ExportPDFRokoviPredIstekom(int brojDana)
@@ -349,6 +349,7 @@ namespace WpfApp1
                         pdfDocument.Add(pdfTable);
                         pdfDocument.Close();
                         fs.Close();
+                        MessageBox.Show("Podaci su spremljeni u .pdf format!");
                     }
                 }
                 catch (IOException ex)
@@ -356,7 +357,6 @@ namespace WpfApp1
                     MessageBox.Show("Datoteka u koju želite zapisati podatke je već otvorena!");
                 }
             }
-            MessageBox.Show("Podaci su spremljeni u .pdf format!");
         }
 
         public static void ExportPDFIsteceniRokovi()
@@ -419,6 +419,7 @@ namespace WpfApp1
                         pdfDocument.Add(pdfTable);
                         pdfDocument.Close();
                         fs.Close();
+                        MessageBox.Show("Podaci su spremljeni u .pdf format!");
                     }
                 }
                 catch (IOException ex)
@@ -426,7 +427,6 @@ namespace WpfApp1
                     MessageBox.Show("Datoteka u koju želite zapisati podatke je već otvorena!");
                 }
             }
-            MessageBox.Show("Podaci su spremljeni u .pdf format!");
         }
     }
 }

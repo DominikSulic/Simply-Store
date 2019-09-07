@@ -130,7 +130,8 @@ namespace WpfApp1
                 datum_kreiranja = DateTime.Now,
                 datum_roka = datumIsteka,
                 zauzeće = zauzima,
-                spremnik_id = idSpremnika
+                spremnik_id = idSpremnika,
+                korisnik_id = korisnikID
             };
 
             dnevnik noviDnevnik = new dnevnik
@@ -181,25 +182,19 @@ namespace WpfApp1
                 stavka_id = id
             };
 
+            
             using (var db = new SSDB())
             {
                 var query = (from stv in db.stavka where stv.id_stavka == id select stv).First();
                 query.naziv = noviNaziv;
                 query.spremnik_id = idSpremnika;
-                query.datum_roka = datumIsteka;
+                if (datumIsteka != null)
+                {
+                    query.datum_roka = datumIsteka;
+                }
                 query.zauzeće = zauzima;
                 db.dnevnik.Add(noviDnevnik);
                 db.SaveChanges();
-            }
-
-            string connectionString = @"Data Source=31.147.204.119\PISERVER,1433; Initial Catalog=19023_DB; User=19023_User; Password='z#X1iD;M'";
-            string upit = "UPDATE spremnik SET zauzeće=zauzeće+" + novaKolicina + " WHERE id_spremnik=" + idSpremnika;
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                connection.Open();
-                SqlCommand command = new SqlCommand(upit, connection);
-                command.ExecuteNonQuery();
-                connection.Close();
             }
         }
 

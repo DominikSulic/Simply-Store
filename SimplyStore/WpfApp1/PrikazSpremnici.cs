@@ -298,7 +298,6 @@ namespace WpfApp1
                 command.ExecuteNonQuery();
                 connection.Close();
             }
-
         } 
     }
 }
