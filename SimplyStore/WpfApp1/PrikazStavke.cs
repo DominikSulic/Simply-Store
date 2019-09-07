@@ -327,52 +327,65 @@ namespace WpfApp1
 
         public static bool promjeniKolicinuStavke(int promjeniKolicinu, int stavkaID)//NEGDJE U OVOJ FUNKCIJI NE ŠTIMA NEŠ,ZAUZEĆE SVEJEDNO ODE U NEGATIVNO AKO SMANJIS ZA VISE
         {
+            string connectionString = @"Data Source=31.147.204.119\PISERVER,1433; Initial Catalog=19023_DB; User=19023_User; Password='z#X1iD;M'";
             int? idSpremnika;
             double promjena;
             using (var db = new SSDB())
             {
                 var query = (from s in db.stavka where s.id_stavka == stavkaID select s).First();
                 idSpremnika = query.spremnik_id;
-                if (query.zauzeće+promjeniKolicinu<0)//VJV OVDE NES NE STIMA
-                {
-                    promjena = ((query.zauzeće + promjeniKolicinu) * -1)+promjeniKolicinu;//MORE LIKE TU
-                    query.zauzeće = promjena;
-                }
-                else
-                {
-                    query.zauzeće += promjeniKolicinu;
-                    promjena = promjeniKolicinu;
-                }
-                db.SaveChanges();
-            }
-            // U OVOM DJELU FUNKCIJE SE DIJELOM I PROVJERAVA(U UPITU2) DAL U SPREMNIK STANE ZELJENA PROMJENA, ALI SE PROVJERAVA PRE KASNO JER SE PROMJENA NA STAVCI VEC DESI ^ PA ONDA BI TREBALO 
-            //PROVJERU NAPRAVIT PRIJE PA RETURN FALSE AKO NE PREJDE(MESSAGE BOXEVI VEC NAMJESTENI)
-            string connectionString = @"Data Source=31.147.204.119\PISERVER,1433; Initial Catalog=19023_DB; User=19023_User; Password='z#X1iD;M'";
-            string upit = "UPDATE spremnik SET zauzeće=zauzeće+" + promjena + " WHERE id_spremnik=" + idSpremnika;
-            string upit2 = "SELECT zauzeće,zapremnina FROM spremnik where id_spremnik=" + idSpremnika;
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                connection.Open();
-                SqlCommand command2 = new SqlCommand(upit2, connection);
-                SqlDataReader reader = command2.ExecuteReader();
-                if (reader.Read())
-                {
-                    
-                    if (reader.GetDouble(1) > reader.GetDouble(0) + promjena)
-                    {
-                        reader.Close();
-                        SqlCommand command = new SqlCommand(upit, connection);
-                        command.ExecuteNonQuery();
-                        connection.Close();
-                        return true;
-                    }
-                    else { return false; }
-                }
-                else
+                var query2 = (from spre in db.spremnik where spre.id_spremnik == idSpremnika select spre).First();
+                if (query2.zauzeće + promjeniKolicinu > query2.zapremnina)
                 {
                     return false;
                 }
+                else
+                {
+                    if (query.zauzeće + promjeniKolicinu < 0)//VJV OVDE NES NE STIMA
+                    {
+                        promjena = ((query.zauzeće + promjeniKolicinu) * -1) + promjeniKolicinu;//MORE LIKE TU
+                        query.zauzeće = promjena;
+                    }
+                    else
+                    {
+                        query.zauzeće += promjeniKolicinu;
+                        promjena = promjeniKolicinu;
+                    }
+                    query2.zauzeće += promjena;
+                    
+                }
+               
+                db.SaveChanges();
+                return true;
             }
+            // U OVOM DJELU FUNKCIJE SE DIJELOM I PROVJERAVA(U UPITU2) DAL U SPREMNIK STANE ZELJENA PROMJENA, ALI SE PROVJERAVA PRE KASNO JER SE PROMJENA NA STAVCI VEC DESI ^ PA ONDA BI TREBALO 
+            //PROVJERU NAPRAVIT PRIJE PA RETURN FALSE AKO NE PREJDE(MESSAGE BOXEVI VEC NAMJESTENI)
+           
+            //string upit = "UPDATE spremnik SET zauzeće=zauzeće+" + promjena + " WHERE id_spremnik=" + idSpremnika;
+            //string upit2 = "SELECT zauzeće,zapremnina FROM spremnik where id_spremnik=" + idSpremnika;
+            //using (SqlConnection connection = new SqlConnection(connectionString))
+            //{
+            //    connection.Open();
+            //    SqlCommand command2 = new SqlCommand(upit2, connection);
+            //    SqlDataReader reader = command2.ExecuteReader();
+            //    if (reader.Read())
+            //    {
+                    
+            //        if (reader.GetDouble(1) > reader.GetDouble(0) + promjena)
+            //        {
+            //            reader.Close();
+            //            SqlCommand command = new SqlCommand(upit, connection);
+            //            command.ExecuteNonQuery();
+            //            connection.Close();
+            //            return true;
+            //        }
+            //        else { return false; }
+            //    }
+            //    else
+            //    {
+            //        return false;
+            //    }
+            //}
         }
 
         public static List<PrikazSpremnici> dohvatiDopusteneSpremnikeOznake(List<PrikazOznaka> odabraneOznake)

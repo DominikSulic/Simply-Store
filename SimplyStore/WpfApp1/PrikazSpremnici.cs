@@ -102,6 +102,7 @@ namespace WpfApp1
                     naziv_spremnika = naziv2,
                     datum_kreiranja = DateTime.Now,
                     zapremnina = zapremnina,
+                    zauzeće=0,
                     opis = opis,
                     prostorija_id = idProstorije,
                     korisnik_id = idKorisnika

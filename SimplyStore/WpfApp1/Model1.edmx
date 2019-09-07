@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="SSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="dnevnik">
           <Key>
             <PropertyRef Name="id_dnevnik" />
@@ -30,8 +30,8 @@
           </Key>
           <Property Name="id_oznaka" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="naziv" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="kvarljivost" Type="varchar" MaxLength="10" Nullable="false" />
-          <Property Name="aktivna" Type="varchar" MaxLength="1" />
+          <Property Name="kvarljivost" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="aktivna" Type="varchar" MaxLength="2" />
         </EntityType>
         <EntityType Name="prostorija">
           <Key>
@@ -53,6 +53,7 @@
           <Property Name="naziv_spremnika" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="datum_kreiranja" Type="datetime" Nullable="false" />
           <Property Name="zapremnina" Type="float" Nullable="false" />
+          <Property Name="zauzeće" Type="float" />
           <Property Name="opis" Type="varchar" MaxLength="5000" />
           <Property Name="korisnik_id" Type="int" />
           <Property Name="prostorija_id" Type="int" />
@@ -85,7 +86,17 @@
           <Property Name="stavka_id" Type="int" Nullable="false" />
           <Property Name="oznaka_id" Type="int" Nullable="false" />
         </EntityType>
-        <Association Name="FK__dnevnik__korisni__29E1370A">
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <Association Name="FK__dnevnik__korisni__28B808A7">
           <End Role="korisnik" Type="Self.korisnik" Multiplicity="0..1" />
           <End Role="dnevnik" Type="Self.dnevnik" Multiplicity="*" />
           <ReferentialConstraint>
@@ -97,7 +108,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__dnevnik__stavka___28ED12D1">
+        <Association Name="FK__dnevnik__stavka___27C3E46E">
           <End Role="stavka" Type="Self.stavka" Multiplicity="0..1" />
           <End Role="dnevnik" Type="Self.dnevnik" Multiplicity="*" />
           <ReferentialConstraint>
@@ -109,7 +120,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__prostorij__koris__1209AD79">
+        <Association Name="FK__prostorij__koris__0FEC5ADD">
           <End Role="korisnik" Type="Self.korisnik" Multiplicity="0..1" />
           <End Role="prostorija" Type="Self.prostorija" Multiplicity="*" />
           <ReferentialConstraint>
@@ -121,7 +132,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__spremnik___oznak__1E6F845E">
+        <Association Name="FK__spremnik___oznak__1D4655FB">
           <End Role="oznaka" Type="Self.oznaka" Multiplicity="1" />
           <End Role="spremnik_oznaka" Type="Self.spremnik_oznaka" Multiplicity="*" />
           <ReferentialConstraint>
@@ -133,7 +144,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__spremnik___sprem__1D7B6025">
+        <Association Name="FK__spremnik___sprem__1C5231C2">
           <End Role="spremnik" Type="Self.spremnik" Multiplicity="1" />
           <End Role="spremnik_oznaka" Type="Self.spremnik_oznaka" Multiplicity="*" />
           <ReferentialConstraint>
@@ -145,7 +156,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__spremnik__korisn__16CE6296">
+        <Association Name="FK__spremnik__korisn__15A53433">
           <End Role="korisnik" Type="Self.korisnik" Multiplicity="0..1" />
           <End Role="spremnik" Type="Self.spremnik" Multiplicity="*" />
           <ReferentialConstraint>
@@ -157,7 +168,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__spremnik__prosto__15DA3E5D">
+        <Association Name="FK__spremnik__prosto__14B10FFA">
           <End Role="prostorija" Type="Self.prostorija" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
@@ -171,7 +182,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__stavka__korisnik__22401542">
+        <Association Name="FK__stavka__korisnik__2116E6DF">
           <End Role="korisnik" Type="Self.korisnik" Multiplicity="0..1" />
           <End Role="stavka" Type="Self.stavka" Multiplicity="*" />
           <ReferentialConstraint>
@@ -183,7 +194,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__stavka__spremnik__214BF109">
+        <Association Name="FK__stavka__spremnik__2022C2A6">
           <End Role="spremnik" Type="Self.spremnik" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
@@ -197,7 +208,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__stavka_oz__oznak__2610A626">
+        <Association Name="FK__stavka_oz__oznak__24E777C3">
           <End Role="oznaka" Type="Self.oznaka" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -211,7 +222,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__stavka_oz__stavk__251C81ED">
+        <Association Name="FK__stavka_oz__stavk__23F3538A">
           <End Role="stavka" Type="Self.stavka" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -225,7 +236,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="DBModelStoreContainer">
+        <EntityContainer Name="SSModelStoreContainer">
           <EntitySet Name="dnevnik" EntityType="Self.dnevnik" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="korisnik" EntityType="Self.korisnik" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="oznaka" EntityType="Self.oznaka" Schema="dbo" store:Type="Tables" />
@@ -234,47 +245,48 @@
           <EntitySet Name="spremnik_oznaka" EntityType="Self.spremnik_oznaka" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="stavka" EntityType="Self.stavka" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="stavka_oznaka" EntityType="Self.stavka_oznaka" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__dnevnik__korisni__29E1370A" Association="Self.FK__dnevnik__korisni__29E1370A">
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__dnevnik__korisni__28B808A7" Association="Self.FK__dnevnik__korisni__28B808A7">
             <End Role="korisnik" EntitySet="korisnik" />
             <End Role="dnevnik" EntitySet="dnevnik" />
           </AssociationSet>
-          <AssociationSet Name="FK__dnevnik__stavka___28ED12D1" Association="Self.FK__dnevnik__stavka___28ED12D1">
+          <AssociationSet Name="FK__dnevnik__stavka___27C3E46E" Association="Self.FK__dnevnik__stavka___27C3E46E">
             <End Role="stavka" EntitySet="stavka" />
             <End Role="dnevnik" EntitySet="dnevnik" />
           </AssociationSet>
-          <AssociationSet Name="FK__prostorij__koris__1209AD79" Association="Self.FK__prostorij__koris__1209AD79">
+          <AssociationSet Name="FK__prostorij__koris__0FEC5ADD" Association="Self.FK__prostorij__koris__0FEC5ADD">
             <End Role="korisnik" EntitySet="korisnik" />
             <End Role="prostorija" EntitySet="prostorija" />
           </AssociationSet>
-          <AssociationSet Name="FK__spremnik___oznak__1E6F845E" Association="Self.FK__spremnik___oznak__1E6F845E">
+          <AssociationSet Name="FK__spremnik___oznak__1D4655FB" Association="Self.FK__spremnik___oznak__1D4655FB">
             <End Role="oznaka" EntitySet="oznaka" />
             <End Role="spremnik_oznaka" EntitySet="spremnik_oznaka" />
           </AssociationSet>
-          <AssociationSet Name="FK__spremnik___sprem__1D7B6025" Association="Self.FK__spremnik___sprem__1D7B6025">
+          <AssociationSet Name="FK__spremnik___sprem__1C5231C2" Association="Self.FK__spremnik___sprem__1C5231C2">
             <End Role="spremnik" EntitySet="spremnik" />
             <End Role="spremnik_oznaka" EntitySet="spremnik_oznaka" />
           </AssociationSet>
-          <AssociationSet Name="FK__spremnik__korisn__16CE6296" Association="Self.FK__spremnik__korisn__16CE6296">
+          <AssociationSet Name="FK__spremnik__korisn__15A53433" Association="Self.FK__spremnik__korisn__15A53433">
             <End Role="korisnik" EntitySet="korisnik" />
             <End Role="spremnik" EntitySet="spremnik" />
           </AssociationSet>
-          <AssociationSet Name="FK__spremnik__prosto__15DA3E5D" Association="Self.FK__spremnik__prosto__15DA3E5D">
+          <AssociationSet Name="FK__spremnik__prosto__14B10FFA" Association="Self.FK__spremnik__prosto__14B10FFA">
             <End Role="prostorija" EntitySet="prostorija" />
             <End Role="spremnik" EntitySet="spremnik" />
           </AssociationSet>
-          <AssociationSet Name="FK__stavka__korisnik__22401542" Association="Self.FK__stavka__korisnik__22401542">
+          <AssociationSet Name="FK__stavka__korisnik__2116E6DF" Association="Self.FK__stavka__korisnik__2116E6DF">
             <End Role="korisnik" EntitySet="korisnik" />
             <End Role="stavka" EntitySet="stavka" />
           </AssociationSet>
-          <AssociationSet Name="FK__stavka__spremnik__214BF109" Association="Self.FK__stavka__spremnik__214BF109">
+          <AssociationSet Name="FK__stavka__spremnik__2022C2A6" Association="Self.FK__stavka__spremnik__2022C2A6">
             <End Role="spremnik" EntitySet="spremnik" />
             <End Role="stavka" EntitySet="stavka" />
           </AssociationSet>
-          <AssociationSet Name="FK__stavka_oz__oznak__2610A626" Association="Self.FK__stavka_oz__oznak__2610A626">
+          <AssociationSet Name="FK__stavka_oz__oznak__24E777C3" Association="Self.FK__stavka_oz__oznak__24E777C3">
             <End Role="oznaka" EntitySet="oznaka" />
             <End Role="stavka_oznaka" EntitySet="stavka_oznaka" />
           </AssociationSet>
-          <AssociationSet Name="FK__stavka_oz__stavk__251C81ED" Association="Self.FK__stavka_oz__stavk__251C81ED">
+          <AssociationSet Name="FK__stavka_oz__stavk__23F3538A" Association="Self.FK__stavka_oz__stavk__23F3538A">
             <End Role="stavka" EntitySet="stavka" />
             <End Role="stavka_oznaka" EntitySet="stavka_oznaka" />
           </AssociationSet>
@@ -283,7 +295,7 @@
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="DBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="SSModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="dnevnik">
           <Key>
             <PropertyRef Name="id_dnevnik" />
@@ -294,8 +306,8 @@
           <Property Name="kolicina" Type="Double" Nullable="false" />
           <Property Name="stavka_id" Type="Int32" />
           <Property Name="korisnik_id" Type="Int32" />
-          <NavigationProperty Name="korisnik" Relationship="Self.FK__dnevnik__korisni__29E1370A" FromRole="dnevnik" ToRole="korisnik" />
-          <NavigationProperty Name="stavka" Relationship="Self.FK__dnevnik__stavka___28ED12D1" FromRole="dnevnik" ToRole="stavka" />
+          <NavigationProperty Name="korisnik" Relationship="Self.FK__dnevnik__korisni__28B808A7" FromRole="dnevnik" ToRole="korisnik" />
+          <NavigationProperty Name="stavka" Relationship="Self.FK__dnevnik__stavka___27C3E46E" FromRole="dnevnik" ToRole="stavka" />
         </EntityType>
         <EntityType Name="korisnik">
           <Key>
@@ -304,10 +316,10 @@
           <Property Name="id_korisnik" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="korisnicko_ime" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="lozinka" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="dnevnik" Relationship="Self.FK__dnevnik__korisni__29E1370A" FromRole="korisnik" ToRole="dnevnik" />
-          <NavigationProperty Name="prostorija" Relationship="Self.FK__prostorij__koris__1209AD79" FromRole="korisnik" ToRole="prostorija" />
-          <NavigationProperty Name="spremnik" Relationship="Self.FK__spremnik__korisn__16CE6296" FromRole="korisnik" ToRole="spremnik" />
-          <NavigationProperty Name="stavka" Relationship="Self.FK__stavka__korisnik__22401542" FromRole="korisnik" ToRole="stavka" />
+          <NavigationProperty Name="dnevnik" Relationship="Self.FK__dnevnik__korisni__28B808A7" FromRole="korisnik" ToRole="dnevnik" />
+          <NavigationProperty Name="prostorija" Relationship="Self.FK__prostorij__koris__0FEC5ADD" FromRole="korisnik" ToRole="prostorija" />
+          <NavigationProperty Name="spremnik" Relationship="Self.FK__spremnik__korisn__15A53433" FromRole="korisnik" ToRole="spremnik" />
+          <NavigationProperty Name="stavka" Relationship="Self.FK__stavka__korisnik__2116E6DF" FromRole="korisnik" ToRole="stavka" />
         </EntityType>
         <EntityType Name="oznaka">
           <Key>
@@ -315,8 +327,8 @@
           </Key>
           <Property Name="id_oznaka" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="naziv" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="kvarljivost" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="aktivna" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="kvarljivost" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="aktivna" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="spremnik" Relationship="Self.spremnik_oznaka" FromRole="oznaka" ToRole="spremnik" />
           <NavigationProperty Name="stavka" Relationship="Self.stavka_oznaka" FromRole="oznaka" ToRole="stavka" />
         </EntityType>
@@ -331,8 +343,8 @@
           <Property Name="posebne_napomene" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
           <Property Name="aktivna" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="korisnik_id" Type="Int32" />
-          <NavigationProperty Name="korisnik" Relationship="Self.FK__prostorij__koris__1209AD79" FromRole="prostorija" ToRole="korisnik" />
-          <NavigationProperty Name="spremnik" Relationship="Self.FK__spremnik__prosto__15DA3E5D" FromRole="prostorija" ToRole="spremnik" />
+          <NavigationProperty Name="korisnik" Relationship="Self.FK__prostorij__koris__0FEC5ADD" FromRole="prostorija" ToRole="korisnik" />
+          <NavigationProperty Name="spremnik" Relationship="Self.FK__spremnik__prosto__14B10FFA" FromRole="prostorija" ToRole="spremnik" />
         </EntityType>
         <EntityType Name="spremnik">
           <Key>
@@ -342,12 +354,13 @@
           <Property Name="naziv_spremnika" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="datum_kreiranja" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="zapremnina" Type="Double" Nullable="false" />
+          <Property Name="zauzeće" Type="Double" />
           <Property Name="opis" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
           <Property Name="korisnik_id" Type="Int32" />
           <Property Name="prostorija_id" Type="Int32" />
-          <NavigationProperty Name="korisnik" Relationship="Self.FK__spremnik__korisn__16CE6296" FromRole="spremnik" ToRole="korisnik" />
-          <NavigationProperty Name="prostorija" Relationship="Self.FK__spremnik__prosto__15DA3E5D" FromRole="spremnik" ToRole="prostorija" />
-          <NavigationProperty Name="stavka" Relationship="Self.FK__stavka__spremnik__214BF109" FromRole="spremnik" ToRole="stavka" />
+          <NavigationProperty Name="korisnik" Relationship="Self.FK__spremnik__korisn__15A53433" FromRole="spremnik" ToRole="korisnik" />
+          <NavigationProperty Name="prostorija" Relationship="Self.FK__spremnik__prosto__14B10FFA" FromRole="spremnik" ToRole="prostorija" />
+          <NavigationProperty Name="stavka" Relationship="Self.FK__stavka__spremnik__2022C2A6" FromRole="spremnik" ToRole="stavka" />
           <NavigationProperty Name="oznaka" Relationship="Self.spremnik_oznaka" FromRole="spremnik" ToRole="oznaka" />
         </EntityType>
         <EntityType Name="stavka">
@@ -361,12 +374,22 @@
           <Property Name="zauzeće" Type="Double" Nullable="false" />
           <Property Name="korisnik_id" Type="Int32" />
           <Property Name="spremnik_id" Type="Int32" />
-          <NavigationProperty Name="dnevnik" Relationship="Self.FK__dnevnik__stavka___28ED12D1" FromRole="stavka" ToRole="dnevnik" />
-          <NavigationProperty Name="korisnik" Relationship="Self.FK__stavka__korisnik__22401542" FromRole="stavka" ToRole="korisnik" />
-          <NavigationProperty Name="spremnik" Relationship="Self.FK__stavka__spremnik__214BF109" FromRole="stavka" ToRole="spremnik" />
+          <NavigationProperty Name="dnevnik" Relationship="Self.FK__dnevnik__stavka___27C3E46E" FromRole="stavka" ToRole="dnevnik" />
+          <NavigationProperty Name="korisnik" Relationship="Self.FK__stavka__korisnik__2116E6DF" FromRole="stavka" ToRole="korisnik" />
+          <NavigationProperty Name="spremnik" Relationship="Self.FK__stavka__spremnik__2022C2A6" FromRole="stavka" ToRole="spremnik" />
           <NavigationProperty Name="oznaka" Relationship="Self.stavka_oznaka" FromRole="stavka" ToRole="oznaka" />
         </EntityType>
-        <Association Name="FK__dnevnik__korisni__29E1370A">
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <Association Name="FK__dnevnik__korisni__28B808A7">
           <End Role="korisnik" Type="Self.korisnik" Multiplicity="0..1" />
           <End Role="dnevnik" Type="Self.dnevnik" Multiplicity="*" />
           <ReferentialConstraint>
@@ -378,7 +401,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__dnevnik__stavka___28ED12D1">
+        <Association Name="FK__dnevnik__stavka___27C3E46E">
           <End Role="stavka" Type="Self.stavka" Multiplicity="0..1" />
           <End Role="dnevnik" Type="Self.dnevnik" Multiplicity="*" />
           <ReferentialConstraint>
@@ -390,7 +413,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__prostorij__koris__1209AD79">
+        <Association Name="FK__prostorij__koris__0FEC5ADD">
           <End Role="korisnik" Type="Self.korisnik" Multiplicity="0..1" />
           <End Role="prostorija" Type="Self.prostorija" Multiplicity="*" />
           <ReferentialConstraint>
@@ -402,7 +425,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__spremnik__korisn__16CE6296">
+        <Association Name="FK__spremnik__korisn__15A53433">
           <End Role="korisnik" Type="Self.korisnik" Multiplicity="0..1" />
           <End Role="spremnik" Type="Self.spremnik" Multiplicity="*" />
           <ReferentialConstraint>
@@ -414,7 +437,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__stavka__korisnik__22401542">
+        <Association Name="FK__stavka__korisnik__2116E6DF">
           <End Role="korisnik" Type="Self.korisnik" Multiplicity="0..1" />
           <End Role="stavka" Type="Self.stavka" Multiplicity="*" />
           <ReferentialConstraint>
@@ -426,7 +449,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__spremnik__prosto__15DA3E5D">
+        <Association Name="FK__spremnik__prosto__14B10FFA">
           <End Role="prostorija" Type="Self.prostorija" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
@@ -440,7 +463,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__stavka__spremnik__214BF109">
+        <Association Name="FK__stavka__spremnik__2022C2A6">
           <End Role="spremnik" Type="Self.spremnik" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
@@ -469,31 +492,32 @@
           <EntitySet Name="prostorija" EntityType="Self.prostorija" />
           <EntitySet Name="spremnik" EntityType="Self.spremnik" />
           <EntitySet Name="stavka" EntityType="Self.stavka" />
-          <AssociationSet Name="FK__dnevnik__korisni__29E1370A" Association="Self.FK__dnevnik__korisni__29E1370A">
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <AssociationSet Name="FK__dnevnik__korisni__28B808A7" Association="Self.FK__dnevnik__korisni__28B808A7">
             <End Role="korisnik" EntitySet="korisnik" />
             <End Role="dnevnik" EntitySet="dnevnik" />
           </AssociationSet>
-          <AssociationSet Name="FK__dnevnik__stavka___28ED12D1" Association="Self.FK__dnevnik__stavka___28ED12D1">
+          <AssociationSet Name="FK__dnevnik__stavka___27C3E46E" Association="Self.FK__dnevnik__stavka___27C3E46E">
             <End Role="stavka" EntitySet="stavka" />
             <End Role="dnevnik" EntitySet="dnevnik" />
           </AssociationSet>
-          <AssociationSet Name="FK__prostorij__koris__1209AD79" Association="Self.FK__prostorij__koris__1209AD79">
+          <AssociationSet Name="FK__prostorij__koris__0FEC5ADD" Association="Self.FK__prostorij__koris__0FEC5ADD">
             <End Role="korisnik" EntitySet="korisnik" />
             <End Role="prostorija" EntitySet="prostorija" />
           </AssociationSet>
-          <AssociationSet Name="FK__spremnik__korisn__16CE6296" Association="Self.FK__spremnik__korisn__16CE6296">
+          <AssociationSet Name="FK__spremnik__korisn__15A53433" Association="Self.FK__spremnik__korisn__15A53433">
             <End Role="korisnik" EntitySet="korisnik" />
             <End Role="spremnik" EntitySet="spremnik" />
           </AssociationSet>
-          <AssociationSet Name="FK__stavka__korisnik__22401542" Association="Self.FK__stavka__korisnik__22401542">
+          <AssociationSet Name="FK__stavka__korisnik__2116E6DF" Association="Self.FK__stavka__korisnik__2116E6DF">
             <End Role="korisnik" EntitySet="korisnik" />
             <End Role="stavka" EntitySet="stavka" />
           </AssociationSet>
-          <AssociationSet Name="FK__spremnik__prosto__15DA3E5D" Association="Self.FK__spremnik__prosto__15DA3E5D">
+          <AssociationSet Name="FK__spremnik__prosto__14B10FFA" Association="Self.FK__spremnik__prosto__14B10FFA">
             <End Role="prostorija" EntitySet="prostorija" />
             <End Role="spremnik" EntitySet="spremnik" />
           </AssociationSet>
-          <AssociationSet Name="FK__stavka__spremnik__214BF109" Association="Self.FK__stavka__spremnik__214BF109">
+          <AssociationSet Name="FK__stavka__spremnik__2022C2A6" Association="Self.FK__stavka__spremnik__2022C2A6">
             <End Role="spremnik" EntitySet="spremnik" />
             <End Role="stavka" EntitySet="stavka" />
           </AssociationSet>
@@ -511,9 +535,9 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="DBModelStoreContainer" CdmEntityContainer="SSDB">
+        <EntityContainerMapping StorageEntityContainer="SSModelStoreContainer" CdmEntityContainer="SSDB">
           <EntitySetMapping Name="dnevnik">
-            <EntityTypeMapping TypeName="DBModel.dnevnik">
+            <EntityTypeMapping TypeName="SSModel.dnevnik">
               <MappingFragment StoreEntitySet="dnevnik">
                 <ScalarProperty Name="id_dnevnik" ColumnName="id_dnevnik" />
                 <ScalarProperty Name="radnja" ColumnName="radnja" />
@@ -525,7 +549,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="korisnik">
-            <EntityTypeMapping TypeName="DBModel.korisnik">
+            <EntityTypeMapping TypeName="SSModel.korisnik">
               <MappingFragment StoreEntitySet="korisnik">
                 <ScalarProperty Name="id_korisnik" ColumnName="id_korisnik" />
                 <ScalarProperty Name="korisnicko_ime" ColumnName="korisnicko_ime" />
@@ -534,7 +558,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="oznaka">
-            <EntityTypeMapping TypeName="DBModel.oznaka">
+            <EntityTypeMapping TypeName="SSModel.oznaka">
               <MappingFragment StoreEntitySet="oznaka">
                 <ScalarProperty Name="id_oznaka" ColumnName="id_oznaka" />
                 <ScalarProperty Name="naziv" ColumnName="naziv" />
@@ -544,7 +568,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="prostorija">
-            <EntityTypeMapping TypeName="DBModel.prostorija">
+            <EntityTypeMapping TypeName="SSModel.prostorija">
               <MappingFragment StoreEntitySet="prostorija">
                 <ScalarProperty Name="id_prostorija" ColumnName="id_prostorija" />
                 <ScalarProperty Name="naziv_prostorije" ColumnName="naziv_prostorije" />
@@ -557,12 +581,13 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="spremnik">
-            <EntityTypeMapping TypeName="DBModel.spremnik">
+            <EntityTypeMapping TypeName="SSModel.spremnik">
               <MappingFragment StoreEntitySet="spremnik">
                 <ScalarProperty Name="id_spremnik" ColumnName="id_spremnik" />
                 <ScalarProperty Name="naziv_spremnika" ColumnName="naziv_spremnika" />
                 <ScalarProperty Name="datum_kreiranja" ColumnName="datum_kreiranja" />
                 <ScalarProperty Name="zapremnina" ColumnName="zapremnina" />
+                <ScalarProperty Name="zauzeće" ColumnName="zauzeće" />
                 <ScalarProperty Name="opis" ColumnName="opis" />
                 <ScalarProperty Name="korisnik_id" ColumnName="korisnik_id" />
                 <ScalarProperty Name="prostorija_id" ColumnName="prostorija_id" />
@@ -570,7 +595,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="stavka">
-            <EntityTypeMapping TypeName="DBModel.stavka">
+            <EntityTypeMapping TypeName="SSModel.stavka">
               <MappingFragment StoreEntitySet="stavka">
                 <ScalarProperty Name="id_stavka" ColumnName="id_stavka" />
                 <ScalarProperty Name="naziv" ColumnName="naziv" />
@@ -582,7 +607,18 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="spremnik_oznaka" TypeName="DBModel.spremnik_oznaka" StoreEntitySet="spremnik_oznaka">
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="SSModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="spremnik_oznaka" TypeName="SSModel.spremnik_oznaka" StoreEntitySet="spremnik_oznaka">
             <EndProperty Name="oznaka">
               <ScalarProperty Name="id_oznaka" ColumnName="oznaka_id" />
             </EndProperty>
@@ -590,7 +626,7 @@
               <ScalarProperty Name="id_spremnik" ColumnName="spremnik_id" />
             </EndProperty>
           </AssociationSetMapping>
-          <AssociationSetMapping Name="stavka_oznaka" TypeName="DBModel.stavka_oznaka" StoreEntitySet="stavka_oznaka">
+          <AssociationSetMapping Name="stavka_oznaka" TypeName="SSModel.stavka_oznaka" StoreEntitySet="stavka_oznaka">
             <EndProperty Name="oznaka">
               <ScalarProperty Name="id_oznaka" ColumnName="oznaka_id" />
             </EndProperty>

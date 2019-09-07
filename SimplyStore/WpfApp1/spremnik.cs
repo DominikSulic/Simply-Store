@@ -24,6 +24,7 @@ namespace WpfApp1
         public string naziv_spremnika { get; set; }
         public System.DateTime datum_kreiranja { get; set; }
         public double zapremnina { get; set; }
+        public Nullable<double> zauzeće { get; set; }
         public string opis { get; set; }
         public Nullable<int> korisnik_id { get; set; }
         public Nullable<int> prostorija_id { get; set; }
