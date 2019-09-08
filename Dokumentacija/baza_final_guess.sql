@@ -7,13 +7,13 @@ DROP TABLE IF EXISTS stavka;
 DROP TABLE IF EXISTS stavka_oznaka;
 DROP TABLE IF EXISTS dnevnik;
 
-TRUNCATE TABLE dnevnik;
-TRUNCATE TABLE stavka_oznaka;
-TRUNCATE TABLE stavka;
-TRUNCATE TABLE spremnik_oznaka;
-TRUNCATE TABLE oznaka;
-TRUNCATE TABLE spremnik;
-TRUNCATE TABLE prostorija;
+DELETE FROM dnevnik;
+DELETE FROM stavka_oznaka;
+DELETE FROM stavka;
+DELETE FROM spremnik_oznaka;
+DELETE FROM  oznaka;
+DELETE FROM  spremnik;
+DELETE FROM  prostorija;
 
 CREATE TABLE korisnik (
     id_korisnik int primary key IDENTITY(1,1),
@@ -101,16 +101,3 @@ VALUES ('filip', 'nou');
 
 INSERT INTO korisnik (korisnicko_ime, lozinka)
 VALUES ('dominik', 'domagojnijesuper');
-
-INSERT INTO spremnik(naziv_spremnika, datum_kreiranja, zapremnina, opis, prostorija_id, tip_id)
-VALUES ('Spremnik 1', '2017-06-16', '15.5', 'spremnik u kojem je nekaj', '1', '1');
-
-
-INSERT INTO oznaka(naziv, kvarljivost)
-VALUES ('Mlijeko', 'da');
-
-INSERT INTO oznaka(naziv, kvarljivost)
-VALUES ('Kruh', 'da');
-
-INSERT INTO oznaka(naziv, kvarljivost, aktivna)
-VALUES ('Drvo', 0 ,'ne');
